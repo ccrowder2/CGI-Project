@@ -112,12 +112,19 @@ namespace CGI_Project {
           Console.Clear();
           System.Console.WriteLine("Please enter your new username: ");
           userName = Console.ReadLine();
-          Console.Clear();
-          System.Console.WriteLine($"Your new username will be {userName}. Type yes to confirm:");
-          confirm = Console.ReadLine();
+          player.SetUserName(userName);
+
+          if(file.UsernameInUse() == true){
+            Console.Clear();
+              System.Console.WriteLine($"The username {userName} is already in use");
+              Pause();
+          } else {
+            Console.Clear();
+            System.Console.WriteLine($"Your new username will be {userName}. Type yes to confirm:");
+            confirm = Console.ReadLine();
+          }
         }
         confirm = "";
-        player.SetUserName(userName);
 
         file.SavePlayer();
       }
