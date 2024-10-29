@@ -31,7 +31,7 @@ namespace CGI_Project {
       }
     }
 
-  // Makes user re enter int if it's an invalid input
+    // Makes user re enter int if it's an invalid input
     public void IntInvalidInput(ref int userInput, int[] answers) {
 
       bool endLoop = false;
@@ -59,7 +59,7 @@ namespace CGI_Project {
       }
     }
 
-// Creates a new player
+    // Creates a new player
     public void CreatePlayer() {
       Player player = new Player();
       PlayerFileHandler file = new PlayerFileHandler(player);
@@ -73,9 +73,6 @@ namespace CGI_Project {
       int xP = 0;
       int level = 0;
 
-      player.SetID(file.NumberOfPlayers()+1);
-      player.IncCount();
-
       while (confirm != "yes") {
         Console.Clear();
         System.Console.WriteLine("Please enter your email: ");
@@ -84,39 +81,46 @@ namespace CGI_Project {
         System.Console.WriteLine($"Your email is {email}. Type yes to confirm:");
         confirm = Console.ReadLine();
       }
-      confirm = "";
       player.SetEmail(email);
-
-      while (confirm != "yes") {
+      if (file.EmailInUse() == true) {
         Console.Clear();
-        System.Console.WriteLine("Please enter your password: ");
-        password = Console.ReadLine();
-        Console.Clear();
-        System.Console.WriteLine($"Please rewrite your password to confirm");
-        reTypePassword = Console.ReadLine();
+        System.Console.WriteLine("Email is already in use, please select the login option.");
+        Pause();
+      } else {
+        confirm = "";
+        player.SetID(file.NumberOfPlayers() + 1);
 
-        if (reTypePassword == password) {
-          confirm = "yes";
-        } else {
-          System.Console.WriteLine("Passwords don't match, please try again");
-          Pause();
+        while (confirm != "yes") {
+          Console.Clear();
+          System.Console.WriteLine("Please enter your password: ");
+          password = Console.ReadLine();
+          Console.Clear();
+          System.Console.WriteLine($"Please rewrite your password to confirm");
+          reTypePassword = Console.ReadLine();
+
+          if (reTypePassword == password) {
+            confirm = "yes";
+          } else {
+            System.Console.WriteLine("Passwords don't match, please try again");
+            Pause();
+          }
         }
-      }
-      confirm = "";
-      player.SetPassword(password);
+        confirm = "";
+        player.SetPassword(password);
 
-      while (confirm != "yes") {
-        Console.Clear();
-        System.Console.WriteLine("Please enter your new username: ");
-        userName = Console.ReadLine();
-        Console.Clear();
-        System.Console.WriteLine($"Your new username will be {userName}. Type yes to confirm:");
-        confirm = Console.ReadLine();
-      }
-      confirm = "";
-      player.SetUserName(userName);
+        while (confirm != "yes") {
+          Console.Clear();
+          System.Console.WriteLine("Please enter your new username: ");
+          userName = Console.ReadLine();
+          Console.Clear();
+          System.Console.WriteLine($"Your new username will be {userName}. Type yes to confirm:");
+          confirm = Console.ReadLine();
+        }
+        confirm = "";
+        player.SetUserName(userName);
 
-      file.SavePlayer();
+        file.SavePlayer();
+      }
     }
   }
 }

@@ -3,12 +3,13 @@
 Menu();
  
 static void Menu(){
-    Console.Clear();
     // Variables
     Utility utility = new Utility();
     int userInput = -1;
 
     // Prompts the user at the start of the game
+    while(userInput != 1){
+    Console.Clear();
     System.Console.WriteLine("1. Existing user? Login\n2. Create new account");
 
     try{
@@ -28,5 +29,6 @@ static void Menu(){
         default:
             utility.IntInvalidInput(ref userInput,answers);
             break;
+    }
     }
 }
