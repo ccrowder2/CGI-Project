@@ -1,0 +1,14 @@
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.GeneratedMSBuildEditorConfig.editorconfig
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.AssemblyInfoInputs.cache
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.AssemblyInfo.cs
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.csproj.CoreCompileInputs.cache
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/bin/Debug/net8.0/CGI-Project
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/bin/Debug/net8.0/CGI-Project.deps.json
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/bin/Debug/net8.0/CGI-Project.runtimeconfig.json
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/bin/Debug/net8.0/CGI-Project.dll
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/bin/Debug/net8.0/CGI-Project.pdb
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.dll
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/refint/CGI-Project.dll
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.pdb
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.genruntimeconfig.cache
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/ref/CGI-Project.dll
