@@ -1,3 +1,5 @@
+using CGI_Project;
+
 namespace CGI_Project {
   public class Utility {
 
@@ -5,6 +7,8 @@ namespace CGI_Project {
       System.Console.WriteLine("\nPress any key to continue:");
       Console.ReadKey();
     }
+
+    // Makes user re enter string if it's an invalid input
     public void StringInvalidInput(ref string userInput, string[] answers) {
 
       bool endLoop = false;
@@ -27,6 +31,7 @@ namespace CGI_Project {
       }
     }
 
+  // Makes user re enter int if it's an invalid input
     public void IntInvalidInput(ref int userInput, int[] answers) {
 
       bool endLoop = false;
@@ -54,7 +59,10 @@ namespace CGI_Project {
       }
     }
 
+// Creates a new player
     public void CreatePlayer() {
+      Player player = new Player();
+      PlayerFileHandler file = new PlayerFileHandler(player);
       // Variables
       string confirm = "";
       int iD = 0;
@@ -65,6 +73,9 @@ namespace CGI_Project {
       int xP = 0;
       int level = 0;
 
+      player.SetID(file.NumberOfPlayers()+1);
+      player.IncCount();
+
       while (confirm != "yes") {
         Console.Clear();
         System.Console.WriteLine("Please enter your email: ");
@@ -74,6 +85,7 @@ namespace CGI_Project {
         confirm = Console.ReadLine();
       }
       confirm = "";
+      player.SetEmail(email);
 
       while (confirm != "yes") {
         Console.Clear();
@@ -91,6 +103,7 @@ namespace CGI_Project {
         }
       }
       confirm = "";
+      player.SetPassword(password);
 
       while (confirm != "yes") {
         Console.Clear();
@@ -101,10 +114,9 @@ namespace CGI_Project {
         confirm = Console.ReadLine();
       }
       confirm = "";
+      player.SetUserName(userName);
 
-      Player player = new Player(iD, userName, email, password, xP, level);
-
-      System.Console.WriteLine(player.ToFile());
+      file.SavePlayer();
     }
   }
 }

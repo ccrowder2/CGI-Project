@@ -1,7 +1,7 @@
 ﻿using CGI_Project;
 
 Menu();
-
+ 
 static void Menu(){
     Console.Clear();
     // Variables
