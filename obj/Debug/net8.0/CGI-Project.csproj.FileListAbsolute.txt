@@ -12,3 +12,4 @@
 /Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.pdb
 /Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.genruntimeconfig.cache
 /Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/ref/CGI-Project.dll
+/Users/coycrowder/MIS221/CGI-Project/CGI-Project/obj/Debug/net8.0/CGI-Project.sourcelink.json

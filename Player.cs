@@ -63,5 +63,9 @@ namespace CGI_Project
         public void SetLevel(int level){
             this.level = level;
         }
+
+        public string ToFile(){
+            return $"{iD}#{email}#{password}#{userName}#{xP}#{level}";
+        }
     }
 }
