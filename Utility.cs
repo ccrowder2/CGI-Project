@@ -3,6 +3,15 @@ using CGI_Project;
 namespace CGI_Project {
   public class Utility {
 
+    private Player player;
+    public Utility(){
+
+    }
+
+    public Utility(Player player){
+      this.player = player;
+    }
+
     public void Pause() {
       System.Console.WriteLine("\nPress any key to continue:");
       Console.ReadKey();
@@ -130,7 +139,7 @@ namespace CGI_Project {
       }
     }
 
-    public Player Login(){
+    public bool Login(ref Player player){
       Console.Clear();
       PlayerFileHandler file = new PlayerFileHandler();
       string email = "";
@@ -138,7 +147,52 @@ namespace CGI_Project {
       System.Console.WriteLine("Please enter your email:");
       email = Console.ReadLine();
 
-      return file.FindPlayerByEmail(email);
+      player = file.FindPlayerByEmail(email);
+
+      if(player == null){
+        Console.Clear();
+        System.Console.WriteLine("Email not in use, please create an account");
+        Pause();
+      } else {
+        if(EnterPassword(player) == true){
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    public bool EnterPassword(Player player){
+      PlayerFileHandler file = new PlayerFileHandler(player);
+      Console.Clear();
+      string password = "";
+      int count = 2;
+      bool condMet = false;
+        System.Console.WriteLine("Please enter your password:");
+        password = Console.ReadLine();
+
+        if(file.CheckPassword(password) == true){
+          return true;
+        } else {
+          while(count > 0 && condMet == false){
+            Console.Clear();
+            System.Console.WriteLine($"Incorrect password, you have {count} attempt(s) left");
+            Pause();
+            Console.Clear();
+            System.Console.WriteLine("Please enter your password:");
+            password = Console.ReadLine();
+
+            if(file.CheckPassword(password) == true){
+              condMet = true;
+              return true;
+            }
+            count--;
+          }
+          Console.Clear();
+          System.Console.WriteLine("You've reached the maximum amount of password attempts, you will now be sent back to the menu.");
+          Pause();
+        }
+      return false;
     }
   }
 }

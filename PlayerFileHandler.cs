@@ -103,5 +103,25 @@ namespace CGI_Project
 
             return player;
         }
+
+        public bool CheckPassword(string password){
+            bool rValue = false;
+            StreamReader inFile = new StreamReader("Players.txt");
+
+            string line = inFile.ReadLine();
+            while(line != null){
+                string[] temp = line.Split('#');
+                string userName = temp[3];
+                
+                if(player.GetPassword() == password){
+                    rValue = true;
+                }
+                line=inFile.ReadLine();
+            }
+
+            inFile.Close();
+
+            return rValue;
+        }
     }
 }
