@@ -74,5 +74,34 @@ namespace CGI_Project
                 outFile.WriteLine(player.ToFile());
             }
         }
+
+        public Player FindPlayerByEmail(string email){
+            Player player = new Player();
+            StreamReader inFile = new StreamReader("Players.txt");
+
+            string line = inFile.ReadLine();
+            while(line != null){
+                string[] temp = line.Split('#');
+
+                if(email == temp[1]){
+                    player.SetID(int.Parse(temp[0]));
+                    player.SetEmail(temp[1]);
+                    player.SetPassword(temp[2]);
+                    player.SetUserName(temp[3]);
+                    player.SetXP(int.Parse(temp[4]));
+                    player.SetLevel(int.Parse(temp[5]));
+                }
+                
+                line=inFile.ReadLine();
+            }
+
+            if(player.GetID() == 0){
+                player = null;
+            }
+
+            inFile.Close();
+
+            return player;
+        }
     }
 }

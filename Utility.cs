@@ -129,5 +129,16 @@ namespace CGI_Project {
         file.SavePlayer();
       }
     }
+
+    public Player Login(){
+      Console.Clear();
+      PlayerFileHandler file = new PlayerFileHandler();
+      string email = "";
+      
+      System.Console.WriteLine("Please enter your email:");
+      email = Console.ReadLine();
+
+      return file.FindPlayerByEmail(email);
+    }
   }
 }

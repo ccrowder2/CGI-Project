@@ -1,9 +1,11 @@
-﻿using CGI_Project;
+﻿using System.Runtime.InteropServices;
+using CGI_Project;
 
 Menu();
  
 static void Menu(){
     // Variables
+    Player player = new Player();
     Utility utility = new Utility();
     int userInput = -1;
 
@@ -21,7 +23,14 @@ static void Menu(){
     int[]answers = {1,2};
 
     switch(userInput){
-        case 1:       
+        case 1:
+            player = utility.Login(); 
+
+            if(player == null) {
+                System.Console.WriteLine("Email not in use, please create an account");
+            } else {
+                System.Console.WriteLine(player.ToFile());
+            }
             break;
         case 2:
             utility.CreatePlayer();
