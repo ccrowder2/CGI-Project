@@ -47,7 +47,7 @@ namespace CGI_Project
             string answer = "";
 
             for(int i=0;i<60;i++){
-                for(int j=0;j<204;j++){
+                for(int j=0;j<198;j++){
                     Island(10,30,15,i,j,ref used);
                     Island(40,75,10,i,j,ref used);
                     Island(80,100,17,i,j,ref used);
@@ -90,18 +90,18 @@ namespace CGI_Project
             height = 60-height;
 
             if(i == height-1 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-2){
-                System.Console.Write("-|-");
+                System.Console.Write("|");
                 used = true;
             } else if(i == height-2 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-2){
-                System.Console.Write(" > ");
+                System.Console.Write(">");
                 used = true;
             } else if(i == height && j >= start && j <= stop){
                 System.Console.Write("_");
                 used = true;
-            } else if (i>height && j >= start && j <= stop){
+            } else if (i > height && j >= start && j <= stop){
                 System.Console.Write("|");
                 used = true;
-            }
+            } 
         }
 
         private void StartingScreen(){
