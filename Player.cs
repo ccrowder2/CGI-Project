@@ -10,7 +10,7 @@ namespace CGI_Project
         private string password;
         private int xP;
         private int level;
-        static private int count = 1;
+        private int position;
 
         public Player(){
 
@@ -72,15 +72,20 @@ namespace CGI_Project
             this.level = level;
         }
 
-        public void SetCount(int count){
-            Player.count = count;
-        }
-        public void IncCount(){
-            count++;
+        public int GetPos(){
+            return position;
         }
 
-        public int GetCount(){
-            return count;
+        public void SetPos(int position){
+            this.position = position;
+        }
+
+        public void IncPos(){
+            position += 3;
+        }
+
+        public void DecPos(){
+            position -= 3;
         }
 
         public string ToFile(){

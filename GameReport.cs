@@ -4,14 +4,7 @@ namespace CGI_Project
     {
         private Player player;
 
-        private bool pause;
-
         public GameReport(){
-
-        }
-
-        private void Pause(){
-            pause = !pause;
 
         }
 
@@ -25,19 +18,19 @@ namespace CGI_Project
             // Variables
             ConsoleKeyInfo key;
             bool end = false;
-            int position = 10;
+            player.SetPos(10);
 
             StartingScreen();
 
             do{
-                TutorialMap(position);
+                TutorialMap();
 
                 key = Console.ReadKey();
 
                 if(key.Key == ConsoleKey.D){
-                    position++;
+                    player.IncPos();
                 } else if (key.Key == ConsoleKey.A){
-                    position--;
+                    player.DecPos();
                 } else if (key.Key == ConsoleKey.X){
                     end = true;
                 }
@@ -45,7 +38,7 @@ namespace CGI_Project
             }while(!end);
         }
 
-        private void TutorialMap(int position){
+        private void TutorialMap(){
             Console.Clear();
 
             // Variables
@@ -54,36 +47,30 @@ namespace CGI_Project
 
             for(int i=0;i<60;i++){
                 for(int j=0;j<80;j++){
-                    Island(10,30,15,i,j,position,ref used);
-                    Island(40,55,10,i,j,position,ref used);
+                    Island(10,30,15,i,j,ref used);
+                    Island(40,55,10,i,j,ref used);
 
                     if(!used){
                         System.Console.Write(" ");
-                    }
-
-                    if(position == 8 || position == 38){
-                        Pause();
-                    }
+                    }  
 
                     used = false;
                 }
                 System.Console.WriteLine();
             }
-            if(pause == true){
+            if(player.GetPos() == 28 || player.GetPos() == 53){
                 System.Console.WriteLine("\n\nQuestion");
                 answer = Console.ReadLine().ToLower();
-
-                Pause();
             }
         }
 
-        private void Island(int start, int stop, int height, int i, int j, int position, ref bool used){
+        private void Island(int start, int stop, int height, int i, int j, ref bool used){
             height = 60-height;
 
-            if(i == height-1 && j == position && position >= start && position <= stop-2){
+            if(i == height-1 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-2){
                 System.Console.Write("-|-");
                 used = true;
-            } else if(i == height-2 && j == position && position >= start && position <= stop-2){
+            } else if(i == height-2 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-2){
                 System.Console.Write(" > ");
                 used = true;
             } else if(i == height && j >= start && j <= stop){

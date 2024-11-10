@@ -1,0 +1,1 @@
+easy#Please write the code that would output the word "hello"#Console.ReadLine("hello");
