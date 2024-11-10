@@ -194,5 +194,10 @@ namespace CGI_Project {
         }
       return false;
     }
+
+    public int Damage(int damage){
+      return player.GetHealth()-damage;
+    }
+    
   }
 }

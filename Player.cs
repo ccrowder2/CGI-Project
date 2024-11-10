@@ -11,6 +11,8 @@ namespace CGI_Project
         private int xP;
         private int level;
         private int position;
+        private int health;
+        private int bound;
 
         public Player(){
 
@@ -86,6 +88,22 @@ namespace CGI_Project
 
         public void DecPos(){
             position -= 3;
+        }
+
+        public int GetHealth(){
+            return health;
+        }
+
+        public void SetHeath(int health){
+            this.health = health;
+        }
+
+        public int GetBound(){
+            return bound;
+        }
+
+        public void SetBound(int bound){
+            this.bound = bound;
         }
 
         public string ToFile(){

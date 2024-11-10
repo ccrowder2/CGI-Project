@@ -19,6 +19,7 @@ namespace CGI_Project
             ConsoleKeyInfo key;
             bool end = false;
             player.SetPos(10);
+            player.SetBound(player.GetPos());
 
             StartingScreen();
 
@@ -29,7 +30,7 @@ namespace CGI_Project
 
                 if(key.Key == ConsoleKey.D){
                     player.IncPos();
-                } else if (key.Key == ConsoleKey.A){
+                } else if (key.Key == ConsoleKey.A && player.GetPos() > player.GetBound()){
                     player.DecPos();
                 } else if (key.Key == ConsoleKey.X){
                     end = true;
@@ -46,9 +47,11 @@ namespace CGI_Project
             string answer = "";
 
             for(int i=0;i<60;i++){
-                for(int j=0;j<80;j++){
+                for(int j=0;j<204;j++){
                     Island(10,30,15,i,j,ref used);
-                    Island(40,55,10,i,j,ref used);
+                    Island(40,75,10,i,j,ref used);
+                    Island(80,100,17,i,j,ref used);
+                    Island(110,120,30,i,j,ref used);
 
                     if(!used){
                         System.Console.Write(" ");
@@ -58,9 +61,28 @@ namespace CGI_Project
                 }
                 System.Console.WriteLine();
             }
-            if(player.GetPos() == 28 || player.GetPos() == 53){
+            if(player.GetPos() == 28 || player.GetPos() == 73 || player.GetPos() == 98 || player.GetPos() == 118){
                 System.Console.WriteLine("\n\nQuestion");
                 answer = Console.ReadLine().ToLower();
+
+                if(answer == "correct"){
+                    switch(player.GetPos()){
+                        case 28:
+                            player.SetPos(41);
+                            break;
+                        case 73:
+                            player.SetPos(81);
+                            break;
+                        case 98:
+                            player.SetPos(111);
+                            break;
+                        case 118:
+                            //player.SetPos();
+                            break;
+                    }
+
+                    player.SetBound(player.GetPos());
+                }
             }
         }
 
