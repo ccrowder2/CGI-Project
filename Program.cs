@@ -44,5 +44,13 @@ static void Menu() {
 }
 
 static void Home(Player player) {
-  System.Console.WriteLine(player.ToFile());
+  bool end = false;
+  GameReport game = new GameReport(player);
+
+  while(!end){
+    if(player.GetXP() == 0){
+      game.Tutorial();
+    }
+    end = true;
+  }
 }
