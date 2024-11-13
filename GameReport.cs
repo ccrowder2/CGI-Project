@@ -1,8 +1,12 @@
+using System.Security.Cryptography;
+
 namespace CGI_Project
 {
     public class GameReport
     {
         private Player player;
+        private int upperBound;
+        private int lowerBound;
 
         public GameReport(){
 
@@ -12,29 +16,47 @@ namespace CGI_Project
             this.player = player;
         }
 
+        public int GetUpperBound(){
+            return upperBound;
+        }
+
+        public int GetLowerBound(){
+            return lowerBound;
+        }
+
+        public void SetUpperBound(int bound){
+            this.upperBound = bound;
+        }
+
+        public void SetLowerBound(int bound){
+            this.lowerBound = bound;
+        }
+
         public void Tutorial(){
             Console.Clear();
 
             // Variables
             ConsoleKeyInfo key;
             bool end = false;
-            player.SetPos(10);
-            player.SetBound(player.GetPos());
+            player.SetPos(11);
+            SetLowerBound(11);
+            SetUpperBound(29);
 
             StartingScreen();
+            TutorialMap();
 
             do{
-                TutorialMap();
-
                 key = Console.ReadKey();
 
-                if(key.Key == ConsoleKey.D){
+                if(key.Key == ConsoleKey.D && player.GetPos() < GetUpperBound()){
                     player.IncPos();
-                } else if (key.Key == ConsoleKey.A && player.GetPos() > player.GetBound()){
+                } else if (key.Key == ConsoleKey.A && player.GetPos() > GetLowerBound()){
                     player.DecPos();
                 } else if (key.Key == ConsoleKey.X){
                     end = true;
                 }
+
+                TutorialMap();
 
             }while(!end);
         }
@@ -51,7 +73,7 @@ namespace CGI_Project
                     Island(10,30,15,i,j,ref used);
                     Island(40,75,10,i,j,ref used);
                     Island(80,100,17,i,j,ref used);
-                    Island(110,120,30,i,j,ref used);
+                    Island(110,170,30,i,j,ref used);
 
                     if(!used){
                         System.Console.Write(" ");
@@ -61,7 +83,7 @@ namespace CGI_Project
                 }
                 System.Console.WriteLine();
             }
-            if(player.GetPos() == 28 || player.GetPos() == 73 || player.GetPos() == 98 || player.GetPos() == 118){
+            if(player.GetPos() == 29 || player.GetPos() == 73 || player.GetPos() == 98 || player.GetPos() == 118){
                 System.Console.WriteLine("\n\nQuestion");
                 answer = Console.ReadLine().ToLower();
 
@@ -81,8 +103,28 @@ namespace CGI_Project
                             break;
                     }
 
-                    player.SetBound(player.GetPos());
+                    SetLowerBound(player.GetPos());
+                } else {
+                    player.SetPos(GetLowerBound());
                 }
+
+                Console.Clear();
+                
+                for(int i=0;i<60;i++){
+                for(int j=0;j<198;j++){
+                    Island(10,30,15,i,j,ref used);
+                    Island(40,75,10,i,j,ref used);
+                    Island(80,100,17,i,j,ref used);
+                    Island(110,170,30,i,j,ref used);
+
+                    if(!used){
+                        System.Console.Write(" ");
+                    }  
+
+                    used = false;
+                }
+                System.Console.WriteLine();
+            }
             }
         }
 
@@ -94,10 +136,10 @@ namespace CGI_Project
                 onIsland = true;
             }
 
-            if(i == height-1 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-1){
+            if(i == height-1 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop){
                 System.Console.Write("-|-");
                 used = true;
-            } else if(i == height-2 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-1){
+            } else if(i == height-2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop){
                 System.Console.Write(" > ");
                 used = true;
             } else if(i == height && j >= start && j <= stop){

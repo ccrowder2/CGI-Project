@@ -98,12 +98,8 @@ namespace CGI_Project
             this.health = health;
         }
 
-        public int GetBound(){
-            return bound;
-        }
-
-        public void SetBound(int bound){
-            this.bound = bound;
+        public void Damage(int damage){
+            health -= damage;
         }
 
         public string ToFile(){
