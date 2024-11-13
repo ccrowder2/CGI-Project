@@ -71,7 +71,7 @@ namespace CGI_Project {
           Island(10, 30, 15, i, j, ref used);
           Island(40, 75, 10, i, j, ref used);
           Island(80, 100, 17, i, j, ref used);
-          Island(110, 170, 30, i, j, ref used);
+          Island(110, 160, 30, i, j, ref used);
 
           if (!used) {
             System.Console.Write(" ");
@@ -81,23 +81,23 @@ namespace CGI_Project {
         }
         System.Console.WriteLine();
       }
-      if (player.GetPos() == 29 || player.GetPos() == 73 || player.GetPos() == 98 || player.GetPos() == 118) {
+      if (player.GetPos() == 29 || player.GetPos() == 74 || player.GetPos() == 99) {
         System.Console.WriteLine("\n\nQuestion");
         answer = Console.ReadLine().ToLower();
 
         if (answer == "correct") {
           switch (player.GetPos()) {
-          case 28:
+          case 29:
             player.SetPos(41);
+            SetUpperBound(74);
             break;
-          case 73:
+          case 74:
             player.SetPos(81);
+            SetUpperBound(99);
             break;
-          case 98:
+          case 99:
             player.SetPos(111);
-            break;
-          case 118:
-            //player.SetPos();
+            SetUpperBound(159);
             break;
           }
 
@@ -113,7 +113,7 @@ namespace CGI_Project {
             Island(10, 30, 15, i, j, ref used);
             Island(40, 75, 10, i, j, ref used);
             Island(80, 100, 17, i, j, ref used);
-            Island(110, 170, 30, i, j, ref used);
+            Island(110, 160, 30, i, j, ref used);
 
             if (!used) {
               System.Console.Write(" ");
