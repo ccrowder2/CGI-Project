@@ -88,12 +88,17 @@ namespace CGI_Project
 
         private void Island(int start, int stop, int height, int i, int j, ref bool used){
             height = 60-height;
+            bool onIsland = false;
 
-            if(i == height-1 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-2){
-                System.Console.Write("|");
+            if(player.GetPos() >= start && player.GetPos() <= stop){
+                onIsland = true;
+            }
+
+            if(i == height-1 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-1){
+                System.Console.Write("-|-");
                 used = true;
-            } else if(i == height-2 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-2){
-                System.Console.Write(">");
+            } else if(i == height-2 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop-1){
+                System.Console.Write(" > ");
                 used = true;
             } else if(i == height && j >= start && j <= stop){
                 System.Console.Write("_");
@@ -101,7 +106,11 @@ namespace CGI_Project
             } else if (i > height && j >= start && j <= stop){
                 System.Console.Write("|");
                 used = true;
-            } 
+            } else if(i == height-1 && j == player.GetPos()+1 && onIsland == true || i == height-2 && j == player.GetPos()+1 && onIsland == true){
+                used = true;
+            } else if(i == height-1 && j == player.GetPos()-1 && onIsland == true || i == height-2 && j == player.GetPos()-1 && onIsland == true){
+                used = true;
+            }
         }
 
         private void StartingScreen(){
