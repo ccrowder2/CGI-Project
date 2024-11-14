@@ -5,6 +5,8 @@ namespace CGI_Project {
     private Player player;
     private int upperBound;
     private int lowerBound;
+    private ConsoleKey key;
+    private ConsoleKey prev;
 
     public GameReport() {
 
@@ -14,20 +16,28 @@ namespace CGI_Project {
       this.player = player;
     }
 
-    public int GetUpperBound() {
-      return upperBound;
-    }
-
-    public int GetLowerBound() {
-      return lowerBound;
-    }
-
-    public void SetUpperBound(int bound) {
+    private void SetUpperBound(int bound) {
       this.upperBound = bound;
     }
 
-    public void SetLowerBound(int bound) {
+    private void SetLowerBound(int bound) {
       this.lowerBound = bound;
+    }
+
+    private void SetKey(ConsoleKey key){
+      this.key = key;
+    }
+
+    private ConsoleKey GetKey(){
+      return key;
+    }
+
+    private void SetPrev(ConsoleKey prev){
+      this.prev = prev;
+    }
+
+    private ConsoleKey GetPrev(){
+      return prev;
     }
 
     public void Tutorial() {
@@ -39,18 +49,20 @@ namespace CGI_Project {
       player.SetPos(11);
       SetLowerBound(11);
       SetUpperBound(29);
+      SetPrev(ConsoleKey.D);
 
       StartingScreen();
       TutorialMap();
 
       do {
         key = Console.ReadKey();
+        SetKey(key.Key);
 
-        if (key.Key == ConsoleKey.D && player.GetPos() < GetUpperBound()) {
+        if (GetKey() == ConsoleKey.D && player.GetPos() < upperBound) {
           player.IncPos();
-        } else if (key.Key == ConsoleKey.A && player.GetPos() > GetLowerBound()) {
+        } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
           player.DecPos();
-        } else if (key.Key == ConsoleKey.X) {
+        } else if (GetKey() == ConsoleKey.X){
           end = true;
         }
 
@@ -103,7 +115,7 @@ namespace CGI_Project {
 
           SetLowerBound(player.GetPos());
         } else {
-          player.SetPos(GetLowerBound());
+          player.SetPos(lowerBound);
         }
 
         Console.Clear();
@@ -137,8 +149,18 @@ namespace CGI_Project {
       if (i == height - 1 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop) {
         System.Console.Write("-|-");
         used = true;
-      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop) {
-        System.Console.Write(" > ");
+      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop && GetKey() == ConsoleKey.D) {
+        System.Console.Write(" 0>");
+        used = true;
+      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop && GetKey() == ConsoleKey.A){
+        System.Console.Write("<0 ");
+        used = true;
+      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop){
+        if(GetPrev() == ConsoleKey.D){
+          System.Console.Write(" 0>");
+        } else if(GetPrev() == ConsoleKey.A){
+          System.Console.Write("<0 ");
+        }
         used = true;
       } else if (i == height && j >= start && j <= stop) {
         System.Console.Write("_");
@@ -150,6 +172,10 @@ namespace CGI_Project {
         used = true;
       } else if (i == height - 1 && j == player.GetPos() - 1 && onIsland == true || i == height - 2 && j == player.GetPos() - 1 && onIsland == true) {
         used = true;
+      }
+
+      if(GetKey() == ConsoleKey.D || GetKey() == ConsoleKey.A){
+        SetPrev(GetKey());
       }
     }
 
