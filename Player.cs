@@ -12,7 +12,6 @@ namespace CGI_Project
         private int level;
         private int position;
         private int health;
-        private int bound;
 
         public Player(){
 

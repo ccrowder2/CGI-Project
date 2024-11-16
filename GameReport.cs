@@ -75,26 +75,12 @@ namespace CGI_Project {
       Console.Clear();
 
       // Variables
-      bool used = false;
       string answer = "";
 
-      for (int i = 0; i < 60; i++) {
-        for (int j = 0; j < 198; j++) {
-          Island(10, 30, 15, i, j, ref used);
-          Island(40, 75, 10, i, j, ref used);
-          Island(80, 100, 17, i, j, ref used);
-          Island(110, 160, 30, i, j, ref used);
-
-          if (!used) {
-            System.Console.Write(" ");
-          }
-
-          used = false;
-        }
-        System.Console.WriteLine();
-      }
+      TutorialIsland();
+      
       if (player.GetPos() == 29 || player.GetPos() == 74 || player.GetPos() == 99) {
-        System.Console.WriteLine("\n\nQuestion");
+        System.Console.WriteLine("\nQuestion");
         answer = Console.ReadLine().ToLower();
 
         if (answer == "correct") {
@@ -117,10 +103,16 @@ namespace CGI_Project {
         } else {
           player.SetPos(lowerBound);
         }
+        TutorialIsland();
+      }
+    }
 
-        Console.Clear();
+    private void TutorialIsland(){
+      Console.Clear();
+      bool used = false;
+        System.Console.WriteLine(Prompt());
 
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 57; i++) {
           for (int j = 0; j < 198; j++) {
             Island(10, 30, 15, i, j, ref used);
             Island(40, 75, 10, i, j, ref used);
@@ -135,7 +127,6 @@ namespace CGI_Project {
           }
           System.Console.WriteLine();
         }
-      }
     }
 
     private void Island(int start, int stop, int height, int i, int j, ref bool used) {
@@ -150,20 +141,28 @@ namespace CGI_Project {
         System.Console.Write("-|-");
         used = true;
       } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop && GetKey() == ConsoleKey.D) {
+        Console.ForegroundColor = ConsoleColor.Yellow;
         System.Console.Write(" 0>");
+        Console.ForegroundColor = ConsoleColor.Gray;
         used = true;
       } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop && GetKey() == ConsoleKey.A){
+        Console.ForegroundColor = ConsoleColor.Yellow;
         System.Console.Write("<0 ");
+        Console.ForegroundColor = ConsoleColor.Gray;
         used = true;
       } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop){
+        Console.ForegroundColor = ConsoleColor.Yellow;
         if(GetPrev() == ConsoleKey.D){
           System.Console.Write(" 0>");
         } else if(GetPrev() == ConsoleKey.A){
           System.Console.Write("<0 ");
         }
+        Console.ForegroundColor = ConsoleColor.Gray;
         used = true;
       } else if (i == height && j >= start && j <= stop) {
+        Console.ForegroundColor = ConsoleColor.Green;
         System.Console.Write("_");
+        Console.ForegroundColor = ConsoleColor.Gray;
         used = true;
       } else if (i > height && j >= start && j <= stop) {
         System.Console.Write("|");
@@ -186,6 +185,19 @@ namespace CGI_Project {
       Console.Clear();
       System.Console.WriteLine("Rules:\n1. In order for the game to print as intended, use an 80x24 terminal\n2. Press the D key to move forward, and the A to move backwards\n3. To interact with an object, stand on it and press the enter key\n\nPress any key to continue:");
       Console.ReadKey();
+    }
+
+    private string Prompt(){
+      if(player.GetPos() >= 10 && player.GetPos() <= 30){
+        return "\n\nPress the D button to move forward, and the A button to move backwards";
+      } else if(player.GetPos() >= 40 && player.GetPos() <= 75){
+        return "\n\nYou've been given a free item, to check you inventory, press s and then enter";
+      } else if(player.GetPos() >= 80 && player.GetPos() <= 100){
+        return "3";
+      } else if(player.GetPos() >= 110 && player.GetPos() <= 160){
+        return "4";
+      }
+      return "";
     }
   }
 }
