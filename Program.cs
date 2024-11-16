@@ -49,7 +49,10 @@ static void Home(Player player) {
 
   while(!end){
     if(player.GetXP() == 0){
-      game.Tutorial();
+      char[] items = player.GetItems();
+      for(int i =0; i<items.Length;i++){
+        Console.WriteLine(items[i]);
+      }
     }
     end = true;
   }

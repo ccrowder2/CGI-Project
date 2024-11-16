@@ -7,6 +7,7 @@ namespace CGI_Project {
     private int lowerBound;
     private ConsoleKey key;
     private ConsoleKey prev;
+    private ConsoleKey accessInventory;
 
     public GameReport() {
 
@@ -28,16 +29,24 @@ namespace CGI_Project {
       this.key = key;
     }
 
-    private ConsoleKey GetKey() {
-      return key;
-    }
-
     private void SetPrev(ConsoleKey prev) {
       this.prev = prev;
     }
 
+    private void SetAccessInventory(ConsoleKey accessInventory) {
+      this.accessInventory = accessInventory;
+    }
+
+    private ConsoleKey GetKey() {
+      return key;
+    }
+
     private ConsoleKey GetPrev() {
       return prev;
+    }
+
+    private ConsoleKey GetAccessInventory(){
+      return accessInventory;
     }
 
     public void Tutorial() {
@@ -67,6 +76,8 @@ namespace CGI_Project {
         }
 
         TutorialMap();
+
+        SetAccessInventory(key.Key);
 
       } while (!end);
     }
@@ -104,7 +115,23 @@ namespace CGI_Project {
           player.SetPos(lowerBound);
         }
         TutorialIsland();
+      } else {
+        Inventory();
       }
+    }
+
+    private void Inventory(){
+      if(key == ConsoleKey.Enter && accessInventory == ConsoleKey.S){
+          Console.Clear();
+          System.Console.WriteLine("In inventory");
+          Console.ReadKey();
+        } else if(key == ConsoleKey.S){
+          Console.ForegroundColor = ConsoleColor.Green;
+          System.Console.WriteLine("\nInventory");
+          Console.ForegroundColor = ConsoleColor.Gray;
+        } else{
+          System.Console.WriteLine("\nInventory");
+        }
     }
 
     private void TutorialIsland() {

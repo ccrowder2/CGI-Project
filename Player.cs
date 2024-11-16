@@ -12,6 +12,7 @@ namespace CGI_Project
         private int level;
         private int position;
         private int health;
+        private char[] items;
 
         public Player(){
 
@@ -97,12 +98,31 @@ namespace CGI_Project
             this.health = health;
         }
 
+        public void SetItems(char[] items){
+            this.items = items;
+        }
+
+        public char[] GetItems(){
+            return items;
+        }
+
         public void Damage(int damage){
             health -= damage;
         }
 
         public string ToFile(){
-            return $"{iD}#{email}#{password}#{userName}#{xP}#{level}";
+            string writeItems = "";
+
+            if(items != null){
+            for(int i =0; i<items.Length;i++){
+                if(items[i] == 'a'){
+                    writeItems += "a";
+                } else if(items[i] == 'b'){
+                    writeItems += "b";
+                }
+            }
+            }
+            return $"{iD}#{email}#{password}#{userName}#{xP}#{level}#{writeItems}";
         }
     }
 }

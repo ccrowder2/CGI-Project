@@ -1,1 +1,4 @@
-easy#Please write the code that would output the word "hello"#Console.ReadLine("hello");
+difficulty#Question#Does the answer need to be exact#answer
+easy#Please write the code that would output the word "hello" excluding quotations#yes#Console.ReadLine("hello");
+easy#A process or set of rules to be followed in calculations or other problem-solving operations, especially by a computer#no#Algorythm
+easy#

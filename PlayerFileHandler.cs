@@ -5,6 +5,7 @@ namespace CGI_Project
     public class PlayerFileHandler
     {
         private Player player;
+        private const int MAX_ITEMS = 5;
 
         public PlayerFileHandler(){
 
@@ -90,6 +91,10 @@ namespace CGI_Project
                     player.SetUserName(temp[3]);
                     player.SetXP(int.Parse(temp[4]));
                     player.SetLevel(int.Parse(temp[5]));
+
+                    if(AddInventory(email) != null){
+                        player.SetItems(AddInventory(email));
+                    }
                 }
                 
                 line=inFile.ReadLine();
@@ -122,6 +127,27 @@ namespace CGI_Project
             inFile.Close();
 
             return rValue;
+        }
+
+        private char[] AddInventory(string email){
+            StreamReader inFile = new StreamReader("Players.txt");
+            char[] inventory = new char[MAX_ITEMS];
+
+            string line = inFile.ReadLine();
+            while(line != null){
+                string[] temp = line.Split('#');
+                string items = temp[6];
+
+                if(email == temp[1]){
+                    for(int i=0;i<items.Length;i++){
+                        inventory[i] = items[i];
+                    }
+                }
+                
+                line=inFile.ReadLine();
+        }
+
+        return inventory;
         }
     }
 }
