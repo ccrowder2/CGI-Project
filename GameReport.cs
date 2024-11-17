@@ -122,9 +122,7 @@ namespace CGI_Project {
 
     private void Inventory(){
       if(key == ConsoleKey.Enter && accessInventory == ConsoleKey.S){
-          Console.Clear();
-          System.Console.WriteLine("In inventory");
-          Console.ReadKey();
+          InventoryList();
         } else if(key == ConsoleKey.S){
           Console.ForegroundColor = ConsoleColor.Green;
           System.Console.WriteLine("\nInventory");
@@ -132,6 +130,55 @@ namespace CGI_Project {
         } else{
           System.Console.WriteLine("\nInventory");
         }
+    }
+
+    private void InventoryList(){
+      Utility util = new Utility(player);
+      ConsoleKeyInfo key;
+      bool end = false;
+      char[] items = player.GetItems();
+      int itemNav = 0;
+      int selected = -1;
+
+      do {
+      Console.Clear();
+      System.Console.WriteLine("\nPress S to move down and W to move up, press ENTER to select\n");
+
+      for(int i=0;i<items.Length;i++){
+        if(items[i] == 'a' && itemNav == 0){
+          Console.ForegroundColor = ConsoleColor.Green;
+          System.Console.WriteLine("Apple");
+          Console.ForegroundColor = ConsoleColor.Gray;
+          selected = i;
+        } else if(items[i] == 'b' && itemNav == 1){
+          Console.ForegroundColor = ConsoleColor.Green;
+          System.Console.WriteLine("Bannana");
+          Console.ForegroundColor = ConsoleColor.Gray;
+          selected = i;
+        } else if(items[i] == 'a'){
+          System.Console.WriteLine("Apple");
+        } else if(items[i] == 'b'){
+          System.Console.WriteLine("Bannana");
+        }
+      }
+
+        key = Console.ReadKey();
+        SetKey(key.Key);
+
+        if (GetKey() == ConsoleKey.S) {
+          itemNav++;
+        } else if (GetKey() == ConsoleKey.W) {
+          itemNav--;
+        } else if (GetKey() == ConsoleKey.Enter){
+          for(int i=0;i<items.Length;i++){
+            if(items[selected] == items[i]){
+              util.ActivateItem(items[selected]);
+              end = true;
+            }
+          }
+        }
+
+      } while (!end);
     }
 
     private void TutorialIsland() {

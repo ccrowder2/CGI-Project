@@ -13,6 +13,7 @@ namespace CGI_Project
         private int position;
         private int health;
         private char[] items;
+        private string itemsInUse;
 
         public Player(){
 
@@ -108,6 +109,14 @@ namespace CGI_Project
 
         public void Damage(int damage){
             health -= damage;
+        }
+
+        public string GetItemsInUse(){
+            return itemsInUse;
+        }
+
+        public void SetItemsInUse(string itemsInUse){
+            this.itemsInUse = itemsInUse;
         }
 
         public string ToFile(){

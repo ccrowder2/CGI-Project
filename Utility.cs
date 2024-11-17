@@ -195,8 +195,54 @@ namespace CGI_Project {
       return false;
     } 
 
-    public void AddItems(){
+    public void ActivateItem(char item){
+      char[] items = player.GetItems();
+      string itemsInUse = player.GetItemsInUse();
+      bool exit = false;
+      int count = 0;
 
+      while(!exit){
+        if(items[count] == item){
+          itemsInUse+=item;
+          player.SetItemsInUse(itemsInUse);
+          exit = true;
+        }
+
+        count++;
+      }
+      RemoveItems(item);
     }  
+
+    private void RemoveItems(char item){
+      char[] items = player.GetItems();
+      int count = 0;
+      bool exit = false;
+
+      while(!exit){
+        if(items[count] == item){
+          items[count] = 'z';
+          exit = true;
+        }
+        count++;
+      }
+
+      for(int i=0;i<items.Length-1;i++){
+        for(int j=i+1;j<items.Length;j++){
+          if(items[i].CompareTo(items[j]) > 0){
+            Swap(i, j);
+          }
+        }
+      }
+    }
+
+    private void Swap(int i, int j){
+      char[] items = player.GetItems();
+
+      char temp = items[i];
+      items[i] = items[j];
+      items[j] = temp;
+
+      player.SetItems(items);
+    }
   }
 }
