@@ -64,6 +64,7 @@ namespace CGI_Project {
       TutorialMap();
 
       do {
+        TutorialMap();
         key = Console.ReadKey();
         SetKey(key.Key);
 
@@ -122,7 +123,13 @@ namespace CGI_Project {
 
     private void Inventory(){
       if(key == ConsoleKey.Enter && accessInventory == ConsoleKey.S){
-          InventoryList();
+          if(player.GetItems() != null){
+            InventoryList();
+          } else {
+            Console.Clear();
+            System.Console.WriteLine("\nYou have no items in your inventory, you can buy more at your home base\n\nPress any key to continue:");
+            Console.ReadKey();
+          }
         } else if(key == ConsoleKey.S){
           Console.ForegroundColor = ConsoleColor.Green;
           System.Console.WriteLine("\nInventory");
@@ -140,17 +147,17 @@ namespace CGI_Project {
       int itemNav = 0;
       int selected = -1;
 
-      do {
+      while(!end){
       Console.Clear();
       System.Console.WriteLine("\nPress S to move down and W to move up, press ENTER to select\n");
 
       for(int i=0;i<items.Length;i++){
-        if(items[i] == 'a' && itemNav == 0){
+        if(items[i] == 'a' && itemNav == i){
           Console.ForegroundColor = ConsoleColor.Green;
           System.Console.WriteLine("Apple");
           Console.ForegroundColor = ConsoleColor.Gray;
           selected = i;
-        } else if(items[i] == 'b' && itemNav == 1){
+        } else if(items[i] == 'b' && itemNav == i){
           Console.ForegroundColor = ConsoleColor.Green;
           System.Console.WriteLine("Bannana");
           Console.ForegroundColor = ConsoleColor.Gray;
@@ -165,9 +172,9 @@ namespace CGI_Project {
         key = Console.ReadKey();
         SetKey(key.Key);
 
-        if (GetKey() == ConsoleKey.S) {
+        if (GetKey() == ConsoleKey.S && itemNav < items.Length) {
           itemNav++;
-        } else if (GetKey() == ConsoleKey.W) {
+        } else if (GetKey() == ConsoleKey.W && itemNav > 0) {
           itemNav--;
         } else if (GetKey() == ConsoleKey.Enter){
           for(int i=0;i<items.Length;i++){
@@ -177,8 +184,7 @@ namespace CGI_Project {
             }
           }
         }
-
-      } while (!end);
+      }
     }
 
     private void TutorialIsland() {

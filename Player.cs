@@ -103,8 +103,19 @@ namespace CGI_Project
             this.items = items;
         }
 
-        public char[] GetItems(){
-            return items;
+        public char[] GetItems(bool ovrRide = false){
+            bool empty = true;
+            for(int i=0;i<items.Length;i++){
+                if(items[i] == 'a' || items[i] == 'b' || items[i] == 'c' || items[i] == 'd'){
+                    empty = false;
+                }
+            }
+
+            if(empty == false || ovrRide == true){
+                return items;
+            } else {
+                return null;
+            }
         }
 
         public void Damage(int damage){

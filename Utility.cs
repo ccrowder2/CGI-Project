@@ -200,8 +200,7 @@ namespace CGI_Project {
       string itemsInUse = player.GetItemsInUse();
       bool exit = false;
       int count = 0;
-
-      while(!exit){
+      while(!exit && items != null){
         if(items[count] == item){
           itemsInUse+=item;
           player.SetItemsInUse(itemsInUse);
@@ -210,7 +209,10 @@ namespace CGI_Project {
 
         count++;
       }
-      RemoveItems(item);
+      
+      if(items != null){
+        RemoveItems(item);
+      }
     }  
 
     private void RemoveItems(char item){
@@ -220,7 +222,7 @@ namespace CGI_Project {
 
       while(!exit){
         if(items[count] == item){
-          items[count] = 'z';
+          items[count] -= item;
           exit = true;
         }
         count++;
@@ -228,7 +230,7 @@ namespace CGI_Project {
 
       for(int i=0;i<items.Length-1;i++){
         for(int j=i+1;j<items.Length;j++){
-          if(items[i].CompareTo(items[j]) > 0){
+          if(items[i].CompareTo(items[j]) < 0){
             Swap(i, j);
           }
         }
@@ -238,11 +240,13 @@ namespace CGI_Project {
     private void Swap(int i, int j){
       char[] items = player.GetItems();
 
-      char temp = items[i];
-      items[i] = items[j];
-      items[j] = temp;
+      if(player.GetItems() != null){
+        char temp = items[i];
+        items[i] = items[j];
+        items[j] = temp;
 
-      player.SetItems(items);
+        player.SetItems(items);
+      }
     }
   }
 }

@@ -46,6 +46,7 @@ static void Menu() {
 static void Home(Player player) {
   bool end = false;
   GameReport game = new GameReport(player);
+  Utility util = new Utility(player);
 
   while(!end){
     if(player.GetXP() == 0){
