@@ -47,10 +47,19 @@ static void Home(Player player) {
   bool end = false;
   GameReport game = new GameReport(player);
   Utility util = new Utility(player);
+  PlayerFileHandler file = new PlayerFileHandler(player);
 
   while(!end){
     if(player.GetXP() == 0){
-      game.Tutorial();
+      util.AddItem('b');
+      char[] items= player.GetItems();
+      for(int i=0;i<items.Length;i++){
+        System.Console.WriteLine(items[i]);
+      }
+      System.Console.WriteLine($"End");
+      
+      Console.ReadKey();
+      file.SaveExistingPlayer();
     }
     end = true;
   }

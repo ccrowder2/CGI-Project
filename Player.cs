@@ -19,7 +19,7 @@ namespace CGI_Project
         public Player(){
 
         }
-        public Player(int iD, string userName, string email, string password, int xP, int level){
+        public Player(int iD, string email, string password, string userName, int xP, int level){
             this.iD = iD;
             this.userName = userName;
             this.email = email;
@@ -105,10 +105,13 @@ namespace CGI_Project
         }
 
         public char[] GetItems(bool ovrRide = false){
+            // b - bonus XP // d - damange boost // h - restore health // i - increased max health
             bool empty = true;
-            for(int i=0;i<items.Length;i++){
-                if(items[i] == 'a' || items[i] == 'b' || items[i] == 'c' || items[i] == 'd'){
-                    empty = false;
+            if(items != null){
+                for(int i=0;i<items.Length;i++){
+                    if(items[i] == 'b' || items[i] == 'd' || items[i] == 'h' || items[i] == 'i'){
+                     empty = false;
+                    }
                 }
             }
 
@@ -122,7 +125,7 @@ namespace CGI_Project
         public int GetItemsCount(){
             countOfItems=-1;
             for(int i=0;i<items.Length;i++){
-                if(items[i] == 'a' || items[i] == 'b' || items[i] == 'c' || items[i] == 'd'){
+                if(items[i] == 'b' || items[i] == 'd' || items[i] == 'h' || items[i] == 'i'){
                     countOfItems++;
                 }
             }
@@ -146,10 +149,14 @@ namespace CGI_Project
 
             if(items != null){
             for(int i =0; i<items.Length;i++){
-                if(items[i] == 'a'){
-                    writeItems += "a";
-                } else if(items[i] == 'b'){
+                if(items[i] == 'b'){
                     writeItems += "b";
+                } else if(items[i] == 'd'){
+                    writeItems += "d";
+                } else if(items[i] == 'h'){
+                    writeItems += "h";
+                } else if(items[i] == 'i'){
+                    writeItems += "i";
                 }
             }
             }

@@ -4,6 +4,7 @@ namespace CGI_Project {
   public class Utility {
 
     private Player player;
+    private const int MAX_ITEMS = 5;
     public Utility(){
 
     }
@@ -195,6 +196,34 @@ namespace CGI_Project {
       return false;
     } 
 
+    public void AddItem(char item) {
+    if (player == null) {
+        Console.WriteLine("Error: Player is not initialized.");
+        return;
+    }
+
+    if (player.GetItems() == null) {
+        char[] newArray = new char[MAX_ITEMS];
+        newArray[0] = item;
+        player.SetItems(newArray);
+    } else {
+        char[] items = player.GetItems();
+        int itemCount = player.GetItemsCount();
+
+        // Check if the inventory is full
+        if (itemCount >= MAX_ITEMS) {
+            Console.WriteLine("Inventory is full. Cannot add more items.");
+            return;
+        }
+
+        items[itemCount] = item;
+        player.SetItems(items);
+    }
+
+    SortInventory();
+}
+
+
     public void ActivateItem(char item){
       char[] items = player.GetItems();
       string itemsInUse = player.GetItemsInUse();
@@ -227,7 +256,10 @@ namespace CGI_Project {
         }
         count++;
       }
+    }
 
+    public void SortInventory(){
+      char[] items = player.GetItems();
       for(int i=0;i<items.Length-1;i++){
         for(int j=i+1;j<items.Length;j++){
           if(items[i].CompareTo(items[j]) < 0){
@@ -236,6 +268,7 @@ namespace CGI_Project {
         }
       }
     }
+    
 
     private void Swap(int i, int j){
       char[] items = player.GetItems();

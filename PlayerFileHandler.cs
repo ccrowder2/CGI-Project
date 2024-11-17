@@ -6,6 +6,7 @@ namespace CGI_Project
     {
         private Player player;
         private const int MAX_ITEMS = 5;
+        private const int MAX_PLAYERS = 500;
 
         public PlayerFileHandler(){
 
@@ -74,6 +75,38 @@ namespace CGI_Project
             {
                 outFile.WriteLine(player.ToFile());
             }
+        }
+
+        public void SaveExistingPlayer(){
+            // Read In All Players
+            StreamReader inFile = new StreamReader("Players.txt");
+            Player[] players = new Player[MAX_PLAYERS];
+            int count = 0;
+
+            string line = inFile.ReadLine();
+            while(line != null){
+                Utility util = new Utility(players[count]);
+                string[] temp = line.Split('#');
+                players[count] = new Player(int.Parse(temp[0]), temp[1], temp[2], temp[3], int.Parse(temp[4]), int.Parse(temp[5]));
+
+                string itemList = temp[6];
+
+                for(int i=0;i<itemList.Length;i++){
+                    util.AddItem(itemList[i]);  
+                }
+                
+                count++;
+                line=inFile.ReadLine();
+            }
+            inFile.Close();
+
+            // Write Out All Players
+            StreamWriter outFile = new StreamWriter("Players.txt");
+            
+            for(int i=0;i<count;i++){
+                outFile.WriteLine(players[i].ToFile());
+            }
+            outFile.Close();
         }
 
         public Player FindPlayerByEmail(string email){
