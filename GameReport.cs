@@ -115,7 +115,6 @@ namespace CGI_Project {
         } else {
           player.SetPos(lowerBound);
         }
-        TutorialIsland();
       } else {
         Inventory();
       }
@@ -172,7 +171,7 @@ namespace CGI_Project {
         key = Console.ReadKey();
         SetKey(key.Key);
 
-        if (GetKey() == ConsoleKey.S && itemNav < items.Length) {
+        if (GetKey() == ConsoleKey.S && itemNav < player.GetItemsCount()) {
           itemNav++;
         } else if (GetKey() == ConsoleKey.W && itemNav > 0) {
           itemNav--;

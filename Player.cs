@@ -14,6 +14,7 @@ namespace CGI_Project
         private int health;
         private char[] items;
         private string itemsInUse;
+        private int countOfItems;
 
         public Player(){
 
@@ -116,6 +117,16 @@ namespace CGI_Project
             } else {
                 return null;
             }
+        }
+
+        public int GetItemsCount(){
+            countOfItems=-1;
+            for(int i=0;i<items.Length;i++){
+                if(items[i] == 'a' || items[i] == 'b' || items[i] == 'c' || items[i] == 'd'){
+                    countOfItems++;
+                }
+            }
+            return countOfItems;
         }
 
         public void Damage(int damage){
