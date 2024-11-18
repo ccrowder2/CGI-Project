@@ -146,9 +146,10 @@ namespace CGI_Project
 
         public string ToFile(){
             string writeItems = "";
+            items = GetItems();
 
             if(items != null){
-            for(int i =0; i<items.Length;i++){
+            for(int i =0;i<GetItems().Length;i++){
                 if(items[i] == 'b'){
                     writeItems += "b";
                 } else if(items[i] == 'd'){
@@ -160,6 +161,7 @@ namespace CGI_Project
                 }
             }
             }
+            System.Console.WriteLine(writeItems);
             return $"{iD}#{email}#{password}#{userName}#{xP}#{level}#{writeItems}";
         }
     }

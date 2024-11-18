@@ -51,12 +51,16 @@ static void Home(Player player) {
 
   while(!end){
     if(player.GetXP() == 0){
-      util.AddItem('b');
       char[] items= player.GetItems();
-      for(int i=0;i<items.Length;i++){
-        System.Console.WriteLine(items[i]);
-      }
+  
       System.Console.WriteLine($"End");
+      util.AddItem('h');
+      items= player.GetItems();
+
+      for(int i=0; i<player.GetItems().Length;i++){
+          System.Console.WriteLine(items[i]);
+      }
+      System.Console.WriteLine("pause");
       
       Console.ReadKey();
       file.SaveExistingPlayer();

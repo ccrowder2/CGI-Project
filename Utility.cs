@@ -198,7 +198,7 @@ namespace CGI_Project {
 
     public void AddItem(char item) {
     if (player == null) {
-        Console.WriteLine("Error: Player is not initialized.");
+        Console.WriteLine("");
         return;
     }
 
@@ -211,12 +211,12 @@ namespace CGI_Project {
         int itemCount = player.GetItemsCount();
 
         // Check if the inventory is full
-        if (itemCount >= MAX_ITEMS) {
+        if (itemCount >= MAX_ITEMS-1) {
             Console.WriteLine("Inventory is full. Cannot add more items.");
             return;
         }
 
-        items[itemCount] = item;
+        items[itemCount+1] = item;
         player.SetItems(items);
     }
 

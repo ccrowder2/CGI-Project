@@ -102,6 +102,13 @@ namespace CGI_Project
 
             // Write Out All Players
             StreamWriter outFile = new StreamWriter("Players.txt");
+            if(player.GetItems() != null){
+            char[] items = player.GetItems();
+            for(int i=0; i<player.GetItemsCount();i++){
+                System.Console.WriteLine(items[i]);
+            }
+            }
+
             
             for(int i=0;i<count;i++){
                 outFile.WriteLine(players[i].ToFile());
@@ -162,7 +169,7 @@ namespace CGI_Project
             return rValue;
         }
 
-        private char[] AddInventory(string email){
+        public char[] AddInventory(string email){
             StreamReader inFile = new StreamReader("Players.txt");
             char[] inventory = new char[MAX_ITEMS];
 
