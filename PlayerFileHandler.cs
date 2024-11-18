@@ -77,44 +77,53 @@ namespace CGI_Project
             }
         }
 
-        public void SaveExistingPlayer(){
-            // Read In All Players
-            StreamReader inFile = new StreamReader("Players.txt");
-            Player[] players = new Player[MAX_PLAYERS];
-            int count = 0;
+        public void SaveExistingPlayer() {
+    // Read all players from the file
+    StreamReader inFile = new StreamReader("Players.txt");
+    Player[] players = new Player[MAX_PLAYERS];
+    int count = 0;
 
-            string line = inFile.ReadLine();
-            while(line != null){
-                Utility util = new Utility(players[count]);
-                string[] temp = line.Split('#');
-                players[count] = new Player(int.Parse(temp[0]), temp[1], temp[2], temp[3], int.Parse(temp[4]), int.Parse(temp[5]));
+    string line = inFile.ReadLine();
+    while (line != null) {
+        string[] temp = line.Split('#');
 
-                string itemList = temp[6];
+        // Create a new Player object from the line data
+        players[count] = new Player(
+            int.Parse(temp[0]), // ID
+            temp[1],            // Email
+            temp[2],            // Password
+            temp[3],            // Username
+            int.Parse(temp[4]), // XP
+            int.Parse(temp[5])  // Level
+        );
 
-                for(int i=0;i<itemList.Length;i++){
-                    util.AddItem(itemList[i]);  
-                }
-                
-                count++;
-                line=inFile.ReadLine();
-            }
-            inFile.Close();
-
-            // Write Out All Players
-            StreamWriter outFile = new StreamWriter("Players.txt");
-            if(player.GetItems() != null){
-            char[] items = player.GetItems();
-            for(int i=0; i<player.GetItemsCount();i++){
-                System.Console.WriteLine(items[i]);
-            }
-            }
-
-            
-            for(int i=0;i<count;i++){
-                outFile.WriteLine(players[i].ToFile());
-            }
-            outFile.Close();
+        // Parse inventory items
+        if (temp.Length > 6 && !string.IsNullOrEmpty(temp[6])) {
+            char[] items = temp[6].ToCharArray();
+            players[count].SetItems(items);
         }
+
+        count++;
+        line = inFile.ReadLine();
+    }
+    inFile.Close();
+
+    // Update the player's data in the array
+    for (int i = 0; i < count; i++) {
+        if (players[i].GetID() == player.GetID()) {
+            players[i] = player; // Replace with the updated player object
+        }
+    }
+
+    // Write all players back to the file
+    StreamWriter outFile = new StreamWriter("Players.txt");
+    for (int i = 0; i < count; i++) {
+        outFile.WriteLine(players[i].ToFile());
+    }
+    outFile.Close();
+}
+
+
 
         public Player FindPlayerByEmail(string email){
             Player player = new Player();
