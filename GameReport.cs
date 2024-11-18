@@ -50,6 +50,7 @@ namespace CGI_Project {
     }
 
     public void Tutorial() {
+      Utility util = new Utility(player);
       Console.Clear();
 
       // Variables
@@ -59,6 +60,7 @@ namespace CGI_Project {
       SetLowerBound(11);
       SetUpperBound(29);
       SetPrev(ConsoleKey.D);
+      util.AddItem('b');
 
       StartingScreen();
       TutorialMap();
@@ -151,21 +153,35 @@ namespace CGI_Project {
       System.Console.WriteLine("\nPress S to move down and W to move up, press ENTER to select\n");
 
       for(int i=0;i<items.Length;i++){
-        if(items[i] == 'a' && itemNav == i){
+        if(items[i] == 'b' && itemNav == i){
           Console.ForegroundColor = ConsoleColor.Green;
-          System.Console.WriteLine("Apple");
+          System.Console.WriteLine("Bonus XP");
           Console.ForegroundColor = ConsoleColor.Gray;
           selected = i;
-        } else if(items[i] == 'b' && itemNav == i){
+        } else if(items[i] == 'd' && itemNav == i){
           Console.ForegroundColor = ConsoleColor.Green;
-          System.Console.WriteLine("Bannana");
+          System.Console.WriteLine("Damage Boost");
           Console.ForegroundColor = ConsoleColor.Gray;
           selected = i;
-        } else if(items[i] == 'a'){
-          System.Console.WriteLine("Apple");
+        } else if(items[i] == 'h' && itemNav == i){
+          Console.ForegroundColor = ConsoleColor.Green;
+          System.Console.WriteLine("Restore Health");
+          Console.ForegroundColor = ConsoleColor.Gray;
+          selected = i;
+        } else if(items[i] == 'i' && itemNav == i){
+          Console.ForegroundColor = ConsoleColor.Green;
+          System.Console.WriteLine("Increase Max Health");
+          Console.ForegroundColor = ConsoleColor.Gray;
+          selected = i;
         } else if(items[i] == 'b'){
-          System.Console.WriteLine("Bannana");
-        }
+          System.Console.WriteLine("Bonus XP");
+        } else if(items[i] == 'd'){
+          System.Console.WriteLine("Damage Boost");
+        } else if(items[i] == 'h'){
+          System.Console.WriteLine("Restore Health");
+        } else if(items[i] == 'i'){
+          System.Console.WriteLine("Increase Max Health");
+        } 
       }
 
         key = Console.ReadKey();

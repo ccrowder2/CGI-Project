@@ -105,7 +105,7 @@ namespace CGI_Project
         }
 
         public char[] GetItems(bool ovrRide = false){
-            // b - bonus XP // d - damange boost // h - restore health // i - increased max health
+            // b - bonus XP // d - damage boost // h - restore health // i - increased max health
             bool empty = true;
             if(items != null){
                 for(int i=0;i<items.Length;i++){

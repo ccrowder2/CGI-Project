@@ -51,19 +51,7 @@ static void Home(Player player) {
 
   while(!end){
     if(player.GetXP() == 0){
-      char[] items= player.GetItems();
-  
-      System.Console.WriteLine($"End");
-      util.AddItem('h');
-      items= player.GetItems();
-
-      for(int i=0; i<player.GetItems().Length;i++){
-          System.Console.WriteLine(items[i]);
-      }
-      System.Console.WriteLine("pause");
-      
-      Console.ReadKey();
-      file.SaveExistingPlayer();
+      game.Tutorial();
     }
     end = true;
   }
