@@ -76,6 +76,7 @@ namespace CGI_Project {
 
       do {
         util.CheckActivatedItems();
+        System.Console.WriteLine(player.GetItemsInUse());
         ConsoleKey newKey = new ConsoleKey();
 
         if(ovrRide == false){
@@ -160,90 +161,100 @@ namespace CGI_Project {
         }
     }
 
-    private void InventoryList(){
-      Utility util = new Utility(player);
-      ConsoleKeyInfo key;
-      bool end = false;
-      char[] items = player.GetItems();
-      int itemNav = 0;
-      int selected = -1;
+    private void InventoryList() {
+    Utility util = new Utility(player);
+    bool end = false;
+    char[] items = player.GetItems();
+    int itemNav = 0; // Tracks the current selection
+    int visibleItemCount = 0; // Tracks the number of valid items displayed
 
-      while(!end){
-      Console.Clear();
-      System.Console.WriteLine("\nPress S to move down and W to move up, press ENTER to select\n");
+    while (!end) {
+        Console.Clear();
+        Console.WriteLine("\nUse W to move up, S to move down, and ENTER to select\n");
 
-      for(int i=0;i<items.Length;i++){
-        if(items[i] == 'b' && itemNav == i){
-          Console.ForegroundColor = ConsoleColor.Green;
-          System.Console.WriteLine("Bonus XP");
-          Console.ForegroundColor = ConsoleColor.Gray;
-          selected = i;
-        } else if(items[i] == 'd' && itemNav == i){
-          Console.ForegroundColor = ConsoleColor.Green;
-          System.Console.WriteLine("Damage Boost");
-          Console.ForegroundColor = ConsoleColor.Gray;
-          selected = i;
-        } else if(items[i] == 'h' && itemNav == i){
-          Console.ForegroundColor = ConsoleColor.Green;
-          System.Console.WriteLine("Restore Health");
-          Console.ForegroundColor = ConsoleColor.Gray;
-          selected = i;
-        } else if(items[i] == 'i' && itemNav == i){
-          Console.ForegroundColor = ConsoleColor.Green;
-          System.Console.WriteLine("Increase Max Health");
-          Console.ForegroundColor = ConsoleColor.Gray;
-          selected = i;
-        } else if(items[i] == 'b'){
-          System.Console.WriteLine("Bonus XP");
-        } else if(items[i] == 'd'){
-          System.Console.WriteLine("Damage Boost");
-        } else if(items[i] == 'h'){
-          System.Console.WriteLine("Restore Health");
-        } else if(items[i] == 'i'){
-          System.Console.WriteLine("Increase Max Health");
-        } 
-      }
-      if(itemNav == player.GetItemsCount()+1){
-        Console.ForegroundColor = ConsoleColor.Green;
-        System.Console.WriteLine("Exit");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        selected = player.GetItemsCount()+1;
-      } else {
-        System.Console.WriteLine("Exit");
-      }
+        visibleItemCount = 0;
 
-        key = Console.ReadKey();
-        SetKey(key.Key);
+        // Display valid items and highlight the current selection
+        for (int i = 0; i < items.Length; i++) {
+            string description = GetItemDescription(items[i]);
+            if (description == null) continue; // Skip unknown items
 
-        if (GetKey() == ConsoleKey.S && itemNav < player.GetItemsCount()+1) {
-          itemNav++;
-        } else if (GetKey() == ConsoleKey.W && itemNav > 0) {
-          itemNav--;
-        } else if(GetKey() == ConsoleKey.Enter && selected == player.GetItemsCount()+1){
-          return;
-        } else if (GetKey() == ConsoleKey.Enter){
-          if(player.GetItemsInUse() != null){
-          string itemsInUse = player.GetItemsInUse();
-          for(int i=0;i<itemsInUse.Length;i++){
-            if(itemsInUse[i] == items[selected]){
-              Console.Clear();
-              System.Console.WriteLine("Item already in use\n\nPress any key to continue:");
-              Console.ReadKey();
-              return;
+            if (itemNav == visibleItemCount) {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(description);
+                Console.ForegroundColor = ConsoleColor.Gray;
+            } else {
+                Console.WriteLine(description);
             }
-          }
-          }
-        
-          for(int i=0;i<items.Length;i++){
-            if(items[selected] == items[i]){
-              util.ActivateItem(items[selected]);
-              end = true;
+            visibleItemCount++;
+        }
+
+        // Highlight "Exit" option
+        if (itemNav == visibleItemCount) {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Exit");
+            Console.ForegroundColor = ConsoleColor.Gray;
+        } else {
+            Console.WriteLine("Exit");
+        }
+
+        // Read input from the player
+        ConsoleKey key = Console.ReadKey().Key;
+
+        // Navigate up and down the list
+        if (key == ConsoleKey.S && itemNav < visibleItemCount) {
+            itemNav++;
+        } else if (key == ConsoleKey.W && itemNav > 0) {
+            itemNav--;
+        } else if (key == ConsoleKey.Enter) {
+            // Exit the inventory if "Exit" is selected
+            if (itemNav == visibleItemCount) {
+                return;
             }
-          }
-        
-      }
+
+            // Get the selected item (recalculate based on valid items)
+            int selectedIndex = -1;
+            visibleItemCount = 0;
+
+            for (int i = 0; i < items.Length; i++) {
+                string description = GetItemDescription(items[i]);
+                if (description == null) continue; // Skip unknown items
+
+                if (visibleItemCount == itemNav) {
+                    selectedIndex = i;
+                    break;
+                }
+                visibleItemCount++;
+            }
+
+            char selectedItem = items[selectedIndex];
+
+            // Check if the item is already in use
+            string itemsInUse = player.GetItemsInUse();
+            bool isInUse = !string.IsNullOrEmpty(itemsInUse) && itemsInUse.Contains(selectedItem);
+
+            if (isInUse) {
+                Console.Clear();
+                Console.WriteLine("Item is already in use.\n\nPress any key to continue...");
+                Console.ReadKey();
+            } else {
+                util.ActivateItem(selectedItem);
+                end = true;
+            }
+        }
     }
-    }
+}
+
+// Helper function to get item descriptions, returns null for unknown items
+private string GetItemDescription(char itemCode) {
+    if (itemCode == 'b') return "Bonus XP";
+    if (itemCode == 'd') return "Damage Boost";
+    if (itemCode == 'h') return "Restore Health";
+    if (itemCode == 'i') return "Increase Max Health";
+    return null; // Unknown item
+}
+
+
 
     private void TutorialIsland() {
       Console.Clear();
