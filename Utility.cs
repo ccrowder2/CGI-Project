@@ -18,7 +18,6 @@ namespace CGI_Project {
       Console.ReadKey();
     }
 
-    // Makes user re enter string if it's an invalid input
     public void StringInvalidInput(ref string userInput, string[] answers) {
 
       bool endLoop = false;
@@ -41,7 +40,6 @@ namespace CGI_Project {
       }
     }
 
-    // Makes user re enter int if it's an invalid input
     public void IntInvalidInput(ref int userInput, int[] answers) {
 
       bool endLoop = false;
