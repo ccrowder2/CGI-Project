@@ -8,6 +8,7 @@ namespace CGI_Project {
     private ConsoleKey key;
     private ConsoleKey prev;
     private ConsoleKey accessInventory;
+    private bool ovrRide = false;
 
     public GameReport() {
 
@@ -49,6 +50,10 @@ namespace CGI_Project {
       return accessInventory;
     }
 
+    private void SwitchOvrRide(){
+      ovrRide = !ovrRide;
+    }
+
     public void Tutorial() {
       Utility util = new Utility(player);
       Console.Clear();
@@ -60,16 +65,24 @@ namespace CGI_Project {
       SetLowerBound(11);
       SetUpperBound(29);
       SetPrev(ConsoleKey.D);
+      player.SetDamage(25);
+      player.SetHealth(100);
+
       util.AddItem('b');
 
       StartingScreen();
       TutorialMap();
 
       do {
-        TutorialMap();
-        key = Console.ReadKey();
-        SetKey(key.Key);
+        util.CheckActivatedItems();
+        ConsoleKey newKey = new ConsoleKey();
 
+        if(ovrRide == false){
+        
+        newKey = Console.ReadKey().Key;
+        SetKey(newKey);
+        
+        
         if (GetKey() == ConsoleKey.D && player.GetPos() < upperBound) {
           player.IncPos();
         } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
@@ -77,10 +90,13 @@ namespace CGI_Project {
         } else if (GetKey() == ConsoleKey.X) {
           end = true;
         }
+        } else {
+          SwitchOvrRide();
+        }
 
         TutorialMap();
 
-        SetAccessInventory(key.Key);
+        SetAccessInventory(newKey);
 
       } while (!end);
     }
@@ -114,8 +130,10 @@ namespace CGI_Project {
           }
 
           SetLowerBound(player.GetPos());
+          SwitchOvrRide();
         } else {
           player.SetPos(lowerBound);
+          SwitchOvrRide();
         }
       } else {
         Inventory();
@@ -124,6 +142,7 @@ namespace CGI_Project {
 
     private void Inventory(){
       if(key == ConsoleKey.Enter && accessInventory == ConsoleKey.S){
+          SwitchOvrRide();
           if(player.GetItems() != null){
             InventoryList();
           } else {

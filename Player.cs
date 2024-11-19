@@ -15,6 +15,7 @@ namespace CGI_Project
         private char[] items;
         private string itemsInUse;
         private int countOfItems;
+        private int damage;
 
         public Player(){
 
@@ -96,7 +97,7 @@ namespace CGI_Project
             return health;
         }
 
-        public void SetHeath(int health){
+        public void SetHealth(int health){
             this.health = health;
         }
 
@@ -132,8 +133,12 @@ namespace CGI_Project
             return countOfItems;
         }
 
-        public void Damage(int damage){
-            health -= damage;
+        public void SetDamage(int damage){
+            this.damage = damage;
+        }
+
+        public int GetDamage(){
+            return damage;
         }
 
         public string GetItemsInUse(){

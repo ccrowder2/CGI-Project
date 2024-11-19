@@ -281,5 +281,21 @@ namespace CGI_Project {
         player.SetItems(items);
       }
     }
+
+    public void CheckActivatedItems(){
+      if(player.GetItemsInUse() != null){
+      string items = player.GetItemsInUse();
+      
+      for(int i=0;i<items.Length;i++){
+        if(items[i] == 'd'){
+          player.SetDamage(50);
+        } else if(items[i] == 'h'){
+           player.SetHealth(100);
+          } else if(items[i] == 'i'){
+            player.SetHealth(150);
+         }
+        }
+      }
+    }
   }
 }
