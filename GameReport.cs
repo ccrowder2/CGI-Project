@@ -69,6 +69,7 @@ namespace CGI_Project {
       player.SetHealth(100);
 
       util.AddItem('b');
+      util.AddItem('b');
 
       StartingScreen();
       TutorialMap();
@@ -202,23 +203,46 @@ namespace CGI_Project {
           System.Console.WriteLine("Increase Max Health");
         } 
       }
+      if(itemNav == player.GetItemsCount()+1){
+        Console.ForegroundColor = ConsoleColor.Green;
+        System.Console.WriteLine("Exit");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        selected = player.GetItemsCount()+1;
+      } else {
+        System.Console.WriteLine("Exit");
+      }
 
         key = Console.ReadKey();
         SetKey(key.Key);
 
-        if (GetKey() == ConsoleKey.S && itemNav < player.GetItemsCount()) {
+        if (GetKey() == ConsoleKey.S && itemNav < player.GetItemsCount()+1) {
           itemNav++;
         } else if (GetKey() == ConsoleKey.W && itemNav > 0) {
           itemNav--;
+        } else if(GetKey() == ConsoleKey.Enter && selected == player.GetItemsCount()+1){
+          return;
         } else if (GetKey() == ConsoleKey.Enter){
+          if(player.GetItemsInUse() != null){
+          string itemsInUse = player.GetItemsInUse();
+          for(int i=0;i<itemsInUse.Length;i++){
+            if(itemsInUse[i] == items[selected]){
+              Console.Clear();
+              System.Console.WriteLine("Item already in use\n\nPress any key to continue:");
+              Console.ReadKey();
+              return;
+            }
+          }
+          }
+        
           for(int i=0;i<items.Length;i++){
             if(items[selected] == items[i]){
               util.ActivateItem(items[selected]);
               end = true;
             }
           }
-        }
+        
       }
+    }
     }
 
     private void TutorialIsland() {
