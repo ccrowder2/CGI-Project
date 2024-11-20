@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
 namespace CGI_Project {
@@ -9,12 +11,13 @@ namespace CGI_Project {
     private ConsoleKey prev;
     private ConsoleKey accessInventory;
     private int enemy;
-    private int enemyHealth = 50;
     private int boss;
+    private int enemyHealth = 50;
     private int num;
     private bool newNum = false;
     private bool ovrRide = false;
     private int[][] currentIslands;
+    private string[] printedEnemy;
 
     public GameReport() {
 
@@ -75,6 +78,10 @@ namespace CGI_Project {
       this.currentIslands = currentIslands;
     }
 
+    private void SetPrintedEnemy(string[] printedEnemy){
+      this.printedEnemy = printedEnemy;
+    }
+
     private void SetRandomNum(int start, int stop){
       Random rnd = new Random();
       int num = rnd.Next(start+6,stop-6);
@@ -101,10 +108,10 @@ namespace CGI_Project {
       util.ResetItems();
       this.enemy = 0;
 
+      string[] newPrintedEnemy = new string[]{"",""};
+      SetPrintedEnemy(newPrintedEnemy);
+
       util.AddItem('b');
-      util.AddItem('d');
-      util.AddItem('h');
-      util.AddItem('i');
 
       StartingScreen();
       TutorialMap();
@@ -122,7 +129,7 @@ namespace CGI_Project {
             player.IncPos();
           } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
             player.DecPos();
-          } else if (player.GetPos() == currentIslands[3][1]-1) {
+          } else if (player.GetPos() >= currentIslands[3][1]-1) {
             Console.Clear();
             System.Console.WriteLine("\n\n Congradulations, you passed the tutorial! You will now be sent to your home base.\n\nPress any key to continue");
             Console.ReadKey();
@@ -177,7 +184,7 @@ namespace CGI_Project {
           player.SetPos(lowerBound);
           SwitchOvrRide();
         }
-      } else if(player.GetPos() == currentIslands[3][3]-1 && enemyHealth > 0){
+      } else if(player.GetPos() >= currentIslands[3][3]-3 &&  player.GetPos() <= currentIslands[3][3]-1 && enemyHealth > 0){
           System.Console.WriteLine("\n Question");
           answer = Console.ReadLine().ToLower();
 
@@ -391,14 +398,15 @@ namespace CGI_Project {
         if(newNum == true && enemy == true){
           SetRandomNum(start, stop);
           SetEnemy(num);
+          PrintedEnemy();
           newNum = !newNum;
         }
 
         if(i == height - 1 && j == num && player.GetPos() > start && player.GetPos() < stop && enemy == true){
-          System.Console.Write(" $ ");
+          System.Console.Write(printedEnemy[1]);
           used = true;
         } else if(i == height - 2 && j == num && player.GetPos() > start && player.GetPos() < stop && enemy == true){
-          System.Console.Write(" i ");
+          System.Console.Write(printedEnemy[0]);
           used = true;
         }
       }
@@ -428,6 +436,35 @@ namespace CGI_Project {
         return "\n\nYou will encounter enemys, get the answers correct to deal damage to them";
       }
       return "";
+    }
+
+    private void PrintedEnemy(){
+      // 0 - Head 1 - Body
+      Random rnd1 = new Random();
+      int number = rnd1.Next(0,5);
+
+      switch(number){
+        case 0:
+          printedEnemy[0] = "-_-";
+          printedEnemy[1] = " I ";
+          break;
+        case 1:
+          printedEnemy[0] = "^o^";
+          printedEnemy[1] = "( )";
+          break;
+        case 2:
+          printedEnemy[0] = ":-:";
+          printedEnemy[1] = "|||";
+          break;
+        case 3:
+          printedEnemy[0] = ".o.";
+          printedEnemy[1] = " | ";
+          break;
+        case 4:
+          printedEnemy[0] = "-|-";
+          printedEnemy[1] = "|||";
+          break;       
+      }
     }
   }
 }
