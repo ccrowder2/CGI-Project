@@ -298,6 +298,28 @@ namespace CGI_Project {
       }
     }
 
+    public void PrintActivatedItems(){
+      if(!string.IsNullOrEmpty(player.GetItemsInUse())){
+        string items = player.GetItemsInUse();
+
+        for(int i=0;i<items.Length;i++){
+          if(items[i] == 'd'){
+          System.Console.Write("Damage Boost");
+          } else if(items[i] == 'i'){
+          System.Console.Write("Increased Max Health");
+         } else if(items[i] == 'b'){
+          System.Console.Write("Bonus XP");
+         }
+
+         if(i != items.Length-1 && items[i] != 'h'){
+          System.Console.Write(", ");
+         }
+        }
+      } else {
+        System.Console.Write("No active items");
+      }
+    }
+
     public void ResetItems(){
       player.SetDamage(25);
       player.SetHealth(100);

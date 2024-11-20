@@ -102,6 +102,9 @@ namespace CGI_Project {
       this.enemy = 0;
 
       util.AddItem('b');
+      util.AddItem('d');
+      util.AddItem('h');
+      util.AddItem('i');
 
       StartingScreen();
       TutorialMap();
@@ -124,7 +127,7 @@ namespace CGI_Project {
             System.Console.WriteLine("\n\n Congradulations, you passed the tutorial! You will now be sent to your home base.\n\nPress any key to continue");
             Console.ReadKey();
             player.SetXP(player.GetXpToEarn());
-            file.SaveExistingPlayer();
+            //file.SaveExistingPlayer();
             end = true;
           }
         } else {
@@ -140,6 +143,7 @@ namespace CGI_Project {
 
     private void TutorialMap() {
       Console.Clear();
+      Utility util = new Utility(player);
 
       // Variables
       string answer = "";
@@ -173,25 +177,24 @@ namespace CGI_Project {
           player.SetPos(lowerBound);
           SwitchOvrRide();
         }
-      } else if(player.GetPos() == currentIslands[3][3]-1 || player.GetPos() == currentIslands[3][3]-2 && enemyHealth > 0){
+      } else if(player.GetPos() == currentIslands[3][3]-1 && enemyHealth > 0){
           System.Console.WriteLine("\n Question");
           answer = Console.ReadLine().ToLower();
 
           if(answer == "correct"){
-            SetEnemyHealth(enemyHealth-25);
+            SetEnemyHealth(enemyHealth-player.GetDamage());
             SwitchOvrRide();
           } else {
             player.SetPos(currentIslands[3][0]+1);
             SwitchOvrRide();
           }
-
-        if(player.GetHealth() <= 0){
-          return;
-        }
       } else {
         Inventory();
         System.Console.WriteLine($"Health: {player.GetHealth()}");
         System.Console.WriteLine($"Damage: {player.GetDamage()}");
+        System.Console.Write($"Activated Items: ");
+        util.PrintActivatedItems();
+        System.Console.WriteLine();
       }
     }
 
@@ -315,7 +318,7 @@ namespace CGI_Project {
       int[] island1 = {10,30,15,-1};
       int[] island2 = {40,75,10,-1};
       int[] island3 = {80,100,17,-1};
-      int[] island4 = {110,160,30,enemy};
+      int[] island4 = {110,145,30,enemy};
 
       int[][] allIslands = new int[][]{island1, island2, island3, island4};
 
@@ -323,8 +326,8 @@ namespace CGI_Project {
       
       System.Console.WriteLine(Prompt());
 
-      for (int i = 0; i < 57; i++) {
-        for (int j = 0; j < 198; j++) {
+      for (int i = 0; i < 54; i++) {
+        for (int j = 0; j < 147; j++) {
           Island(island1[0], island1[1], island1[2], i, j, ref used);
           Island(island2[0], island2[1], island2[2], i, j, ref used);
           Island(island3[0], island3[1], island3[2], i, j, ref used);
