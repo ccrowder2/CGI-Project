@@ -291,9 +291,18 @@ namespace CGI_Project {
            player.SetHealth(100);
           } else if(items[i] == 'i'){
             player.SetHealth(150);
+         } else if(items[i] == 'b'){
+          player.SetXpToEarn(150);
          }
         }
       }
+    }
+
+    public void ResetItems(){
+      player.SetDamage(25);
+      player.SetHealth(100);
+      player.SetXpToEarn(100);
+      player.SetItemsInUse("");
     }
   }
 }

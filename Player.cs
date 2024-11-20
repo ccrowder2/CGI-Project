@@ -16,6 +16,7 @@ namespace CGI_Project
         private string itemsInUse;
         private int countOfItems;
         private int damage;
+        private int xpToEarn;
 
         public Player(){
 
@@ -147,6 +148,14 @@ namespace CGI_Project
 
         public void SetItemsInUse(string itemsInUse){
             this.itemsInUse = itemsInUse;
+        }
+
+        public void SetXpToEarn(int xpToEarn){
+            this.xpToEarn = xpToEarn;
+        }
+
+        public int GetXpToEarn(){
+            return xpToEarn;
         }
 
         public string ToFile(){

@@ -77,10 +77,10 @@ namespace CGI_Project {
 
     private void SetRandomNum(int start, int stop){
       Random rnd = new Random();
-      int num = rnd.Next(start+3,stop-3);
+      int num = rnd.Next(start+6,stop-6);
 
-      while(num%2!=0){
-        num = rnd.Next(start+3,stop-3);
+      while(num%3==0){
+        num = rnd.Next(start+6,stop-6);
       }
 
       this.num = num;
@@ -88,6 +88,7 @@ namespace CGI_Project {
 
     public void Tutorial() {
       Utility util = new Utility(player);
+      PlayerFileHandler file = new PlayerFileHandler(player);
       Console.Clear();
 
       // Variables
@@ -97,8 +98,7 @@ namespace CGI_Project {
       SetLowerBound(11);
       SetUpperBound(29);
       SetPrev(ConsoleKey.D);
-      player.SetDamage(25);
-      player.SetHealth(100);
+      util.ResetItems();
       this.enemy = 0;
 
       util.AddItem('b');
@@ -119,7 +119,12 @@ namespace CGI_Project {
             player.IncPos();
           } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
             player.DecPos();
-          } else if (GetKey() == ConsoleKey.X) {
+          } else if (player.GetPos() == currentIslands[3][1]-1) {
+            Console.Clear();
+            System.Console.WriteLine("\n\n Congradulations, you passed the tutorial! You will now be sent to your home base.\n\nPress any key to continue");
+            Console.ReadKey();
+            player.SetXP(player.GetXpToEarn());
+            file.SaveExistingPlayer();
             end = true;
           }
         } else {
@@ -168,17 +173,17 @@ namespace CGI_Project {
           player.SetPos(lowerBound);
           SwitchOvrRide();
         }
-      } else if(player.GetPos() == currentIslands[3][3]-1 || player.GetPos() == currentIslands[3][3]-2){
-        while(player.GetHealth() > 0 && enemyHealth > 0){
+      } else if(player.GetPos() == currentIslands[3][3]-1 || player.GetPos() == currentIslands[3][3]-2 && enemyHealth > 0){
           System.Console.WriteLine("\n Question");
           answer = Console.ReadLine().ToLower();
 
           if(answer == "correct"){
             SetEnemyHealth(enemyHealth-25);
+            SwitchOvrRide();
           } else {
-            player.SetHealth(player.GetHealth()-25);
+            player.SetPos(currentIslands[3][0]+1);
+            SwitchOvrRide();
           }
-        }
 
         if(player.GetHealth() <= 0){
           return;
@@ -186,6 +191,7 @@ namespace CGI_Project {
       } else {
         Inventory();
         System.Console.WriteLine($"Health: {player.GetHealth()}");
+        System.Console.WriteLine($"Damage: {player.GetDamage()}");
       }
     }
 

@@ -53,6 +53,9 @@ static void Home(Player player) {
     if(player.GetXP() == 0){
       game.Tutorial();
     }
+    Console.Clear();
+    System.Console.WriteLine("This is the home base:");
+    Console.ReadKey();
     end = true;
   }
 }
