@@ -159,10 +159,7 @@ namespace CGI_Project {
 
 
       if (player.GetPos() == currentIslands[0][1]-1 || player.GetPos() == currentIslands[1][1]-1 || player.GetPos() == currentIslands[2][1]-1) {
-        System.Console.WriteLine("\nQuestion");
-        answer = Console.ReadLine().ToLower();
-
-        if (answer == "correct") {
+        if (Question("easy") == true) {
           if(player.GetPos() == currentIslands[0][1]-1){
             player.SetPos(currentIslands[1][0]+1);
             SetUpperBound(currentIslands[1][1]-1);
@@ -184,11 +181,8 @@ namespace CGI_Project {
           player.SetPos(lowerBound);
           SwitchOvrRide();
         }
-      } else if(player.GetPos() >= currentIslands[3][3]-3 &&  player.GetPos() <= currentIslands[3][3]-1 && enemyHealth > 0){
-          System.Console.WriteLine("\n Question");
-          answer = Console.ReadLine().ToLower();
-
-          if(answer == "correct"){
+      } else if(player.GetPos() >= currentIslands[3][3]-3 &&  player.GetPos() <= currentIslands[3][3]-1 && enemyHealth > 0){       
+          if(Question("medium") == true){
             SetEnemyHealth(enemyHealth-player.GetDamage());
             SwitchOvrRide();
           } else {
@@ -467,19 +461,59 @@ namespace CGI_Project {
       }
     }
 
-    private bool Question(string difficulty){
-      FileHandler file = new FileHandler(player);
+    private bool Question(string difficulty) {
+    PlayerFileHandler file = new PlayerFileHandler(player);
 
-      string[] question = file.Question(difficulty);
+    // Retrieve the question and options
+    string[] questionData = file.Question(difficulty);
+    string question = questionData[0];
+    string answer = questionData[1];
+    string option1 = questionData[2];
+    string option2 = questionData[3];
+    string option3 = questionData[4];
+    string option4 = questionData[5];
 
-      string question = question[0];
-      string answer = question[1];
-      string option1 = question[2];
-      string option2 = question[3];
-      string option3 = question[4];
-      string option4 = question[5];
+    string[] options = { option1, option2, option3, option4 };
+    int currentSelection = 0; // Tracks the current highlighted option
 
-
+    // Display the initial question and options
+    Console.WriteLine(question);
+    for (int i = 0; i < options.Length; i++) {
+        if (i == currentSelection) {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(options[i]);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        } else {
+            Console.WriteLine(options[i]);
+        }
     }
+
+    while (true) {
+        ConsoleKey key = Console.ReadKey(true).Key;
+
+        // Update navigation and redisplay options
+        if (key == ConsoleKey.S && currentSelection < options.Length - 1) {
+            currentSelection++;
+        } else if (key == ConsoleKey.W && currentSelection > 0) {
+            currentSelection--;
+        } else if (key == ConsoleKey.Enter) {
+            // Check if the selected option is correct
+            return options[currentSelection].Equals(answer, StringComparison.OrdinalIgnoreCase);
+        }
+
+        // Overwrite the options in place
+        Console.SetCursorPosition(0, Console.CursorTop - options.Length);
+        for (int i = 0; i < options.Length; i++) {
+            if (i == currentSelection) {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(options[i].PadRight(Console.WindowWidth - 1));
+                Console.ForegroundColor = ConsoleColor.Gray;
+            } else {
+                Console.WriteLine(options[i].PadRight(Console.WindowWidth - 1));
+            }
+        }
+    }
+}
+
   }
 }
