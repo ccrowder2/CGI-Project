@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CGI-Project")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+77a4b4211fb4794a584af3f6826e312502c65d2a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e07844ae2353b6c2b845dd6b54e42a4c9b4946c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("CGI-Project")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CGI-Project")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

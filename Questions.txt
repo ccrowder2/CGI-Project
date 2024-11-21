@@ -1,4 +1,108 @@
-difficulty#Question#Does the answer need to be exact#answer
-easy#Please write the code that would output the word "hello" excluding quotations#yes#Console.ReadLine("hello");
-easy#A process or set of rules to be followed in calculations or other problem-solving operations, especially by a computer#no#Algorythm
-easy#
+Easy#What is the object-oriented way to become wealthy?#Inheritance#Inheritance#Polymorphism#Encapsulation#Abstraction
+Easy#What is the purpose of a UML Diagram?#To provide a standard way of visualizing the design of your classes#To provide a standard way of visualizing the design of your classes#To demonstrate how you plan to deploy your application#Both A and C#Neither A nor C
+Easy#A class’s responsibilities does not include?#These are all the responsibilities of a class#Storing pieces of data that describe itself#Providing the blueprint for the creation of objects#Performing operations through the use of methods#These are all the responsibilities of a class
+Easy#How many elements are stored in this array? int[] numbers = new int[34];#34#33#34#35#Not enough information
+Easy#How many parameters does a default constructor have?#0#2#1#0#The number of instance variables declared in the class
+Easy#In the cookie-cutter metaphor, you can think of the _______ as a cookie cutter and _______ as the cookies.#Class; objects#Class; fields#Object; classes#Class; objects#Class; methods
+Easy#The accessor methods are sometimes called ___________.#Getters#getters#specifiers#setters#classes
+Easy#The word “public” that appears before a field declaration, in a class definition, is known as a(n) _______.#Access specifier#Access specifier#Accessor method#Class specifier#None of the above
+Easy#What do we use to separate the data within our files?#Delimiter#Partition#Doorway#Delimiter#Controller
+Easy#What is the subscript for the data value “Toyota” in the array string[] makes = {“Honda”, “Ford”, “Toyota”, “Nissan”, “Volvo”};?#2#1#2#3#You cannot use a subscript here
+Easy#What is the data type of each individual element in the array string[] books = new string[100];?#String#String#Books#Book#Int[]
+Easy#Which of the following best defines a class?#Blueprint for an object#Blueprint for an object#Scope of an object#Parent of an object#Instance of an object
+Easy#Mutator methods are commonly called _________.#Setters#Getters#Setters#Public#Private
+Easy#Which of the following best describes an object?#An instance of a class#A blueprint for a class#A method#A static field#An instance of a class
+Easy#Which of these is NOT a valid data type in C#?#Character#String#Float#Class#Character
+Easy#What does “Encapsulation” primarily help with?#Data hiding#Data hiding#Code duplication#Performance optimization#Object creation
+Easy#Which keyword is used to declare a constant value in C#?#const#static#readonly#const#fixed
+Easy#What does the keyword 'new' do in C#?#Creates an instance of a class#Deletes a class instance#Creates an instance of a class#Defines a method#Declares a variable
+Easy#What is the default value of an uninitialized integer in C#?#0#null#0#undefined#1
+Easy#Which of the following is NOT a feature of object-oriented programming?#Recursion#Encapsulation#Polymorphism#Abstraction#Recursion
+Easy#What does the keyword 'void' mean in C#?#The method does not return a value#The method does not return a value#The method must return a string#The method is empty#The method does not accept arguments
+Easy#What symbol is used to access members of an object?#Dot (.)#Dot (.)#Colon (: )#Arrow (->)#Semicolon (;)
+Easy#Which data type is used to store true/false values?#bool#int#bool#char#string
+Easy#What is the correct syntax to declare an array of 10 integers in C#?#int[] arr = new int[10];#int arr[10];#int arr = [10];#array<int> arr(10);#int[] arr = new int[10];
+Easy#What is the entry point for a C# console application?#Main method#Start method#Main method#Entry method#Run method
+Easy#What is a loop that never ends called?#Infinite loop#For loop#While loop#Infinite loop#Do-while loop
+Easy#Which operator is used to compare two values in C#?#==#=#==#!=#===
+Easy#Which of these is NOT a valid access modifier in C#?#protected internal#sealed#protected internal#private#public
+Easy#What type of value does a method with a return type 'double' return?#A decimal number#An integer#A string#A boolean#A decimal number
+Easy#Which exception is thrown when dividing by zero in C#?#DivideByZeroException#ArithmeticException#NullReferenceException#DivideByZeroException#IndexOutOfRangeException
+Easy#What is the purpose of the `this` keyword?#To refer to the current instance of the class#To refer to the current instance of the class#To declare a static field#To access private fields in another class#To define a constructor
+Easy#What is the purpose of the `using` directive in C#?#To include namespaces in your program#To include namespaces in your program#To define a namespace#To initialize variables#To handle exceptions
+Easy#Which symbol is used for comments in C#?#//#//#/*#<!--#@@
+Easy#What does `Console.WriteLine()` do in C#?#Prints a line of text to the console#Prints a line of text to the console#Reads input from the console#Writes a value to a file#Displays an error message
+Easy#What is the size of an `int` in C#?#4 bytes#2 bytes#4 bytes#8 bytes#16 bytes
+Easy#Which of the following is a reference type?#string#int#bool#string#char
+Easy#What does the `+=` operator do in C#?#Adds a value to a variable and assigns the result#Increments the variable by 1#Adds a value to a variable and assigns the result#Multiplies the variable by 2#Subtracts a value from the variable
+Easy#What is the purpose of the `return` statement in a method?#To send a value back to the calling code#To exit the program#To send a value back to the calling code#To declare a new variable#To continue the loop
+Easy#What is the output of the following code? Console.WriteLine(3 + 5);#8#3#5#8#35
+Easy#Which of the following loops will run at least once?#do-while#do-while#for#while#foreach
+Easy#What is the syntax to declare a constant in C#?#const int x = 10;#readonly int x = 10;#int x = const 10;#int const x = 10;#const int x = 10;
+Easy#What is the default value of a boolean in C#?#false#null#true#undefined#false
+Easy#Which operator is used to perform logical AND in C#?#&&#&&#||#==#!=
+Easy#What is the purpose of a constructor in a class?#To initialize an object#To destroy an object#To create a method#To initialize an object#To call another class
+Easy#Which data structure uses a LIFO (Last In, First Out) principle?#Stack#Queue#Stack#LinkedList#Array
+Easy#Which of the following keywords is used to define a method?#void#void#public#static#int
+Medium#Which of the following is NOT true about constructors?#They can have a different name than the class they are in#They do not have a return type#They can have a different name than the class they are in#If no constructor is explicitly defined, the class comes with one by default#It is needed to instantiate a new instance of a class
+Medium#What term is used to describe the method responsible for creating an object?#Constructor#Access specifier#Instance#Member#Constructor
+Medium#Why is a binary search often a more effective way of searching?#Its ability to eliminate large portions of the data as not having the desired value#The values of the array must be numeric#It uses machine code to perform the search (0s and 1s)#Its ability to eliminate large portions of the data as not having the desired value#A binary search is never a more effective way of searching
+Medium#What does it mean when a field or method has the keyword static?#It does not belong to an instance of a class, but to the class as a whole#The class has multiple fields with the same name#It does not belong to an instance of a class, but to the class as a whole#The field or method is default for the class#It can also serve as a constructor
+Medium#The starting point for finding the needed classes for a project is to identify all of the _______ in the problem statement / requirements.#Nouns#Stakeholders#Adjectives#Nouns#None of the above
+Medium#What is it called when two or more methods in a class may have the same name?#Overloaded Method#Access Modifier#Overloaded Method#Method Header#Multi-Parameter Programming
+Medium#We access an individual element in an array by using the ______________.#Subscript#Subscript#Bubble sort#Getter#Specifier
+Medium#Why might we declare a field as static?#Both A and B#It is information that describes the class as a whole#We only want one copy of the field in memory for the entire class#Both A and B#Neither A nor B
+Medium#Which searching algorithm requires the array to be sorted?#Binary#Sequential#Linear#Parallel#Binary
+Medium#Which type of data file access starts from the beginning and proceeds sequentially to the end?#Sequential access#Sequential access#Direct access#Output access#Input access
+Medium#___________ is a standard way of drawing diagrams that describe object-oriented systems.#UML#Data flow diagrams#UML#Flowchart#IPO
+Medium#Which keyword in C# is used to inherit from a base class?#: (colon)#:#=> (arrow)=>#base#inherits
+Medium#What is the default access modifier for a class in C#?#internal#private#public#internal#protected
+Medium#Which method is used to read a single line of input from the console in C#?#Console.ReadLine()#Console.Read()#Console.ReadLine()#Console.ReadKey()#Console.ReadChar()
+Medium#What is the difference between an abstract class and an interface?#An abstract class can have implementations, while an interface cannot#Both can have method implementations#An abstract class cannot have fields, while an interface can#An abstract class can have implementations, while an interface cannot#An interface can have constructors
+Medium#What does 'override' do in C#?#Allows a derived class to provide a specific implementation of a method in the base class#Creates a new method in the derived class#Allows a derived class to provide a specific implementation of a method in the base class#Replaces the base class entirely#Defines a static method
+Medium#What is boxing in C#?#Converting a value type to an object type#Storing multiple objects in a container#Converting a value type to an object type#Creating a new reference to an object#Defining a structure
+Medium#Which keyword is used to prevent a class from being inherited?#sealed#abstract#virtual#sealed#override
+Medium#How can we ensure a class in C# has only one instance?#Using the Singleton pattern#Using a static constructor#Using the Singleton pattern#Declaring all methods as private#Using a sealed class
+Medium#What is the purpose of the 'finally' block in a try-catch statement?#To execute code after the try and catch blocks, regardless of whether an exception occurred#To execute only when an exception occurs#To execute code after the try and catch blocks, regardless of whether an exception occurred#To catch multiple exceptions#To rethrow the caught exception
+Medium#Which loop guarantees at least one iteration?#do-while#do-while#for#while#foreach
+Medium#What is a method signature in C#?#The method name and its parameter types#The return type of a method#The method name and its parameter types#The access modifier of a method#The body of the method
+Medium#Which collection allows unique elements only?#HashSet#List#HashSet#ArrayList#Dictionary
+Medium#What does the 'readonly' keyword ensure?#The field can only be assigned during initialization or in the constructor#The field can only be modified during runtime#The field can only be assigned during initialization or in the constructor#The field cannot be modified#The field must be static
+Medium#What is the difference between a List and an Array in C#?#A List can grow dynamically, while an Array has a fixed size#A List has a fixed size, while an Array can grow dynamically#A List supports LINQ, while an Array does not#A List can grow dynamically, while an Array has a fixed size#An Array is always sorted
+Medium#What does the 'params' keyword do in C#?#Allows a method to accept a variable number of arguments#Prevents a method from being overridden#Allows a method to accept a variable number of arguments#Declares a method as static#Indicates a reference type
+Medium#What is the purpose of the `is` operator in C#?#To check if an object is of a specific type#To check if an object is of a specific type#To cast an object to another type#To compare two values#To check for null
+Medium#What is a nullable type in C#?#A value type that can also store null#A value type that can also store null#A reference type that prevents null assignment#A method parameter that must be initialized#A type that does not have a default value
+Medium#What does the `foreach` loop do in C#?#Iterates through each element in a collection#Iterates through each element in a collection#Repeats a block of code while a condition is true#Executes code based on a condition#Removes items from a list
+Medium#What is the purpose of the `abstract` keyword?#To define a method or class that must be implemented in a derived class#To define a method or class that must be implemented in a derived class#To declare a method as static#To make a class non-instantiable#To prevent inheritance
+Medium#What is the difference between `break` and `continue` in C#?#`break` exits a loop, while `continue` skips the current iteration#`break` skips the current iteration, while `continue` exits a loop#Both stop the loop immediately#Both restart the loop#`break` exits a loop, while `continue` skips the current iteration
+Medium#Which of the following is true about exception handling?#Finally block always executes, regardless of whether an exception occurred#Catch block must always be used#Finally block always executes, regardless of whether an exception occurred#Throwing exceptions is not allowed in C# programs#Only runtime errors can be caught
+Medium#What is the difference between `protected` and `internal` access modifiers?#Protected is accessible by derived classes, internal is accessible within the same assembly#Protected is accessible by derived classes, internal is accessible within the same assembly#Protected is more restrictive than internal#Internal is accessible only in private methods#Protected is accessible everywhere
+Medium#What does the `base()` call in a constructor do?#Calls the constructor of the base class#Calls the constructor of the base class#Calls another method in the same class#Defines a new base class#Overrides a method
+Medium#What is the advantage of using properties over fields in C#?#They allow controlled access to data#They are faster than fields#They allow controlled access to data#They occupy less memory#They are always static
+Hard#What does the following UML diagram entry mean? +IsPrimeNumber(x: int): bool#This is a public method named IsPrimeNumber with one parameter of data type int and returns a value of type bool#This is a public method named IsPrimeNumber with two parameters of data type int and bool. This method returns nothing.#This is a public method named IsPrimeNumber with one parameter of data type int and returns a value of type bool#This is a private method named IsPrimeNumber with one parameter of data type int and returns a value of type bool#This is a private method named IsPrimeNumber with two parameters of data type int and bool. This method returns nothing.
+Hard#Which sort algorithm finds a value to the right of the current element, for the min/max value, and swaps it?#Selection Sort#Ascending Sort#Bubble Sort#Selection Sort#Merge Sort
+Hard#Why is polymorphism important in object-oriented programming?#It allows objects to be treated as instances of their parent class#It allows objects to be treated as instances of their parent class#It allows for code optimization#It is required for method overloading#It simplifies inheritance
+Hard#What is the purpose of a virtual method in C#?#To allow derived classes to override it#To allow derived classes to override it#To create abstract methods#To define private methods#To prevent inheritance
+Hard#How does method overriding differ from method overloading?#Overriding changes behavior in derived classes, while overloading defines multiple methods in the same class#Overriding changes behavior in derived classes, while overloading defines multiple methods in the same class#Overloading is required for encapsulation#Overriding applies only to static methods#Overloading applies only to abstract classes
+Hard#What does the `readonly` keyword do in C#?#Allows the field to be assigned only during declaration or in a constructor#Allows the field to be assigned only during declaration or in a constructor#Prevents the field from being modified anywhere#Locks the field during runtime#Sets the field as static
+Hard#What is the output of the following code? int[] x = {5, 3, 9}; Process(x); public void Process(int[] a) { a[1] += a[0]; }#8#5#8#9#Error
+Hard#What happens if a derived class does not implement an abstract method from its base class?#A compile-time error occurs#A compile-time error occurs#The method is ignored#The method is automatically inherited#The method is treated as virtual
+Hard#What is covariance in C#?#Ability to assign a derived type to a base type#Ability to assign a derived type to a base type#Ability to compare two incompatible types#Assigning base types to derived types#Returning multiple values from a method
+Hard#What is the difference between ref and out parameters in C#?#ref parameters must be initialized before use, out parameters must be assigned inside the method#ref parameters must be initialized before use, out parameters must be assigned inside the method#Both must be initialized before use#ref parameters cannot be changed#out parameters must always be null
+Hard#What is the difference between IEnumerable and IEnumerator?#IEnumerable allows iteration over a collection, IEnumerator controls the iteration process#IEnumerable allows iteration over a collection, IEnumerator controls the iteration process#IEnumerator can store multiple collections#IEnumerable is faster#IEnumerator is only used with arrays
+Hard#What is the purpose of the 'yield' keyword?#To create an iterator method that returns elements one at a time#To create an iterator method that returns elements one at a time#To end a method early#To throw an exception#To pass control to another method
+Hard#What is the significance of the `base` keyword in C#?#It is used to call a method or constructor from a base class#It is used to create a derived class#It is used to call a method or constructor from a base class#It declares a new method in the base class#It is used to override a virtual method
+Hard#What does LINQ stand for?#Language-Integrated Query#Language-Integrated Query#List Integration Query#Logical Interface Query#Language Interface Query
+Hard#What happens if a class has both a finalizer and implements IDisposable?#The finalizer will still be called unless suppressed#The finalizer is ignored#The Dispose method is called automatically#The finalizer will still be called unless suppressed#The program throws an exception
+Hard#What is the difference between 'throw' and 'throw ex'?#'throw' preserves the original stack trace, while 'throw ex' resets it#'throw' preserves the original stack trace, while 'throw ex' resets it#Both behave identically#'throw' is only used in catch blocks#'throw ex' is faster
+Hard#How can deferred execution be achieved in C#?#Using LINQ queries#Using LINQ queries#Using async methods#Using parallel processing#Using sealed classes
+Hard#What is the output of the following code? int[] arr = {1, 2, 3}; Console.WriteLine(arr[3]);#IndexOutOfRangeException#1#3#Compile error#IndexOutOfRangeException
+Hard#What is the purpose of the `volatile` keyword in C#?#To indicate that a field can be modified by multiple threads#To indicate that a field can be modified by multiple threads#To define a constant field#To prevent a field from being accessed outside the class#To optimize memory usage
+Hard#What is an extension method in C#?#A static method that adds functionality to an existing type#A static method that adds functionality to an existing type#A method that extends the lifespan of an object#A method that overrides a base class method#A method that is inherited from another class
+Hard#What is the difference between shallow copy and deep copy?#A shallow copy duplicates only the references, while a deep copy duplicates the objects themselves#A shallow copy duplicates the objects themselves, while a deep copy duplicates only the references#A shallow copy applies only to value types#A shallow copy always uses constructors#A shallow copy duplicates only the references, while a deep copy duplicates the objects themselves
+Hard#What is the purpose of `async` and `await` in C#?#To handle asynchronous operations#To handle asynchronous operations#To define recursive methods#To improve loop performance#To declare static methods
+Hard#What does the term 'dependency injection' mean?#Passing an object to a class that depends on it#Passing an object to a class that depends on it#Creating objects in a class directly#Using static fields to reduce dependency#Preventing null values
+Hard#How does a HashSet differ from a Dictionary in C#?#A HashSet stores only unique values, while a Dictionary stores key-value pairs#A HashSet is unordered, while a Dictionary is ordered#A HashSet stores only unique values, while a Dictionary stores key-value pairs#A Dictionary is faster than a HashSet#A HashSet does not allow null values
+Hard#What is the difference between Task and Thread in C#?#Task is a higher-level abstraction for managing asynchronous code, while Thread represents a low-level system thread#Task is a higher-level abstraction for managing asynchronous code, while Thread represents a low-level system thread#Thread is faster than Task#Task is used only for parallel loops#Thread cannot handle exceptions
+Hard#What is the purpose of the `lock` statement in C#?#To ensure that a block of code runs only on one thread at a time#To prevent a variable from being modified#To ensure that a block of code runs only on one thread at a time#To make methods thread-safe#To optimize multi-threading
+Hard#What happens if you try to modify a collection while iterating over it?#An InvalidOperationException is thrown#The collection is updated#An InvalidOperationException is thrown#The changes are ignored#The program crashes

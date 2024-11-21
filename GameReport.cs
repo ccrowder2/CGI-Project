@@ -466,5 +466,20 @@ namespace CGI_Project {
           break;       
       }
     }
+
+    private bool Question(string difficulty){
+      FileHandler file = new FileHandler(player);
+
+      string[] question = file.Question(difficulty);
+
+      string question = question[0];
+      string answer = question[1];
+      string option1 = question[2];
+      string option2 = question[3];
+      string option3 = question[4];
+      string option4 = question[5];
+
+
+    }
   }
 }

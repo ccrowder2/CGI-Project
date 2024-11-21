@@ -192,8 +192,50 @@ namespace CGI_Project {
 
         line = inFile.ReadLine();
       }
+      inFile.Close();
 
       return inventory;
+    }
+
+    public string[] Question(string difficulty){
+      StreamReader inFile = new StreamReader("Questions.txt");
+      string[] question = new string[]{"Question", "Answer", "Option1", "Option2", "Option3", "Option4"}
+
+      Random rnd = new Random();
+      int num = 0;
+
+      if(difficulty == "easy"){
+        num = rnd.Next(0,46);
+      } else if(difficulty == "medium"){
+        num = rnd.next(46,81);
+      } else if(difficulty == "hard"){
+        num = rnd.next(81,108);
+      }
+
+      string line = inFile.ReadLine();
+
+      while(line != null){
+        string[] temp = line.Split('#');
+        if(count == num){
+          // Question
+          question[0] == temp[1];
+          // Answer
+          question[1] == temp[2];
+          // Option1
+          question[2] == temp[3];
+          // Option2
+          question[3] == temp[4];
+          // Option3
+          question[4] == temp[5];
+          // Option4
+          question[5] == temp[6];
+        }
+
+        count++;
+        line = inFile.ReadLine();
+      }
+
+      return question;
     }
   }
 }
