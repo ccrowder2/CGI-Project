@@ -63,31 +63,31 @@ namespace CGI_Project {
       ovrRide = !ovrRide;
     }
 
-    private void SetEnemy(int enemy){
+    private void SetEnemy(int enemy) {
       this.enemy = enemy;
     }
-    private void SetBoss(int boss){
+    private void SetBoss(int boss) {
       this.boss = boss;
     }
 
-    private void SetEnemyHealth(int enemyHealth){
+    private void SetEnemyHealth(int enemyHealth) {
       this.enemyHealth = enemyHealth;
     }
 
-    private void SetCurrentIslands(int[][] currentIslands){
+    private void SetCurrentIslands(int[][] currentIslands) {
       this.currentIslands = currentIslands;
     }
 
-    private void SetPrintedEnemy(string[] printedEnemy){
+    private void SetPrintedEnemy(string[] printedEnemy) {
       this.printedEnemy = printedEnemy;
     }
 
-    private void SetRandomNum(int start, int stop){
+    private void SetRandomNum(int start, int stop) {
       Random rnd = new Random();
-      int num = rnd.Next(start+6,stop-6);
+      int num = rnd.Next(start + 6, stop - 6);
 
-      while(num%3==0){
-        num = rnd.Next(start+6,stop-6);
+      while (num % 3 == 0) {
+        num = rnd.Next(start + 6, stop - 6);
       }
 
       this.num = num;
@@ -108,7 +108,10 @@ namespace CGI_Project {
       util.ResetItems();
       this.enemy = 0;
 
-      string[] newPrintedEnemy = new string[]{"",""};
+      string[] newPrintedEnemy = new string[] {
+        "",
+        ""
+      };
       SetPrintedEnemy(newPrintedEnemy);
 
       util.AddItem('b');
@@ -129,7 +132,7 @@ namespace CGI_Project {
             player.IncPos();
           } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
             player.DecPos();
-          } else if (player.GetPos() >= currentIslands[3][1]-1) {
+          } else if (player.GetPos() >= currentIslands[3][1] - 1) {
             Console.Clear();
             System.Console.WriteLine("\n\n Congradulations, you passed the tutorial! You will now be sent to your home base.\n\nPress any key to continue");
             Console.ReadKey();
@@ -157,24 +160,22 @@ namespace CGI_Project {
 
       TutorialIsland();
 
-
-      if (player.GetPos() == currentIslands[0][1]-1 || player.GetPos() == currentIslands[1][1]-1 || player.GetPos() == currentIslands[2][1]-1) {
+      if (player.GetPos() == currentIslands[0][1] - 1 || player.GetPos() == currentIslands[1][1] - 1 || player.GetPos() == currentIslands[2][1] - 1) {
         System.Console.WriteLine();
         if (Question("easy") == true) {
-          if(player.GetPos() == currentIslands[0][1]-1){
-            player.SetPos(currentIslands[1][0]+1);
-            SetUpperBound(currentIslands[1][1]-1);
+          if (player.GetPos() == currentIslands[0][1] - 1) {
+            player.SetPos(currentIslands[1][0] + 1);
+            SetUpperBound(currentIslands[1][1] - 1);
             newNum = !newNum;
-          } else if(player.GetPos() == currentIslands[1][1]-1){
-            player.SetPos(currentIslands[2][0]+1);
-            SetUpperBound(currentIslands[2][1]-1);
+          } else if (player.GetPos() == currentIslands[1][1] - 1) {
+            player.SetPos(currentIslands[2][0] + 1);
+            SetUpperBound(currentIslands[2][1] - 1);
             newNum = !newNum;
-          } else if(player.GetPos() == currentIslands[2][1]-1){
-            player.SetPos(currentIslands[3][0]+1);
-            SetUpperBound(currentIslands[3][1]-1);
+          } else if (player.GetPos() == currentIslands[2][1] - 1) {
+            player.SetPos(currentIslands[3][0] + 1);
+            SetUpperBound(currentIslands[3][1] - 1);
             newNum = !newNum;
           }
-          
 
           SetLowerBound(player.GetPos());
           SwitchOvrRide();
@@ -182,15 +183,15 @@ namespace CGI_Project {
           player.SetPos(lowerBound);
           SwitchOvrRide();
         }
-      } else if(player.GetPos() >= currentIslands[3][3]-3 &&  player.GetPos() <= currentIslands[3][3]-1 && enemyHealth > 0){  
-        System.Console.WriteLine();     
-          if(Question("medium") == true){
-            SetEnemyHealth(enemyHealth-player.GetDamage());
-            SwitchOvrRide();
-          } else {
-            player.SetPos(currentIslands[3][0]+1);
-            SwitchOvrRide();
-          }
+      } else if (player.GetPos() >= currentIslands[3][3] - 3 && player.GetPos() <= currentIslands[3][3] - 1 && enemyHealth > 0) {
+        System.Console.WriteLine();
+        if (Question("medium") == true) {
+          SetEnemyHealth(enemyHealth - player.GetDamage());
+          SwitchOvrRide();
+        } else {
+          player.SetPos(currentIslands[3][0] + 1);
+          SwitchOvrRide();
+        }
       } else {
         Inventory();
         System.Console.WriteLine($"Health: {player.GetHealth()}");
@@ -318,15 +319,40 @@ namespace CGI_Project {
       bool used = false;
 
       // Island# - Start Stop Height Enemy or Not
-      int[] island1 = {10,30,15,-1};
-      int[] island2 = {40,75,10,-1};
-      int[] island3 = {80,100,17,-1};
-      int[] island4 = {110,145,30,enemy};
+      int[] island1 = {
+        10,
+        30,
+        15,
+        -1
+      };
+      int[] island2 = {
+        40,
+        75,
+        10,
+        -1
+      };
+      int[] island3 = {
+        80,
+        100,
+        17,
+        -1
+      };
+      int[] island4 = {
+        110,
+        145,
+        30,
+        enemy
+      };
 
-      int[][] allIslands = new int[][]{island1, island2, island3, island4};
+      int[][] allIslands = new int[][] {
+        island1,
+        island2,
+        island3,
+        island4
+      };
 
       SetCurrentIslands(allIslands);
-      
+
       System.Console.WriteLine(Prompt());
 
       for (int i = 0; i < 53; i++) {
@@ -390,18 +416,18 @@ namespace CGI_Project {
         used = true;
       }
 
-      if(enemy == true && enemyHealth > 0){
-        if(newNum == true && enemy == true){
+      if (enemy == true && enemyHealth > 0) {
+        if (newNum == true && enemy == true) {
           SetRandomNum(start, stop);
           SetEnemy(num);
           PrintedEnemy();
           newNum = !newNum;
         }
 
-        if(i == height - 1 && j == num && player.GetPos() > start && player.GetPos() < stop && enemy == true){
+        if (i == height - 1 && j == num && player.GetPos() > start && player.GetPos() < stop && enemy == true) {
           System.Console.Write(printedEnemy[1]);
           used = true;
-        } else if(i == height - 2 && j == num && player.GetPos() > start && player.GetPos() < stop && enemy == true){
+        } else if (i == height - 2 && j == num && player.GetPos() > start && player.GetPos() < stop && enemy == true) {
           System.Console.Write(printedEnemy[0]);
           used = true;
         }
@@ -434,88 +460,93 @@ namespace CGI_Project {
       return "";
     }
 
-    private void PrintedEnemy(){
+    private void PrintedEnemy() {
       // 0 - Head 1 - Body
       Random rnd1 = new Random();
-      int number = rnd1.Next(0,5);
+      int number = rnd1.Next(0, 5);
 
-      switch(number){
-        case 0:
-          printedEnemy[0] = "-_-";
-          printedEnemy[1] = " I ";
-          break;
-        case 1:
-          printedEnemy[0] = "^o^";
-          printedEnemy[1] = "( )";
-          break;
-        case 2:
-          printedEnemy[0] = ":-:";
-          printedEnemy[1] = "|||";
-          break;
-        case 3:
-          printedEnemy[0] = ".o.";
-          printedEnemy[1] = " | ";
-          break;
-        case 4:
-          printedEnemy[0] = "-|-";
-          printedEnemy[1] = "|||";
-          break;       
+      switch (number) {
+      case 0:
+        printedEnemy[0] = "-_-";
+        printedEnemy[1] = " I ";
+        break;
+      case 1:
+        printedEnemy[0] = "^o^";
+        printedEnemy[1] = "( )";
+        break;
+      case 2:
+        printedEnemy[0] = ":-:";
+        printedEnemy[1] = "|||";
+        break;
+      case 3:
+        printedEnemy[0] = ".o.";
+        printedEnemy[1] = " | ";
+        break;
+      case 4:
+        printedEnemy[0] = "-|-";
+        printedEnemy[1] = "|||";
+        break;
       }
     }
 
     private bool Question(string difficulty) {
-    PlayerFileHandler file = new PlayerFileHandler(player);
+      PlayerFileHandler file = new PlayerFileHandler(player);
 
-    // Retrieve the question and options
-    string[] questionData = file.Question(difficulty);
-    string question = questionData[0];
-    string answer = questionData[1];
-    string option1 = questionData[2];
-    string option2 = questionData[3];
-    string option3 = questionData[4];
-    string option4 = questionData[5];
+      // Retrieve the question and options
+      string[] questionData = file.Question(difficulty);
+      string question = questionData[0];
+      string answer = questionData[1];
+      string option1 = questionData[2];
+      string option2 = questionData[3];
+      string option3 = questionData[4];
+      string option4 = questionData[5];
 
-    string[] options = { option1, option2, option3, option4 };
-    int currentSelection = 0; // Tracks the current highlighted option
+      string[] options = {
+        option1,
+        option2,
+        option3,
+        option4
+      };
+      int currentSelection = 0; // Tracks the current highlighted option
 
-    // Display the initial question and options
-    Console.WriteLine(question);
-    for (int i = 0; i < options.Length; i++) {
+      // Display the initial question and options
+      Console.WriteLine(question);
+      for (int i = 0; i < options.Length; i++) {
         if (i == currentSelection) {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(options[i]);
-            Console.ForegroundColor = ConsoleColor.Gray;
+          Console.ForegroundColor = ConsoleColor.Green;
+          Console.WriteLine(options[i]);
+          Console.ForegroundColor = ConsoleColor.Gray;
         } else {
-            Console.WriteLine(options[i]);
+          Console.WriteLine(options[i]);
         }
-    }
+      }
 
-    while (true) {
+      while (true) {
         ConsoleKey key = Console.ReadKey(true).Key;
 
         // Update navigation and redisplay options
         if (key == ConsoleKey.S && currentSelection < options.Length - 1) {
-            currentSelection++;
+          currentSelection++;
         } else if (key == ConsoleKey.W && currentSelection > 0) {
-            currentSelection--;
+          currentSelection--;
         } else if (key == ConsoleKey.Enter) {
-            // Check if the selected option is correct
-            return options[currentSelection].Equals(answer, StringComparison.OrdinalIgnoreCase);
+          // Check if the selected option is correct
+          return options[currentSelection].Equals(answer, StringComparison.OrdinalIgnoreCase);
         }
 
         // Overwrite the options in place
         Console.SetCursorPosition(0, Console.CursorTop - options.Length);
         for (int i = 0; i < options.Length; i++) {
-            if (i == currentSelection) {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(options[i].PadRight(Console.WindowWidth - 1));
-                Console.ForegroundColor = ConsoleColor.Gray;
-            } else {
-                Console.WriteLine(options[i].PadRight(Console.WindowWidth - 1));
-            }
+          if (i == currentSelection) {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(options[i].PadRight(Console.WindowWidth - 1));
+            Console.ForegroundColor = ConsoleColor.Gray;
+          } else {
+            Console.WriteLine(options[i].PadRight(Console.WindowWidth - 1));
+          }
         }
+      }
     }
-}
 
   }
 }
