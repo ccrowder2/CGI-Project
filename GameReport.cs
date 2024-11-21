@@ -159,6 +159,7 @@ namespace CGI_Project {
 
 
       if (player.GetPos() == currentIslands[0][1]-1 || player.GetPos() == currentIslands[1][1]-1 || player.GetPos() == currentIslands[2][1]-1) {
+        System.Console.WriteLine();
         if (Question("easy") == true) {
           if(player.GetPos() == currentIslands[0][1]-1){
             player.SetPos(currentIslands[1][0]+1);
@@ -181,7 +182,8 @@ namespace CGI_Project {
           player.SetPos(lowerBound);
           SwitchOvrRide();
         }
-      } else if(player.GetPos() >= currentIslands[3][3]-3 &&  player.GetPos() <= currentIslands[3][3]-1 && enemyHealth > 0){       
+      } else if(player.GetPos() >= currentIslands[3][3]-3 &&  player.GetPos() <= currentIslands[3][3]-1 && enemyHealth > 0){  
+        System.Console.WriteLine();     
           if(Question("medium") == true){
             SetEnemyHealth(enemyHealth-player.GetDamage());
             SwitchOvrRide();
@@ -327,7 +329,7 @@ namespace CGI_Project {
       
       System.Console.WriteLine(Prompt());
 
-      for (int i = 0; i < 54; i++) {
+      for (int i = 0; i < 53; i++) {
         for (int j = 0; j < 147; j++) {
           Island(island1[0], island1[1], island1[2], i, j, ref used);
           Island(island2[0], island2[1], island2[2], i, j, ref used);
@@ -345,7 +347,7 @@ namespace CGI_Project {
     }
 
     private void Island(int start, int stop, int height, int i, int j, ref bool used, bool enemy = false, bool boss = false) {
-      height = 60 - height;
+      height = 53 - height;
       bool onIsland = false;
 
       if (player.GetPos() >= start && player.GetPos() <= stop) {
