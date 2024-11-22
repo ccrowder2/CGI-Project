@@ -49,9 +49,10 @@ static void Home(Player player) {
   Utility util = new Utility(player);
   PlayerFileHandler file = new PlayerFileHandler(player);
 
-  if(player.GetXP() == 0){
+  if(player.GetLevel() == 0){
     game.Tutorial();
   }
   game.Home();
-    
+  
+
 }

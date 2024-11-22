@@ -738,6 +738,7 @@ namespace CGI_Project {
 
     public void Home(){
       PlayerFileHandler file = new PlayerFileHandler(player);
+      Utility util = new Utility(player);
       bool end = false;
 
       // Set player back
@@ -747,6 +748,7 @@ namespace CGI_Project {
       prev = ConsoleKey.D;
       key = ConsoleKey.D;
       ovrRide = true;
+      util.AddLevels();
 
       ConsoleKey newKey = new ConsoleKey();
 
