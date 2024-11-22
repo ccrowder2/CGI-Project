@@ -137,7 +137,7 @@ namespace CGI_Project {
             System.Console.WriteLine("\n\n Congradulations, you passed the tutorial! You will now be sent to your home base.\n\nPress any key to continue");
             Console.ReadKey();
             player.SetXP(player.GetXpToEarn());
-            //file.SaveExistingPlayer();
+            file.SaveExistingPlayer();
             end = true;
           }
         } else {
@@ -546,6 +546,97 @@ namespace CGI_Project {
           }
         }
       }
+    }
+
+    public void PrintHome(){
+      Console.Clear();
+      bool used = false;
+
+      for (int i = 0; i < 53; i++) {
+        for (int j = 0; j < 147; j++) {
+          Island(0, 101, 5, i, j, ref used);
+          ItemShop(i,j, ref used);
+
+          if (!used) {
+            System.Console.Write(" ");
+          }
+
+          used = false;
+        }
+        System.Console.WriteLine();
+      }
+
+      if(player.GetPos() == 16){
+        
+      }
+      
+    }
+
+    public void ItemShop(int i, int j, ref bool used){
+      int height = 48;
+
+      if(i==height-1&&j==5 || i==height-2&&j==5 || i==height-3&&j==5 || i==height-1&&j==13 || i==height-2&&j==13 || i==height-3&&j==13){
+        System.Console.Write("|");
+        used = true;
+      } else if(i==height-1&&j==6 || i==height-1&&j==7 || i==height-1&&j==8 || i==height-1&&j==9 || i==height-1&&j==10 || i==height-1&&j==11 || i==height-1&&j==12){
+        System.Console.Write("-");
+        used = true;
+      } else if(i==height-3&&j==6 || i==height-3&&j==7 || i==height-3&&j==8 || i==height-3&&j==9 || i==height-3&&j==10 || i==height-3&&j==11 || i==height-3&&j==12){
+        System.Console.Write("-");
+        used = true;
+      } else if(i==height-2 && j==7){
+        System.Console.Write("I");
+        used = true;
+      } else if(i==height-2 && j==8){
+        System.Console.Write("t");
+        used = true;
+      } else if(i==height-2 && j==9){
+        System.Console.Write("e");
+        used = true;
+      } else if(i==height-2 && j==10){
+        System.Console.Write("m");
+        used = true;
+      } else if(i==height-2 && j==11){
+        System.Console.Write("s");
+        used = true;
+      }
+
+      
+    }
+
+    public void Home(){
+      bool end = false;
+
+      // Set player back
+      player.SetPos(49);
+      SetLowerBound(16);
+      SetUpperBound(99);
+      prev = ConsoleKey.D;
+      key = ConsoleKey.D;
+      ovrRide = true;
+
+      ConsoleKey newKey = new ConsoleKey();
+
+      do{
+
+        if (ovrRide == false) {
+          newKey = Console.ReadKey().Key;
+          SetKey(newKey);
+
+          if (GetKey() == ConsoleKey.D && player.GetPos() < upperBound) {
+            player.IncPos();
+          } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
+            player.DecPos();
+          } else if(GetKey() == ConsoleKey.X){
+            end = true;
+          }
+
+        } else {
+          SwitchOvrRide();
+        }
+        
+        PrintHome();
+      }while(!end);
     }
 
   }

@@ -17,6 +17,7 @@ namespace CGI_Project
         private int countOfItems;
         private int damage;
         private int xpToEarn;
+        private int prevPos;
 
         public Player(){
 
@@ -105,6 +106,14 @@ namespace CGI_Project
         public void SetItems(char[] items){
             this.items = items;
         }
+
+        public int GetPrevPos() {
+        return prevPos;
+        }
+
+        public void SetPrevPos(int prevPos){
+        this.prevPos = prevPos;
+    }
 
         public char[] GetItems(bool ovrRide = false){
             // b - bonus XP // d - damage boost // h - restore health // i - increased max health

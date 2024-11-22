@@ -49,13 +49,9 @@ static void Home(Player player) {
   Utility util = new Utility(player);
   PlayerFileHandler file = new PlayerFileHandler(player);
 
-  while(!end){
-    if(player.GetXP() == 0){
-      game.Tutorial();
-    }
-    Console.Clear();
-    System.Console.WriteLine("This is the home base:");
-    Console.ReadKey();
-    end = true;
+  if(player.GetXP() == 0){
+    game.Tutorial();
   }
+  game.Home();
+    
 }
