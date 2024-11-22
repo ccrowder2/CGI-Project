@@ -18,6 +18,7 @@ namespace CGI_Project {
     private bool ovrRide = false;
     private int[][] currentIslands;
     private string[] printedEnemy;
+    private bool enterLevel = false;
 
     public GameReport() {
 
@@ -680,7 +681,7 @@ namespace CGI_Project {
 
       for (int i = 0; i < 53; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(0, 101, 5, i, j, ref used);
+          Island(0, 102, 5, i, j, ref used);
           PrintItemShop(i,j, ref used);
 
           if (!used) {
@@ -690,6 +691,23 @@ namespace CGI_Project {
           used = false;
         }
         System.Console.WriteLine();
+      }
+
+      if(enterLevel == true){
+        SwitchOvrRide();
+        enterLevel = false;
+        System.Console.WriteLine("Press Enter to start a game");
+        if(Console.ReadKey().Key == ConsoleKey.Enter){
+          
+          Console.Clear();
+          System.Console.WriteLine("Start Game");
+          Console.ReadKey();
+          player.SetPos(76);
+        } else {
+          player.SetPos(76);
+        }
+      } else {
+        Inventory(true);
       }
 
       if(player.GetPos() == 16 && player.GetItemsCount() != 4){
@@ -708,10 +726,11 @@ namespace CGI_Project {
         Console.ReadKey();
         player.SetPos(19);
         SwitchOvrRide();
-      } else {
-        Inventory(true);
+      } else if(player.GetPos() == 79){
+        SwitchOvrRide();
+        player.SetPos(91);
+        enterLevel = true;
       }
-      
     }
 
     public void PrintItemShop(int i, int j, ref bool used){
@@ -741,16 +760,29 @@ namespace CGI_Project {
       } else if(i==height-2 && j==11){
         System.Console.Write("s");
         used = true;
-      } else if(i==height-4&&j==90 || i==height-5&&j==90 || i==height-6&&j==90 || i==height-4&&j==98 || i==height-5&&j==98 || i==height-6&&j==98){
+      } else if(i==height-1&&j==88 || i==height-2&&j==88 || i==height-3&&j==88 || i==height-1&&j==94 || i==height-2&&j==94 || i==height-3&&j==94){
         System.Console.Write("|");
         used = true;
-      } else if(i==height-4&&j==91 || i==height-4&&j==92 || i==height-4&&j==93 || i==height-4&&j==94 || i==height-4&&j==95 || i==height-4&&j==96 || i==height-4&&j==97){
+      } else if(i==height-3&&j==89 || i==height-3&&j==90 || i==height-3&&j==91 || i==height-3&&j==92 || i==height-3&&j==93){
         System.Console.Write("-");
         used = true;
-      } else if(i==height-6&&j==91 || i==height-6&&j==92 || i==height-6&&j==93 || i==height-6&&j==94 || i==height-6&&j==95 || i==height-6&&j==96 || i==height-6&&j==97){
-        System.Console.Write("-");
+      } else if(i==height-1&&j==82 || i==height-2&&j==82 || i==height-3&&j==82 || i==height-4&&j==82 || i==height-5&&j==82 ||i==height-6&&j==82 || i==height-1&&j==100 || i==height-2&&j==100 || i==height-3&&j==100 || i==height-4&&j==100 || i==height-5&&j==100 || i==height-6&&j==100){
+        System.Console.Write("|");
         used = true;
-      }  
+      } else if(i==height-1&&j>82&&j<88 || i==height-2&&j>82&&j<88 || i==height-3&&j>82&&j<88){
+        System.Console.Write("|");
+        used = true;
+      } else if(i==height-4&&j>82&&j<100 || i==height-5&&j>82&&j<100 || i==height-6&&j>82&&j<100){
+        if(i==height-6){
+          System.Console.Write("-");
+        } else {
+          System.Console.Write("|");
+        }
+        used = true;
+      } else if(i==height-1&&j>94&&j<100 || i==height-2&&j>94&&j<100 || i==height-3&&j>94&&j<100){
+        System.Console.Write("|");
+        used = true;
+      }
     }
 
     public void Home(){
@@ -761,7 +793,7 @@ namespace CGI_Project {
       // Set player back
       player.SetPos(49);
       SetLowerBound(16);
-      SetUpperBound(99);
+      SetUpperBound(79);
       prev = ConsoleKey.D;
       key = ConsoleKey.D;
       ovrRide = true;
