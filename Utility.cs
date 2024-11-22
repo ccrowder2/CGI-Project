@@ -198,6 +198,8 @@ namespace CGI_Project {
     if (player == null) {
         Console.WriteLine("");
         return;
+    } else if(player.GetItemsCount() == 4){
+      return;
     }
 
     if (player.GetItems() == null) {

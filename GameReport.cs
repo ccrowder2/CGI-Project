@@ -134,7 +134,7 @@ namespace CGI_Project {
             player.DecPos();
           } else if (player.GetPos() >= currentIslands[3][1] - 1) {
             Console.Clear();
-            System.Console.WriteLine("\n\n Congradulations, you passed the tutorial! You will now be sent to your home base.\n\nPress any key to continue");
+            System.Console.WriteLine("\n\nCongratulations, you passed the tutorial! You will now be sent to your home base.\n\nPress any key to continue");
             Console.ReadKey();
             player.SetXP(player.GetXpToEarn());
             file.SaveExistingPlayer();
@@ -548,6 +548,124 @@ namespace CGI_Project {
       }
     }
 
+    public void ItemShop(){
+      Console.Clear();
+
+      Utility util = new Utility(player);
+      int itemNav = 0;
+      char selected = 'x';
+      bool end = false;
+
+      do{
+      Console.Clear();
+
+      System.Console.WriteLine("Item Shop");
+      if(itemNav == 0){
+        Console.ForegroundColor = ConsoleColor.Green;
+        System.Console.WriteLine("Bonus XP - 25 XP");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        selected = 'b';
+      } else {
+        System.Console.WriteLine("Bonus XP - 25 XP");
+      }
+
+      if(itemNav == 1){
+        Console.ForegroundColor = ConsoleColor.Green;
+        System.Console.WriteLine("Damage Boost - 75 XP");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        selected = 'd';
+      } else {
+        System.Console.WriteLine("Damage Boost - 75 XP");
+      }
+
+      if(itemNav == 2){
+        Console.ForegroundColor = ConsoleColor.Green;
+        System.Console.WriteLine("Restore Health - 25XP");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        selected = 'h';
+      } else {
+        System.Console.WriteLine("Restore Health - 25XP");
+      }
+
+      if(itemNav == 3){
+        Console.ForegroundColor = ConsoleColor.Green;
+        System.Console.WriteLine("Increased Max Health - 50XP");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        selected = 'i';
+      } else {
+        System.Console.WriteLine("Increased Max Health - 50XP");
+      }
+
+      if(itemNav == 4){
+        Console.ForegroundColor = ConsoleColor.Green;
+        System.Console.WriteLine("Exit");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        selected = 'e';
+      } else {
+        System.Console.WriteLine("Exit");
+      }
+
+      // Read input from the player
+        ConsoleKey newKey = Console.ReadKey().Key;
+
+        // Navigate up and down the list
+        if (newKey == ConsoleKey.S && itemNav < 4){
+          itemNav++;
+        } else if (newKey == ConsoleKey.W && itemNav > 0) {
+          itemNav--;
+        } else if (newKey == ConsoleKey.Enter){
+          System.Console.WriteLine("test");
+
+          if(selected == 'e'){
+          } else {
+            switch(selected){
+              case 'b':
+                if(player.GetXP()<25){
+                  Console.Clear();
+                  System.Console.WriteLine("You don't have enough XP to purchase this item\n\nPress any key to continue");
+                  Console.ReadKey();
+                } else {
+                  util.AddItem(selected);
+                  player.SetXP(player.GetXP()-25);
+                }
+                break;
+              case 'd':
+                if(player.GetXP()<75){
+                  Console.Clear();
+                  System.Console.WriteLine("You don't have enough XP to purchase this item\n\nPress any key to continue");
+                  Console.ReadKey();
+                } else {
+                  util.AddItem(selected);
+                  player.SetXP(player.GetXP()-75);
+                }
+                break;
+              case 'h':
+                if(player.GetXP()<25){
+                  Console.Clear();
+                  System.Console.WriteLine("You don't have enough XP to purchase this item\n\nPress any key to continue");
+                  Console.ReadKey();
+                } else {
+                  util.AddItem(selected);
+                  player.SetXP(player.GetXP()-25);
+                }
+                break;
+              case 'i':
+                if(player.GetXP()<50){
+                  Console.Clear();
+                  System.Console.WriteLine("You don't have enough XP to purchase this item\n\nPress any key to continue");
+                  Console.ReadKey();
+                } else {
+                  util.AddItem(selected);
+                  player.SetXP(player.GetXP()-50);
+                }
+                break;
+            }
+          }
+          end = true;
+        }
+      } while(!end);
+    }
+
     public void PrintHome(){
       Console.Clear();
       bool used = false;
@@ -555,7 +673,7 @@ namespace CGI_Project {
       for (int i = 0; i < 53; i++) {
         for (int j = 0; j < 147; j++) {
           Island(0, 101, 5, i, j, ref used);
-          ItemShop(i,j, ref used);
+          PrintItemShop(i,j, ref used);
 
           if (!used) {
             System.Console.Write(" ");
@@ -566,13 +684,27 @@ namespace CGI_Project {
         System.Console.WriteLine();
       }
 
-      if(player.GetPos() == 16){
+      if(player.GetPos() == 16 && player.GetItemsCount() != 4){
+        Console.Clear();
+        System.Console.WriteLine("Press ENTER to enter the item shop, press any key to exit");
+        SwitchOvrRide();
+
+        if(Console.ReadKey().Key == ConsoleKey.Enter){
+          ItemShop();
+        }
         
+        player.SetPos(19);
+      } else if(player.GetPos() == 16 && player.GetItemsCount() == 4){
+        Console.Clear();
+        System.Console.WriteLine("You have the maximum amount of items\n\nPress any key to continue");
+        Console.ReadKey();
+        player.SetPos(19);
+        SwitchOvrRide();
       }
       
     }
 
-    public void ItemShop(int i, int j, ref bool used){
+    public void PrintItemShop(int i, int j, ref bool used){
       int height = 48;
 
       if(i==height-1&&j==5 || i==height-2&&j==5 || i==height-3&&j==5 || i==height-1&&j==13 || i==height-2&&j==13 || i==height-3&&j==13){
@@ -605,6 +737,7 @@ namespace CGI_Project {
     }
 
     public void Home(){
+      PlayerFileHandler file = new PlayerFileHandler(player);
       bool end = false;
 
       // Set player back
@@ -618,7 +751,7 @@ namespace CGI_Project {
       ConsoleKey newKey = new ConsoleKey();
 
       do{
-
+        PrintHome();
         if (ovrRide == false) {
           newKey = Console.ReadKey().Key;
           SetKey(newKey);
@@ -628,14 +761,18 @@ namespace CGI_Project {
           } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
             player.DecPos();
           } else if(GetKey() == ConsoleKey.X){
-            end = true;
+            Console.Clear();
+            System.Console.WriteLine("Are you sure you want to exit the game, all progress made will be saved (Enter to leave, any key to continue)");
+
+            if(Console.ReadKey().Key == ConsoleKey.Enter){
+              file.SaveExistingPlayer();
+              end = true;
+            }
           }
 
         } else {
           SwitchOvrRide();
         }
-        
-        PrintHome();
       }while(!end);
     }
 
