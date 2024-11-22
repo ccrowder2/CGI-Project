@@ -330,26 +330,26 @@ namespace CGI_Project {
     }
 
     public void AddLevels(){
-      if(player.GetXP() >= 100){
-        player.SetLevel(1);
-      } else if(player.GetXP() >= 200){
-        player.SetLevel(2);
-      } else if(player.GetXP() >= 300){
-        player.SetLevel(3);
-      } else if(player.GetXP() >= 400){
-        player.SetLevel(4);
-      } else if(player.GetXP() >= 500){
-        player.SetLevel(5);
-      } else if(player.GetXP() >= 700){
-        player.SetLevel(6);
-      } else if(player.GetXP() >= 900){
-        player.SetLevel(7);
-      } else if(player.GetXP() >= 1100){
-        player.SetLevel(8);
+      if(player.GetXP() >= 1500){
+        player.SetLevel(10);
       } else if(player.GetXP() >= 1300){
         player.SetLevel(9);
-      } else if(player.GetXP() >= 1500){
-        player.SetLevel(10);
+      } else if(player.GetXP() >= 1100){
+        player.SetLevel(8);
+      } else if(player.GetXP() >= 900){
+        player.SetLevel(7);
+      } else if(player.GetXP() >= 700){
+        player.SetLevel(6);
+      } else if(player.GetXP() >= 500){
+        player.SetLevel(5);
+      } else if(player.GetXP() >= 400){
+        player.SetLevel(4);
+      } else if(player.GetXP() >= 300){
+        player.SetLevel(3);
+      } else if(player.GetXP() >= 200){
+        player.SetLevel(2);
+      } else if(player.GetXP() >= 100){
+        player.SetLevel(1);
       }
     }
   }
