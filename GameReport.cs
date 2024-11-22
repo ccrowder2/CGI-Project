@@ -202,11 +202,11 @@ namespace CGI_Project {
       }
     }
 
-    private void Inventory() {
+    private void Inventory(bool home = false) {
       if (key == ConsoleKey.Enter && accessInventory == ConsoleKey.S) {
         SwitchOvrRide();
         if (player.GetItems() != null) {
-          InventoryList();
+          InventoryList(home);
         } else {
           Console.Clear();
           System.Console.WriteLine("\nYou have no items in your inventory, you can buy more at your home base\n\nPress any key to continue:");
@@ -221,7 +221,7 @@ namespace CGI_Project {
       }
     }
 
-    private void InventoryList() {
+    private void InventoryList(bool home = false) {
       Utility util = new Utility(player);
       bool end = false;
       char[] items = player.GetItems();
@@ -298,6 +298,14 @@ namespace CGI_Project {
             Console.WriteLine("Item is already in use.\n\nPress any key to continue...");
             Console.ReadKey();
           } else {
+            if(home == true){
+              Console.Clear();
+              System.Console.WriteLine("Are you sure you want to remove this item from you inventory? (Enter to delete, any key to exit)");
+              if(Console.ReadKey().Key == ConsoleKey.Enter){
+                util.RemoveItems(selectedItem);
+              }
+              return;
+            }
             util.ActivateItem(selectedItem);
             end = true;
           }
@@ -700,6 +708,8 @@ namespace CGI_Project {
         Console.ReadKey();
         player.SetPos(19);
         SwitchOvrRide();
+      } else {
+        Inventory(true);
       }
       
     }
@@ -731,9 +741,16 @@ namespace CGI_Project {
       } else if(i==height-2 && j==11){
         System.Console.Write("s");
         used = true;
-      }
-
-      
+      } else if(i==height-4&&j==90 || i==height-5&&j==90 || i==height-6&&j==90 || i==height-4&&j==98 || i==height-5&&j==98 || i==height-6&&j==98){
+        System.Console.Write("|");
+        used = true;
+      } else if(i==height-4&&j==91 || i==height-4&&j==92 || i==height-4&&j==93 || i==height-4&&j==94 || i==height-4&&j==95 || i==height-4&&j==96 || i==height-4&&j==97){
+        System.Console.Write("-");
+        used = true;
+      } else if(i==height-6&&j==91 || i==height-6&&j==92 || i==height-6&&j==93 || i==height-6&&j==94 || i==height-6&&j==95 || i==height-6&&j==96 || i==height-6&&j==97){
+        System.Console.Write("-");
+        used = true;
+      }  
     }
 
     public void Home(){
@@ -754,6 +771,7 @@ namespace CGI_Project {
 
       do{
         PrintHome();
+        SetAccessInventory(newKey);
         if (ovrRide == false) {
           newKey = Console.ReadKey().Key;
           SetKey(newKey);

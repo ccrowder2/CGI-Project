@@ -244,7 +244,7 @@ namespace CGI_Project {
       }
     }  
 
-    private void RemoveItems(char item){
+    public void RemoveItems(char item){
       char[] items = player.GetItems();
       int count = 0;
       bool exit = false;
