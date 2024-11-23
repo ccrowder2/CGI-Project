@@ -19,6 +19,7 @@ namespace CGI_Project {
     private int[][] currentIslands;
     private string[] printedEnemy;
     private bool enterLevel = false;
+    private bool switchIslands = false;
 
     public GameReport() {
 
@@ -64,6 +65,10 @@ namespace CGI_Project {
       ovrRide = !ovrRide;
     }
 
+    private void SwitchIslands(){
+      switchIslands = !switchIslands;
+    }
+
     private void SetEnemy(int enemy) {
       this.enemy = enemy;
     }
@@ -92,6 +97,59 @@ namespace CGI_Project {
       }
 
       this.num = num;
+    }
+
+    private int RandomStart(int stop){
+      bool end = false;
+      Random rnd = new Random();
+      int number = -1;
+
+      while(!end){
+        number= Random.Next(stop, 7){
+          if(number%3==0){
+            end = true;
+          }
+        }
+      }
+      return stop+number;
+    }
+
+    private int RandomStop(int start, int length){
+      bool end = false;
+      Random rnd = new Random();
+      int number = -1;
+      int number2 = -1;
+
+      while(!end){
+        number = Random.Next(stop, 7);
+          number2 = Random.Next(stop-6,stop+1);
+          if(number%6==0){
+            return length+number;
+            end = true;
+          } else if(number2%6==0){
+            return length-number2;
+            end = true;
+          }
+        }
+      
+      return -1;
+    }
+
+    private int RandomHeight(){
+      Random rnd = new Random();
+      
+      return rnd.Next(5,21);
+    }
+
+    private bool CreateEnemy(){
+      Random rnd = new Random;
+      int number = rnd.Next(0,2);
+
+      if(number == 0){
+        return true;
+      } else {
+        return false;
+      }
     }
 
     public void Tutorial() {
@@ -698,10 +756,7 @@ namespace CGI_Project {
         enterLevel = false;
         System.Console.WriteLine("Press Enter to start a game");
         if(Console.ReadKey().Key == ConsoleKey.Enter){
-          
-          Console.Clear();
-          System.Console.WriteLine("Start Game");
-          Console.ReadKey();
+          RandomGame();
           player.SetPos(76);
         } else {
           player.SetPos(76);
@@ -828,5 +883,68 @@ namespace CGI_Project {
       }while(!end);
     }
 
+    public void RandomGame(){
+      Utility util = new Utility(player);
+      PlayerFileHandler file = new PlayerFileHandler(player);
+      Console.Clear();
+
+      // Variables
+      ConsoleKeyInfo key;
+      bool end = false;
+
+      // Reseting Game
+      player.SetPos(11);
+      SetLowerBound(11);
+      SetUpperBound(29);
+      SetPrev(ConsoleKey.D);
+      util.ResetItems();
+      this.enemy = 0;
+      player.SetItemsInUse("");
+      SetCurrentIslands();
+
+      string[] newPrintedEnemy = new string[] {
+        "",
+        ""
+      };
+      SetPrintedEnemy(newPrintedEnemy);
+
+      do{
+        if(switchIslands == true){
+          // Island Variables
+          int island1Stop = RandomStop(3,21);
+          int island2Start = RandomStart(island1Stop);
+          int island2Stop = RandomStop(island2Start, 18);
+          int island3Start = RandomStart(island2Stop);
+          int island3Stop = RandomStop(island3Start, 27); 
+          int[] island1 = {3,island1Stop, RandomHeight(), CreateEnemy()};
+          int[] island2 = {island2Start, island2Stop, RandomHeight(), CreateEnemy()};
+          int[] island3 = {island2Start, island3Stop, RandomHeight(), CreateEnemy()};
+          int[][] current = new int[][]{island1, island2, island3};
+          SetCurrentIslands(current);
+          switchIslands();
+        }
+
+      }while(!end);
+
+    }
+
+    public void RandomIslands(){
+      for (int i = 0; i < 53; i++) {
+        for (int j = 0; j < 147; j++) {
+          Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, currentIslands[0][3]);
+          Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, currentIslands[1][3]);
+          Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, currentIslands[2][3]);
+
+          if (!used) {
+            System.Console.Write(" ");
+          }
+
+          used = false;
+        }
+        System.Console.WriteLine();
+      }     
+    }
+
   }
+  
 }
