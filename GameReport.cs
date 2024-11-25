@@ -18,6 +18,7 @@ namespace CGI_Project {
     private bool ovrRide = false;
     private int[][] currentIslands;
     private string[] printedEnemy;
+    private bool[] isEnemy;
     private bool enterLevel = false;
     private bool switchIslands = false;
 
@@ -102,35 +103,48 @@ namespace CGI_Project {
     private int RandomStart(int stop){
       bool end = false;
       Random rnd = new Random();
-      int number = -1;
+      int number = rnd.Next(0,3);
 
-      while(!end){
-        number= Random.Next(stop, 7){
-          if(number%3==0){
-            end = true;
-          }
-        }
+      switch(number){
+        case 0:
+          return stop+3;
+          break;
+        case 1:
+          return stop+6;
+          break;
+        case 2:
+          return stop+9;
+          break;
       }
-      return stop+number;
+      
+      return -1;
     }
 
     private int RandomStop(int start, int length){
       bool end = false;
       Random rnd = new Random();
-      int number = -1;
-      int number2 = -1;
+      int number = rnd.Next(0,6);
 
-      while(!end){
-        number = Random.Next(stop, 7);
-          number2 = Random.Next(stop-6,stop+1);
-          if(number%6==0){
-            return length+number;
-            end = true;
-          } else if(number2%6==0){
-            return length-number2;
-            end = true;
-          }
-        }
+      switch(number){
+        case 0:
+          return start+length+3;
+          break;
+        case 1:
+          return start+length+6;
+          break;
+        case 2:
+          return  start+length+9;;
+          break;
+        case 3:
+          return start+length-3;
+          break;
+        case 4:
+          return start+length-6;
+          break;
+        case 5:
+          return  start+length-9;;
+          break;
+      }
       
       return -1;
     }
@@ -142,7 +156,7 @@ namespace CGI_Project {
     }
 
     private bool CreateEnemy(){
-      Random rnd = new Random;
+      Random rnd = new Random();
       int number = rnd.Next(0,2);
 
       if(number == 0){
@@ -150,6 +164,10 @@ namespace CGI_Project {
       } else {
         return false;
       }
+    }
+
+    private void SetIsEnemy(bool[] isEnemy){
+      this.isEnemy = isEnemy;
     }
 
     public void Tutorial() {
@@ -422,7 +440,7 @@ namespace CGI_Project {
 
       System.Console.WriteLine(Prompt());
 
-      for (int i = 0; i < 53; i++) {
+      for (int i = 0; i < 63; i++) {
         for (int j = 0; j < 147; j++) {
           Island(island1[0], island1[1], island1[2], i, j, ref used);
           Island(island2[0], island2[1], island2[2], i, j, ref used);
@@ -440,7 +458,7 @@ namespace CGI_Project {
     }
 
     private void Island(int start, int stop, int height, int i, int j, ref bool used, bool enemy = false, bool boss = false) {
-      height = 53 - height;
+      height = 63 - height;
       bool onIsland = false;
 
       if (player.GetPos() >= start && player.GetPos() <= stop) {
@@ -891,17 +909,16 @@ namespace CGI_Project {
       // Variables
       ConsoleKeyInfo key;
       bool end = false;
+      ConsoleKey newKey = new ConsoleKey();
 
       // Reseting Game
-      player.SetPos(11);
-      SetLowerBound(11);
-      SetUpperBound(29);
       SetPrev(ConsoleKey.D);
       util.ResetItems();
       this.enemy = 0;
       player.SetItemsInUse("");
-      SetCurrentIslands();
-
+      SwitchIslands();
+      newNum = !newNum;
+      
       string[] newPrintedEnemy = new string[] {
         "",
         ""
@@ -909,6 +926,7 @@ namespace CGI_Project {
       SetPrintedEnemy(newPrintedEnemy);
 
       do{
+        util.CheckActivatedItems();
         if(switchIslands == true){
           // Island Variables
           int island1Stop = RandomStop(3,21);
@@ -916,24 +934,68 @@ namespace CGI_Project {
           int island2Stop = RandomStop(island2Start, 18);
           int island3Start = RandomStart(island2Stop);
           int island3Stop = RandomStop(island3Start, 27); 
-          int[] island1 = {3,island1Stop, RandomHeight(), CreateEnemy()};
-          int[] island2 = {island2Start, island2Stop, RandomHeight(), CreateEnemy()};
-          int[] island3 = {island2Start, island3Stop, RandomHeight(), CreateEnemy()};
+          bool[] enemy = {CreateEnemy(),CreateEnemy(),CreateEnemy()};
+          SetIsEnemy(enemy);
+          int[] island1 = {3,island1Stop, RandomHeight()};
+          int[] island2 = {island2Start, island2Stop, RandomHeight()};
+          int[] island3 = {island3Start, island3Stop, RandomHeight()};
           int[][] current = new int[][]{island1, island2, island3};
           SetCurrentIslands(current);
-          switchIslands();
+          player.SetPos(current[0][0]+3);
+          SetLowerBound(current[0][0]);
+          SetUpperBound(current[0][1]);
+          SwitchIslands();
+        }
+
+        RandomGameMap();
+
+        if (ovrRide == false) {
+          newKey = Console.ReadKey().Key;
+          SetKey(newKey);
+
+          if (GetKey() == ConsoleKey.D && player.GetPos() < upperBound) {
+            player.IncPos();
+          } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
+            player.DecPos();
+          } else if(GetKey() == ConsoleKey.X){
+            end = true;
+          }
+
+        } else {
+          SwitchOvrRide();
         }
 
       }while(!end);
 
     }
 
-    public void RandomIslands(){
-      for (int i = 0; i < 53; i++) {
+    private void RandomGameMap(){
+      Console.Clear();
+      RandomIslands();
+      Utility util = new Utility();
+      int x = 1;
+
+      if(x==2){
+
+      } else{
+        Inventory();
+        System.Console.WriteLine($"Health: {player.GetHealth()}");
+        System.Console.WriteLine($"Damage: {player.GetDamage()}");
+        System.Console.Write($"Activated Items: ");
+        if(!string.IsNullOrEmpty(player.GetItemsInUse())){
+          util.PrintActivatedItems();
+        }
+        System.Console.WriteLine($"Enemy pos: {enemy}");
+      }
+    }
+
+    private void RandomIslands(){
+      bool used = false;
+      for (int i = 0; i < 63; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, currentIslands[0][3]);
-          Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, currentIslands[1][3]);
-          Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, currentIslands[2][3]);
+          Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, isEnemy[0]);
+          Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, isEnemy[1]);
+          Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, isEnemy[2]);
 
           if (!used) {
             System.Console.Write(" ");
@@ -942,9 +1004,7 @@ namespace CGI_Project {
           used = false;
         }
         System.Console.WriteLine();
-      }     
+      }  
     }
-
   }
-  
 }
