@@ -52,5 +52,6 @@ static void Home(Player player) {
   if(player.GetLevel() == 0){
     game.Tutorial();
   }
-  game.RandomGame();
+
+  game.Home();
 }

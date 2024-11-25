@@ -440,12 +440,12 @@ namespace CGI_Project {
 
       System.Console.WriteLine(Prompt());
 
-      for (int i = 0; i < 63; i++) {
+      for (int i = 0; i < 53; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(island1[0], island1[1], island1[2], i, j, ref used);
-          Island(island2[0], island2[1], island2[2], i, j, ref used);
-          Island(island3[0], island3[1], island3[2], i, j, ref used);
-          Island(island4[0], island4[1], island4[2], i, j, ref used, true);
+          Island(island1[0], island1[1], island1[2], i, j, ref used, 53);
+          Island(island2[0], island2[1], island2[2], i, j, ref used, 53);
+          Island(island3[0], island3[1], island3[2], i, j, ref used, 53);
+          Island(island4[0], island4[1], island4[2], i, j, ref used, 53, true);
 
           if (!used) {
             System.Console.Write(" ");
@@ -457,8 +457,8 @@ namespace CGI_Project {
       }
     }
 
-    private void Island(int start, int stop, int height, int i, int j, ref bool used, bool enemy = false, bool boss = false) {
-      height = 63 - height;
+    private void Island(int start, int stop, int height, int i, int j, ref bool used, int loopLength, bool enemy = false, bool boss = false) {
+      height = loopLength - height;
       bool onIsland = false;
 
       if (player.GetPos() >= start && player.GetPos() <= stop) {
@@ -509,10 +509,10 @@ namespace CGI_Project {
           newNum = !newNum;
         }
 
-        if (i == height - 1 && j == num && player.GetPos() > start && player.GetPos() < stop && enemy == true) {
+        if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true) {
           System.Console.Write(printedEnemy[1]);
           used = true;
-        } else if (i == height - 2 && j == num && player.GetPos() > start && player.GetPos() < stop && enemy == true) {
+        } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true) {
           System.Console.Write(printedEnemy[0]);
           used = true;
         }
@@ -755,9 +755,9 @@ namespace CGI_Project {
       Console.Clear();
       bool used = false;
 
-      for (int i = 0; i < 53; i++) {
+      for (int i = 0; i < 63; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(0, 102, 5, i, j, ref used);
+          Island(0, 102, 5, i, j, ref used, 63);
           PrintItemShop(i,j, ref used);
 
           if (!used) {
@@ -772,7 +772,7 @@ namespace CGI_Project {
       if(enterLevel == true){
         SwitchOvrRide();
         enterLevel = false;
-        System.Console.WriteLine("Press Enter to start a game");
+        System.Console.WriteLine("\nPress Enter to start a game");
         if(Console.ReadKey().Key == ConsoleKey.Enter){
           RandomGame();
           player.SetPos(76);
@@ -785,7 +785,7 @@ namespace CGI_Project {
 
       if(player.GetPos() == 16 && player.GetItemsCount() != 4){
         Console.Clear();
-        System.Console.WriteLine("Press ENTER to enter the item shop, press any key to exit");
+        System.Console.WriteLine("\nPress ENTER to enter the item shop, press any key to exit");
         SwitchOvrRide();
 
         if(Console.ReadKey().Key == ConsoleKey.Enter){
@@ -807,7 +807,7 @@ namespace CGI_Project {
     }
 
     public void PrintItemShop(int i, int j, ref bool used){
-      int height = 48;
+      int height = 63-5;
 
       if(i==height-1&&j==5 || i==height-2&&j==5 || i==height-3&&j==5 || i==height-1&&j==13 || i==height-2&&j==13 || i==height-3&&j==13){
         System.Console.Write("|");
@@ -865,8 +865,6 @@ namespace CGI_Project {
 
       // Set player back
       player.SetPos(49);
-      SetLowerBound(16);
-      SetUpperBound(79);
       prev = ConsoleKey.D;
       key = ConsoleKey.D;
       ovrRide = true;
@@ -875,6 +873,8 @@ namespace CGI_Project {
       ConsoleKey newKey = new ConsoleKey();
 
       do{
+        SetLowerBound(16);
+        SetUpperBound(79);
         PrintHome();
         SetAccessInventory(newKey);
         if (ovrRide == false) {
@@ -949,6 +949,8 @@ namespace CGI_Project {
 
         RandomGameMap();
 
+        SetAccessInventory(newKey);
+
         if (ovrRide == false) {
           newKey = Console.ReadKey().Key;
           SetKey(newKey);
@@ -993,9 +995,9 @@ namespace CGI_Project {
       bool used = false;
       for (int i = 0; i < 63; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, isEnemy[0]);
-          Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, isEnemy[1]);
-          Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, isEnemy[2]);
+          Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, 63, isEnemy[0]);
+          Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, 63, isEnemy[1]);
+          Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, 63, isEnemy[2]);
 
           if (!used) {
             System.Console.Write(" ");
