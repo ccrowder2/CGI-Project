@@ -91,10 +91,10 @@ namespace CGI_Project {
 
     private void SetRandomNum(int start, int stop) {
       Random rnd = new Random();
-      int num = rnd.Next(start + 6, stop - 6);
+      int num = rnd.Next(start + 3, stop - 3);
 
       while (num % 3 == 0) {
-        num = rnd.Next(start + 6, stop - 6);
+        num = rnd.Next(start + 3, stop - 3);
       }
 
       this.num = num;
@@ -465,20 +465,20 @@ namespace CGI_Project {
         onIsland = true;
       }
 
-      if (i == height - 1 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop) {
+      if (i == height - 1 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop) {
         System.Console.Write("-|-");
         used = true;
-      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop && GetKey() == ConsoleKey.D) {
+      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop && GetKey() == ConsoleKey.D) {
         Console.ForegroundColor = ConsoleColor.Yellow;
         System.Console.Write(" 0>");
         Console.ForegroundColor = ConsoleColor.Gray;
         used = true;
-      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop && GetKey() == ConsoleKey.A) {
+      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop && GetKey() == ConsoleKey.A) {
         Console.ForegroundColor = ConsoleColor.Yellow;
         System.Console.Write("<0 ");
         Console.ForegroundColor = ConsoleColor.Gray;
         used = true;
-      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() > start && player.GetPos() < stop) {
+      } else if (i == height - 2 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop) {
         Console.ForegroundColor = ConsoleColor.Yellow;
         if (GetPrev() == ConsoleKey.D) {
           System.Console.Write(" 0>");
@@ -929,11 +929,11 @@ namespace CGI_Project {
         util.CheckActivatedItems();
         if(switchIslands == true){
           // Island Variables
-          int island1Stop = RandomStop(3,21);
+          int island1Stop = RandomStop(3,24);
           int island2Start = RandomStart(island1Stop);
-          int island2Stop = RandomStop(island2Start, 18);
+          int island2Stop = RandomStop(island2Start, 20);
           int island3Start = RandomStart(island2Stop);
-          int island3Stop = RandomStop(island3Start, 27); 
+          int island3Stop = RandomStop(island3Start, 28); 
           bool[] enemy = {CreateEnemy(),CreateEnemy(),CreateEnemy()};
           SetIsEnemy(enemy);
           int[] island1 = {3,island1Stop, RandomHeight()};
