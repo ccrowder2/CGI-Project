@@ -91,10 +91,10 @@ namespace CGI_Project {
 
     private void SetRandomNum(int start, int stop) {
       Random rnd = new Random();
-      int num = rnd.Next(start + 3, stop - 3);
+      int num = rnd.Next(lowerBound+7, upperBound - 7);
 
-      while (num % 3 == 0) {
-        num = rnd.Next(start + 3, stop - 3);
+      while (num % 7 == 0) {
+        num = rnd.Next(lowerBound + 7, upperBound - 7);
       }
 
       this.num = num;
@@ -447,7 +447,7 @@ namespace CGI_Project {
           Island(island3[0], island3[1], island3[2], i, j, ref used, 53);
           Island(island4[0], island4[1], island4[2], i, j, ref used, 53, true);
 
-          if (!used) {
+          if (!used){
             System.Console.Write(" ");
           }
 
@@ -991,6 +991,14 @@ namespace CGI_Project {
       }
     }
 
+    private bool OnIsland(int start, int stop){
+      if(player.GetPos() >= start && player.GetPos() <= stop){
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     private void RandomIslands(){
       bool used = false;
       for (int i = 0; i < 63; i++) {
@@ -999,7 +1007,13 @@ namespace CGI_Project {
           Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, 63, isEnemy[1]);
           Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, 63, isEnemy[2]);
 
-          if (!used) {
+          if (!used && j == num+1 && i==63-currentIslands[0][2]-1 && isEnemy[0] == true  && OnIsland(currentIslands[0][0], currentIslands[0][1]) == true || !used && j == num+1 && i==63-currentIslands[0][2]-2 && isEnemy[0] == true && OnIsland(currentIslands[0][0], currentIslands[0][1]) == true || !used && j == num+2 && i==63-currentIslands[0][2]-1 && isEnemy[0] == true  && OnIsland(currentIslands[0][0], currentIslands[0][1]) == true || !used && j == num+2 && i==63-currentIslands[0][2]-2 && isEnemy[0] == true && OnIsland(currentIslands[0][0], currentIslands[0][1]) == true){
+            
+          } else if (!used && j == num+1 && i==63-currentIslands[1][2]-1 && isEnemy[1] == true && OnIsland(currentIslands[1][0], currentIslands[1][1]) == true || !used && j == num+1 && i==63-currentIslands[1][2]-2 && isEnemy[1] == true && OnIsland(currentIslands[1][0], currentIslands[1][1]) == true || !used && j == num+2 && i==63-currentIslands[1][2]-1 && isEnemy[1] == true && OnIsland(currentIslands[1][0], currentIslands[1][1]) == true || !used && j == num+2 && i==63-currentIslands[1][2]-2 && isEnemy[1] == true && OnIsland(currentIslands[1][0], currentIslands[1][1]) == true){
+        
+          } else if (!used && j == num+1 && i==63-currentIslands[2][2]-1 && isEnemy[2] == true && OnIsland(currentIslands[2][0], currentIslands[2][1]) == true || !used && j == num+1 && i==63-currentIslands[2][2]-2 && isEnemy[2] == true && OnIsland(currentIslands[2][0], currentIslands[2][1]) == true || !used && j == num+2 && i==63-currentIslands[2][2]-1 && isEnemy[2] == true && OnIsland(currentIslands[2][0], currentIslands[2][1]) == true || !used && j == num+2 && i==63-currentIslands[2][2]-2 && isEnemy[2] == true && OnIsland(currentIslands[2][0], currentIslands[2][1]) == true){
+
+          } else if(!used){
             System.Console.Write(" ");
           }
 
