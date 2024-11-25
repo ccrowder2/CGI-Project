@@ -17,10 +17,11 @@ namespace CGI_Project {
     private bool newNum = false;
     private bool ovrRide = false;
     private int[][] currentIslands;
-    private string[] printedEnemy;
+    private string[][] printedEnemy;
     private bool[] isEnemy;
     private bool enterLevel = false;
     private bool switchIslands = false;
+    private int printEnemyCount = -1;
 
     public GameReport() {
 
@@ -85,7 +86,7 @@ namespace CGI_Project {
       this.currentIslands = currentIslands;
     }
 
-    private void SetPrintedEnemy(string[] printedEnemy) {
+    private void SetPrintedEnemy(string[][] printedEnemy) {
       this.printedEnemy = printedEnemy;
     }
 
@@ -166,6 +167,10 @@ namespace CGI_Project {
       }
     }
 
+    private void IncPrintEnemyCount(){
+      printEnemyCount++;
+    }
+
     private void SetIsEnemy(bool[] isEnemy){
       this.isEnemy = isEnemy;
     }
@@ -185,10 +190,10 @@ namespace CGI_Project {
       util.ResetItems();
       this.enemy = 0;
 
-      string[] newPrintedEnemy = new string[] {
-        "",
-        ""
-      };
+      string[] enemyHead = {"","",""};
+      string[] enemyBody = {"","",""};
+
+      string[][] newPrintedEnemy = new string[][] {enemyHead, enemyBody};
       SetPrintedEnemy(newPrintedEnemy);
 
       util.AddItem('b');
@@ -442,10 +447,10 @@ namespace CGI_Project {
 
       for (int i = 0; i < 53; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(island1[0], island1[1], island1[2], i, j, ref used, 53);
-          Island(island2[0], island2[1], island2[2], i, j, ref used, 53);
-          Island(island3[0], island3[1], island3[2], i, j, ref used, 53);
-          Island(island4[0], island4[1], island4[2], i, j, ref used, 53, true);
+          Island(island1[0], island1[1], island1[2], i, j, ref used, 53, false, false, true);
+          Island(island2[0], island2[1], island2[2], i, j, ref used, 53, false, false, true);
+          Island(island3[0], island3[1], island3[2], i, j, ref used, 53, false, false, true);
+          Island(island4[0], island4[1], island4[2], i, j, ref used, 53, true, false, true);
 
           if (!used){
             System.Console.Write(" ");
@@ -457,7 +462,7 @@ namespace CGI_Project {
       }
     }
 
-    private void Island(int start, int stop, int height, int i, int j, ref bool used, int loopLength, bool enemy = false, bool boss = false) {
+    private void Island(int start, int stop, int height, int i, int j, ref bool used, int loopLength, bool enemy = false, bool boss = false, bool tutorial = false) {
       height = loopLength - height;
       bool onIsland = false;
 
@@ -502,19 +507,35 @@ namespace CGI_Project {
       }
 
       if (enemy == true && enemyHealth > 0) {
-        if (newNum == true && enemy == true) {
+        if (newNum == true && enemy == true && onIsland == true) {
           SetRandomNum(start, stop);
           SetEnemy(num);
           PrintedEnemy();
           newNum = !newNum;
         }
 
-        if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true) {
-          System.Console.Write(printedEnemy[1]);
+        if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+          System.Console.Write(printedEnemy[1][0]);
           used = true;
-        } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true) {
-          System.Console.Write(printedEnemy[0]);
+        } else if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+          System.Console.Write(printedEnemy[1][1]);
           used = true;
+        } else if (i == height - 1 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+          System.Console.Write(printedEnemy[1][2]);
+          used = true;
+        } else if (i == height - 2 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+          System.Console.Write(printedEnemy[0][0]);
+          used = true;
+        } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+          System.Console.Write(printedEnemy[0][1]);
+          used = true;
+        } else if (i == height - 2 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+          System.Console.Write(printedEnemy[0][2]);
+          used = true;
+        } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == true){
+          Console.Write("8-8");
+        } else if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == true){
+          Console.Write(" I ");
         }
       }
 
@@ -549,27 +570,55 @@ namespace CGI_Project {
       // 0 - Head 1 - Body
       Random rnd1 = new Random();
       int number = rnd1.Next(0, 5);
+      string[] enemyHead = {" "," "," "};
+      string[] enemyBody = {" "," "," "};
+      string[][] newEnemy = {enemyHead, enemyBody};
 
       switch (number) {
       case 0:
-        printedEnemy[0] = "-_-";
-        printedEnemy[1] = " I ";
+        enemyHead[0] = "-";
+        enemyHead[1] = "_";
+        enemyHead[2] = "-";
+        enemyBody[0] = " ";
+        enemyBody[1] = "I";
+        enemyBody[2] = " ";
+        SetPrintedEnemy(newEnemy);
         break;
       case 1:
-        printedEnemy[0] = "^o^";
-        printedEnemy[1] = "( )";
+        enemyHead[0] = "^";
+        enemyHead[1] = "o";
+        enemyHead[2] = "^";
+        enemyBody[0] = "(";
+        enemyBody[1] = " ";
+        enemyBody[2] = ")";
+        SetPrintedEnemy(newEnemy);
         break;
       case 2:
-        printedEnemy[0] = ":-:";
-        printedEnemy[1] = "|||";
+        enemyHead[0] = ":";
+        enemyHead[1] = "-";
+        enemyHead[2] = ":";
+        enemyBody[0] = "|";
+        enemyBody[1] = "|";
+        enemyBody[2] = "|";
+        SetPrintedEnemy(newEnemy);
         break;
       case 3:
-        printedEnemy[0] = ".o.";
-        printedEnemy[1] = " | ";
+        enemyHead[0] = ".";
+        enemyHead[1] = "O";
+        enemyHead[2] = ".";
+        enemyBody[0] = " ";
+        enemyBody[1] = "I";
+        enemyBody[2] = " ";
+        SetPrintedEnemy(newEnemy);
         break;
-      case 4:
-        printedEnemy[0] = "-|-";
-        printedEnemy[1] = "|||";
+      default:
+        enemyHead[0] = "-";
+        enemyHead[1] = "|";
+        enemyHead[2] = "-";
+        enemyBody[0] = "|";
+        enemyBody[1] = "|";
+        enemyBody[2] = "|";
+        SetPrintedEnemy(newEnemy);
         break;
       }
     }
@@ -919,11 +968,10 @@ namespace CGI_Project {
       SwitchIslands();
       newNum = !newNum;
       
-      string[] newPrintedEnemy = new string[] {
-        "",
-        ""
-      };
-      SetPrintedEnemy(newPrintedEnemy);
+      string[] enemyHead = {"","",""};
+      string[] enemyBody = {"","",""};
+
+      string[][] newPrintedEnemy = new string[][] {enemyHead, enemyBody};
 
       do{
         util.CheckActivatedItems();
@@ -1007,13 +1055,7 @@ namespace CGI_Project {
           Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, 63, isEnemy[1]);
           Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, 63, isEnemy[2]);
 
-          if (!used && j == num+1 && i==63-currentIslands[0][2]-1 && isEnemy[0] == true  && OnIsland(currentIslands[0][0], currentIslands[0][1]) == true || !used && j == num+1 && i==63-currentIslands[0][2]-2 && isEnemy[0] == true && OnIsland(currentIslands[0][0], currentIslands[0][1]) == true || !used && j == num+2 && i==63-currentIslands[0][2]-1 && isEnemy[0] == true  && OnIsland(currentIslands[0][0], currentIslands[0][1]) == true || !used && j == num+2 && i==63-currentIslands[0][2]-2 && isEnemy[0] == true && OnIsland(currentIslands[0][0], currentIslands[0][1]) == true){
-            
-          } else if (!used && j == num+1 && i==63-currentIslands[1][2]-1 && isEnemy[1] == true && OnIsland(currentIslands[1][0], currentIslands[1][1]) == true || !used && j == num+1 && i==63-currentIslands[1][2]-2 && isEnemy[1] == true && OnIsland(currentIslands[1][0], currentIslands[1][1]) == true || !used && j == num+2 && i==63-currentIslands[1][2]-1 && isEnemy[1] == true && OnIsland(currentIslands[1][0], currentIslands[1][1]) == true || !used && j == num+2 && i==63-currentIslands[1][2]-2 && isEnemy[1] == true && OnIsland(currentIslands[1][0], currentIslands[1][1]) == true){
-        
-          } else if (!used && j == num+1 && i==63-currentIslands[2][2]-1 && isEnemy[2] == true && OnIsland(currentIslands[2][0], currentIslands[2][1]) == true || !used && j == num+1 && i==63-currentIslands[2][2]-2 && isEnemy[2] == true && OnIsland(currentIslands[2][0], currentIslands[2][1]) == true || !used && j == num+2 && i==63-currentIslands[2][2]-1 && isEnemy[2] == true && OnIsland(currentIslands[2][0], currentIslands[2][1]) == true || !used && j == num+2 && i==63-currentIslands[2][2]-2 && isEnemy[2] == true && OnIsland(currentIslands[2][0], currentIslands[2][1]) == true){
-
-          } else if(!used){
+          if(!used){
             System.Console.Write(" ");
           }
 
