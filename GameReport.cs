@@ -89,15 +89,15 @@ namespace CGI_Project {
       this.printedEnemy = printedEnemy;
     }
 
-    private void SetRandomNum(int start, int stop) {
+    private void SetRandomNum() {
       Random rnd = new Random();
-      int num = rnd.Next(lowerBound+7, upperBound - 7);
+      int num = rnd.Next(lowerBound+6, upperBound - 6);
 
-      while (num % 7 == 0) {
-        num = rnd.Next(lowerBound + 7, upperBound - 7);
+      while (num % 3 != 0) {
+        num = rnd.Next(lowerBound + 6, upperBound - 6);
       }
 
-      this.num = num;
+      this.num = num+1;
     }
 
     private int RandomStart(int stop){
@@ -127,22 +127,22 @@ namespace CGI_Project {
 
       switch(number){
         case 0:
-          return start+length+3;
+          return start+length+3+2;
           break;
         case 1:
-          return start+length+6;
+          return start+length+6+2;
           break;
         case 2:
-          return  start+length+9;;
+          return  start+length+9+2;
           break;
         case 3:
-          return start+length-3;
+          return start+length-3+2;
           break;
         case 4:
-          return start+length-6;
+          return start+length-6+2;
           break;
         case 5:
-          return  start+length-9;;
+          return  start+length-9+2;
           break;
       }
       
@@ -503,13 +503,21 @@ namespace CGI_Project {
 
       if (enemy == true && enemyHealth > 0) {
         if (newNum == true && enemy == true && onIsland == true) {
-          SetRandomNum(start, stop);
+          SetRandomNum();
           SetEnemy(num);
           PrintedEnemy();
           newNum = !newNum;
         }
 
-        if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+        if(num < start && player.GetPos() >= start && player.GetPos() <= stop || num > stop && player.GetPos() >= start && player.GetPos() <= stop ) {
+            Console.Clear();
+            System.Console.WriteLine("Error");
+            Console.ReadKey();
+            return;
+        }
+
+
+        if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][0])) {
           if(printedEnemy[1][0] == "$"){
             System.Console.Write(" ");
           } else {
@@ -517,24 +525,29 @@ namespace CGI_Project {
           }
           
           used = true;
-        } else if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
-          System.Console.Write(printedEnemy[1][1]);
+        } else if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][1])) {
+          if(printedEnemy[1][1] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedEnemy[1][1]);
+          }
+
           used = true;
-        } else if (i == height - 1 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+        } else if (i == height - 1 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][2])) {
           if(printedEnemy[1][2] == "$"){
             System.Console.Write(" ");
           } else {
             System.Console.Write(printedEnemy[1][2]);
           }
-          
+
           used = true;
-        } else if (i == height - 2 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+        } else if (i == height - 2 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[0][0])) {
           System.Console.Write(printedEnemy[0][0]);
           used = true;
-        } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+        } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[0][1])) {
           System.Console.Write(printedEnemy[0][1]);
           used = true;
-        } else if (i == height - 2 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
+        } else if (i == height - 2 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[0][2])) {
           System.Console.Write(printedEnemy[0][2]);
           used = true;
         } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == true){
@@ -986,11 +999,11 @@ namespace CGI_Project {
         util.CheckActivatedItems();
         if(switchIslands == true){
           // Island Variables
-          int island1Stop = RandomStop(3,24);
+          int island1Stop = RandomStop(3,45);
           int island2Start = RandomStart(island1Stop);
-          int island2Stop = RandomStop(island2Start, 20);
+          int island2Stop = RandomStop(island2Start, 39);
           int island3Start = RandomStart(island2Stop);
-          int island3Stop = RandomStop(island3Start, 28); 
+          int island3Stop = RandomStop(island3Start, 48); 
           bool[] enemy = {CreateEnemy(),CreateEnemy(),CreateEnemy()};
           SetIsEnemy(enemy);
           int[] island1 = {3,island1Stop, RandomHeight()};
@@ -999,8 +1012,8 @@ namespace CGI_Project {
           int[][] current = new int[][]{island1, island2, island3};
           SetCurrentIslands(current);
           player.SetPos(current[0][0]+1);
-          SetLowerBound(current[0][0]);
-          SetUpperBound(current[0][1]);
+          SetLowerBound(current[0][0]+1);
+          SetUpperBound(current[0][1]-1);
           SwitchIslands();
         }
 
@@ -1044,7 +1057,7 @@ namespace CGI_Project {
         if(!string.IsNullOrEmpty(player.GetItemsInUse())){
           util.PrintActivatedItems();
         }
-        System.Console.WriteLine($"Enemy pos: {enemy}");
+        System.Console.WriteLine($"Player pos: {player.GetPos()}");
       }
     }
 
