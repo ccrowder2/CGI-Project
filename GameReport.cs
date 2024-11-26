@@ -21,6 +21,7 @@ namespace CGI_Project {
     private bool[] isEnemy;
     private bool enterLevel = false;
     private bool switchIslands = false;
+    private int randomIslandCount;
 
     public GameReport() {
 
@@ -91,13 +92,17 @@ namespace CGI_Project {
 
     private void SetRandomNum() {
       Random rnd = new Random();
-      int number = rnd.Next(lowerBound+6, upperBound - 6);
+      int number = -1;
 
       while (number % 3 != 0) {
         number = rnd.Next(lowerBound + 6, upperBound - 6);
       }
 
-      this.num = number+1;
+      if(player.GetPos() <= 20){
+        this.num = number+1;
+      } else {
+        this.num = number;
+      }
     }
 
     private int RandomStart(int stop){
@@ -125,6 +130,8 @@ namespace CGI_Project {
       Random rnd = new Random();
       int number = rnd.Next(0,6);
 
+      if(player.GetPos() <= 20){
+
       switch(number){
         case 0:
           return start+length+3+2;
@@ -144,6 +151,28 @@ namespace CGI_Project {
         case 5:
           return  start+length-9+2;
           break;
+      }
+      } else {
+        switch(number){
+        case 0:
+          return start+length+3;
+          break;
+        case 1:
+          return start+length+6;
+          break;
+        case 2:
+          return  start+length+9;
+          break;
+        case 3:
+          return start+length-3;
+          break;
+        case 4:
+          return start+length-6;
+          break;
+        case 5:
+          return  start+length-9;
+          break;
+      }
       }
       
       return -1;
@@ -513,12 +542,11 @@ namespace CGI_Project {
           SetEnemy(num);
           PrintedEnemy();
           newNum = !newNum;
-          enemyHealth = 50;
         }
 
         if(num < start && player.GetPos() >= start && player.GetPos() <= stop || num > stop && player.GetPos() >= start && player.GetPos() <= stop ){
           enemy = false;
-          throw new Exception("Error");
+          System.Console.WriteLine("Error");
         } else {
             
           if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][0])) {
@@ -995,6 +1023,9 @@ namespace CGI_Project {
       player.SetItemsInUse("");
       SwitchIslands();
       newNum = !newNum;
+      randomIslandCount = 0;
+      enemyHealth = 50;
+      
       
       string[] enemyHead = {"","",""};
       string[] enemyBody = {"","",""};
@@ -1005,19 +1036,22 @@ namespace CGI_Project {
         util.CheckActivatedItems();
         if(switchIslands == true){
           // Island Variables
+          player.SetPos(4);
           int island1Stop = RandomStop(3,45);
           int island2Start = RandomStart(island1Stop);
-          int island2Stop = RandomStop(island2Start, 39);
+          int island2Stop = RandomStop(island2Start, 30);
           int island3Start = RandomStart(island2Stop);
-          int island3Stop = RandomStop(island3Start, 48); 
-          bool[] enemy = {CreateEnemy(),CreateEnemy(),CreateEnemy()};
+          int island3Stop = RandomStop(island3Start, 45); 
+          bool enemy1 = CreateEnemy();
+          bool enemy2 = CreateEnemy();
+          bool enemy3 = CreateEnemy();
+          bool[] enemy = {enemy1,enemy2,enemy3};
           SetIsEnemy(enemy);
           int[] island1 = {3,island1Stop, RandomHeight()};
           int[] island2 = {island2Start, island2Stop, RandomHeight()};
           int[] island3 = {island3Start, island3Stop, RandomHeight()};
           int[][] current = new int[][]{island1, island2, island3};
           SetCurrentIslands(current);
-          player.SetPos(current[0][0]+1);
           SetLowerBound(current[0][0]+1);
           SetUpperBound(current[0][1]-1);
           SwitchIslands();
@@ -1051,23 +1085,29 @@ namespace CGI_Project {
       Console.Clear();
       RandomIslands();
       Utility util = new Utility(player);
-      int x = 1;
 
       if(player.GetPos() == currentIslands[0][1] - 1 || player.GetPos() == currentIslands[1][1] - 1 || player.GetPos() == currentIslands[2][1] - 1){
-        System.Console.WriteLine();
-        if (Question("easy") == true) {
+        System.Console.WriteLine("Question");
+        if (Console.ReadLine() == "answer") {
           if (player.GetPos() == currentIslands[0][1] - 1) {
             player.SetPos(currentIslands[1][0] + 1);
             SetUpperBound(currentIslands[1][1] - 1);
             newNum = !newNum;
+            enemyHealth = 50;
           } else if (player.GetPos() == currentIslands[1][1] - 1) {
             player.SetPos(currentIslands[2][0] + 1);
             SetUpperBound(currentIslands[2][1] - 1);
             newNum = !newNum;
+            enemyHealth = 50;
           } else if (player.GetPos() == currentIslands[2][1] - 1) {
-            player.SetPos(currentIslands[3][0] + 1);
-            SetUpperBound(currentIslands[3][1] - 1);
-            newNum = !newNum;
+            if(randomIslandCount == 0){
+              randomIslandCount++;
+              SwitchIslands();
+              newNum = !newNum;
+              enemyHealth = 50;
+            } else {
+              // Enter boss fight
+            }
           }
 
           SetLowerBound(player.GetPos());
@@ -1077,7 +1117,8 @@ namespace CGI_Project {
           SwitchOvrRide();
         }
       } else if(player.GetPos() == enemy-3 && enemyHealth > 0){
-        if (Question("medium") == true) {
+        System.Console.WriteLine("Question");
+        if (Console.ReadLine() == "answer") {
           SetEnemyHealth(enemyHealth - player.GetDamage());
           SwitchOvrRide();
         } else {
