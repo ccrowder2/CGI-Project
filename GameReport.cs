@@ -302,6 +302,7 @@ namespace CGI_Project {
       Utility util = new Utility(player);
       bool end = false;
       char[] items = player.GetItems();
+      
       int itemNav = 0; // Tracks the current selection
       int visibleItemCount = 0; // Tracks the number of valid items displayed
 
@@ -512,10 +513,12 @@ namespace CGI_Project {
           SetEnemy(num);
           PrintedEnemy();
           newNum = !newNum;
+          enemyHealth = 50;
         }
 
         if(num < start && player.GetPos() >= start && player.GetPos() <= stop || num > stop && player.GetPos() >= start && player.GetPos() <= stop ){
           enemy = false;
+          throw new Exception("Error");
         } else {
             
           if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][0])) {
@@ -1047,20 +1050,49 @@ namespace CGI_Project {
     private void RandomGameMap(){
       Console.Clear();
       RandomIslands();
-      Utility util = new Utility();
+      Utility util = new Utility(player);
       int x = 1;
 
-      if(x==2){
+      if(player.GetPos() == currentIslands[0][1] - 1 || player.GetPos() == currentIslands[1][1] - 1 || player.GetPos() == currentIslands[2][1] - 1){
+        System.Console.WriteLine();
+        if (Question("easy") == true) {
+          if (player.GetPos() == currentIslands[0][1] - 1) {
+            player.SetPos(currentIslands[1][0] + 1);
+            SetUpperBound(currentIslands[1][1] - 1);
+            newNum = !newNum;
+          } else if (player.GetPos() == currentIslands[1][1] - 1) {
+            player.SetPos(currentIslands[2][0] + 1);
+            SetUpperBound(currentIslands[2][1] - 1);
+            newNum = !newNum;
+          } else if (player.GetPos() == currentIslands[2][1] - 1) {
+            player.SetPos(currentIslands[3][0] + 1);
+            SetUpperBound(currentIslands[3][1] - 1);
+            newNum = !newNum;
+          }
 
-      } else{
+          SetLowerBound(player.GetPos());
+          SwitchOvrRide();
+        } else {
+          player.SetPos(lowerBound);
+          SwitchOvrRide();
+        }
+      } else if(player.GetPos() == enemy-3 && enemyHealth > 0){
+        if (Question("medium") == true) {
+          SetEnemyHealth(enemyHealth - player.GetDamage());
+          SwitchOvrRide();
+        } else {
+          player.SetPos(lowerBound);
+          SwitchOvrRide();
+        }
+
+      }else{
         Inventory();
         System.Console.WriteLine($"Health: {player.GetHealth()}");
         System.Console.WriteLine($"Damage: {player.GetDamage()}");
         System.Console.Write($"Activated Items: ");
         if(!string.IsNullOrEmpty(player.GetItemsInUse())){
           util.PrintActivatedItems();
-        }
-        System.Console.WriteLine($"Player pos: {player.GetPos()}");
+        } 
       }
     }
 
