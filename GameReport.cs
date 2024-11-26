@@ -91,13 +91,13 @@ namespace CGI_Project {
 
     private void SetRandomNum() {
       Random rnd = new Random();
-      int num = rnd.Next(lowerBound+6, upperBound - 6);
+      int number = rnd.Next(lowerBound+6, upperBound - 6);
 
-      while (num % 3 != 0) {
-        num = rnd.Next(lowerBound + 6, upperBound - 6);
+      while (number % 3 != 0) {
+        number = rnd.Next(lowerBound + 6, upperBound - 6);
       }
 
-      this.num = num+1;
+      this.num = number+1;
     }
 
     private int RandomStart(int stop){
@@ -402,6 +402,7 @@ namespace CGI_Project {
     private void TutorialIsland() {
       Console.Clear();
       bool used = false;
+      bool putEnemy = false;
 
       // Island# - Start Stop Height Enemy or Not
       int[] island1 = {
@@ -440,12 +441,16 @@ namespace CGI_Project {
 
       System.Console.WriteLine(Prompt());
 
+      if(player.GetPos() >= island4[0] && player.GetPos() <= island4[1]){
+        putEnemy = true;
+      }
+
       for (int i = 0; i < 53; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(island1[0], island1[1], island1[2], i, j, ref used, 53, false, false, true);
-          Island(island2[0], island2[1], island2[2], i, j, ref used, 53, false, false, true);
-          Island(island3[0], island3[1], island3[2], i, j, ref used, 53, false, false, true);
-          Island(island4[0], island4[1], island4[2], i, j, ref used, 53, true, false, true);
+          Island(island1[0], island1[1], island1[2], i, j, ref used, 53, ref putEnemy, false, true);
+          Island(island2[0], island2[1], island2[2], i, j, ref used, 53, ref putEnemy, false, true);
+          Island(island3[0], island3[1], island3[2], i, j, ref used, 53, ref putEnemy, false, true);
+          Island(island4[0], island4[1], island4[2], i, j, ref used, 53, ref putEnemy, false, true);
 
           if (!used){
             System.Console.Write(" ");
@@ -457,7 +462,7 @@ namespace CGI_Project {
       }
     }
 
-    private void Island(int start, int stop, int height, int i, int j, ref bool used, int loopLength, bool enemy = false, bool boss = false, bool tutorial = false) {
+    private void Island(int start, int stop, int height, int i, int j, ref bool used, int loopLength, ref bool enemy, bool boss = false, bool tutorial = false) {
       height = loopLength - height;
       bool onIsland = false;
 
@@ -509,15 +514,11 @@ namespace CGI_Project {
           newNum = !newNum;
         }
 
-        if(num < start && player.GetPos() >= start && player.GetPos() <= stop || num > stop && player.GetPos() >= start && player.GetPos() <= stop ) {
-            Console.Clear();
-            System.Console.WriteLine("Error");
-            Console.ReadKey();
-            return;
-        }
-
-
-        if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][0])) {
+        if(num < start && player.GetPos() >= start && player.GetPos() <= stop || num > stop && player.GetPos() >= start && player.GetPos() <= stop ){
+          enemy = false;
+        } else {
+            
+          if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][0])) {
           if(printedEnemy[1][0] == "$"){
             System.Console.Write(" ");
           } else {
@@ -557,6 +558,7 @@ namespace CGI_Project {
           Console.Write(" I ");
           used = true;
         }
+      }
       }
 
       if (GetKey() == ConsoleKey.D || GetKey() == ConsoleKey.A) {
@@ -824,10 +826,11 @@ namespace CGI_Project {
     public void PrintHome(){
       Console.Clear();
       bool used = false;
+      bool homeEnemy = false;
 
       for (int i = 0; i < 63; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(0, 102, 5, i, j, ref used, 63);
+          Island(0, 102, 5, i, j, ref used, 63, ref homeEnemy);
           PrintItemShop(i,j, ref used);
 
           if (!used) {
@@ -1073,9 +1076,9 @@ namespace CGI_Project {
       bool used = false;
       for (int i = 0; i < 63; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, 63, isEnemy[0]);
-          Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, 63, isEnemy[1]);
-          Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, 63, isEnemy[2]);
+          Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, 63, ref isEnemy[0]);
+          Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, 63, ref isEnemy[1]);
+          Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, 63, ref isEnemy[2]);
 
           if(!used){
             System.Console.Write(" ");
