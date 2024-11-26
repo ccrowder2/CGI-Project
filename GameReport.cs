@@ -21,7 +21,6 @@ namespace CGI_Project {
     private bool[] isEnemy;
     private bool enterLevel = false;
     private bool switchIslands = false;
-    private int printEnemyCount = -1;
 
     public GameReport() {
 
@@ -165,10 +164,6 @@ namespace CGI_Project {
       } else {
         return false;
       }
-    }
-
-    private void IncPrintEnemyCount(){
-      printEnemyCount++;
     }
 
     private void SetIsEnemy(bool[] isEnemy){
@@ -515,13 +510,23 @@ namespace CGI_Project {
         }
 
         if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
-          System.Console.Write(printedEnemy[1][0]);
+          if(printedEnemy[1][0] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedEnemy[1][0]);
+          }
+          
           used = true;
         } else if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
           System.Console.Write(printedEnemy[1][1]);
           used = true;
         } else if (i == height - 1 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
-          System.Console.Write(printedEnemy[1][2]);
+          if(printedEnemy[1][2] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedEnemy[1][2]);
+          }
+          
           used = true;
         } else if (i == height - 2 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false) {
           System.Console.Write(printedEnemy[0][0]);
@@ -534,8 +539,10 @@ namespace CGI_Project {
           used = true;
         } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == true){
           Console.Write("8-8");
+          used = true;
         } else if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == true){
           Console.Write(" I ");
+          used = true;
         }
       }
 
@@ -567,21 +574,21 @@ namespace CGI_Project {
     }
 
     private void PrintedEnemy() {
-      // 0 - Head 1 - Body
       Random rnd1 = new Random();
-      int number = rnd1.Next(0, 5);
       string[] enemyHead = {" "," "," "};
       string[] enemyBody = {" "," "," "};
       string[][] newEnemy = {enemyHead, enemyBody};
 
+      do{
+      int number = rnd1.Next(0, 5);
       switch (number) {
       case 0:
         enemyHead[0] = "-";
         enemyHead[1] = "_";
         enemyHead[2] = "-";
-        enemyBody[0] = " ";
+        enemyBody[0] = "$";
         enemyBody[1] = "I";
-        enemyBody[2] = " ";
+        enemyBody[2] = "$";
         SetPrintedEnemy(newEnemy);
         break;
       case 1:
@@ -589,7 +596,7 @@ namespace CGI_Project {
         enemyHead[1] = "o";
         enemyHead[2] = "^";
         enemyBody[0] = "(";
-        enemyBody[1] = " ";
+        enemyBody[1] = "$";
         enemyBody[2] = ")";
         SetPrintedEnemy(newEnemy);
         break;
@@ -606,9 +613,9 @@ namespace CGI_Project {
         enemyHead[0] = ".";
         enemyHead[1] = "O";
         enemyHead[2] = ".";
-        enemyBody[0] = " ";
+        enemyBody[0] = "$";
         enemyBody[1] = "I";
-        enemyBody[2] = " ";
+        enemyBody[2] = "$";
         SetPrintedEnemy(newEnemy);
         break;
       default:
@@ -621,6 +628,7 @@ namespace CGI_Project {
         SetPrintedEnemy(newEnemy);
         break;
       }
+      } while(string.IsNullOrEmpty(enemyHead[0]) || string.IsNullOrEmpty(enemyHead[1]) || string.IsNullOrEmpty(enemyHead[2]) || string.IsNullOrEmpty(enemyBody[0]) || string.IsNullOrEmpty(enemyBody[1]) || string.IsNullOrEmpty(enemyBody[2]));
     }
 
     private bool Question(string difficulty) {
@@ -825,6 +833,7 @@ namespace CGI_Project {
         if(Console.ReadKey().Key == ConsoleKey.Enter){
           RandomGame();
           player.SetPos(76);
+          SwitchOvrRide();
         } else {
           player.SetPos(76);
         }
@@ -989,7 +998,7 @@ namespace CGI_Project {
           int[] island3 = {island3Start, island3Stop, RandomHeight()};
           int[][] current = new int[][]{island1, island2, island3};
           SetCurrentIslands(current);
-          player.SetPos(current[0][0]+3);
+          player.SetPos(current[0][0]+1);
           SetLowerBound(current[0][0]);
           SetUpperBound(current[0][1]);
           SwitchIslands();
