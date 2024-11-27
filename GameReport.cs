@@ -1193,7 +1193,7 @@ namespace CGI_Project {
       string[] bossHead = {" "," "," "," "," "," "};
       string[] bossMiddle = {" "," "," "," "," "," "};
       string[] bossLegs = {" "," "," "," "," "," "};
-      string[][] newEnemy = {bossHead, bossMiddle, bossLegs};
+      string[][] newEnemy = {bossLegs, bossMiddle, bossHead};
 
       switch(number){
         case 0:
@@ -1260,128 +1260,57 @@ namespace CGI_Project {
     SetPrintedBoss(newEnemy);
     }
 
-    public void PrintBoss(int i, int j, ref bool used){
-      // Variables
-      int island1Start = 3;
-      int island1Stop = 41;
-      int island1Height = 63-15;
-      int island2Start = 42;
-      int island2Stop = 77;
-      int island2Height = 63-5;
-      int island3Start = 78;
-      int island3Stop = 116;
-      int island3Height = 63-15;
+ public void PrintBoss(int i, int j, ref bool used)
+{
+    // Variables
+    int[] islandStarts = { 3, 42, 78 };
+    int[] islandHeights = { 63 - 15, 63 - 5, 63 - 15 };
 
-      if(moveBoss == true){
+    if (moveBoss)
+    {
         Random rnd = new Random();
-        int number = rnd.Next(0,3);
-
-        switch(number){
-          case 0:
-            currentBossPos = boss[0];
-            break;
-          case 1:
-            currentBossPos = boss[1];
-            break;
-          case 2:
-            currentBossPos = boss[2];
-            break;
-        }
+        int number = rnd.Next(0, 3);
+        currentBossPos = boss[number];
         moveBoss = false;
-      }
-
-      if(currentBossPos == boss[0]){
-        if(i==island1Height-1 && j==boss[0]+bossCount){
-          int count = bossCount+2;
-          if(printedBoss[2][count] == "$"){
-            System.Console.Write(" ");
-          } else {
-            System.Console.Write(printedBoss[2][count]);
-          }
-          if(bossCount<=2){
-            bossCount++;
-          }
-          used = true;
-        } else if(i==island1Height-2 && j==boss[0]+bossCount){
-          int count = bossCount+2;
-          if(printedBoss[1][count] == "$"){
-            System.Console.Write(" ");
-          } else {
-            System.Console.Write(printedBoss[1][count]);
-          }
-          used = true;
-        } else if(i==island1Height-3 && j==boss[0]+bossCount){
-          int count = bossCount+2;
-          if(printedBoss[0][count] == "$"){
-            System.Console.Write(" ");
-          } else {
-            System.Console.Write(printedBoss[0][count]);
-          }
-          used = true;
-        }
-      } else if(currentBossPos == boss[1]){
-        if(i==island2Height-1 && j==boss[1]+bossCount){
-          int count = bossCount+2;
-          if(printedBoss[2][count] == "$"){
-            System.Console.Write(" ");
-          } else {
-            System.Console.Write(printedBoss[2][count]);
-          }
-          if(bossCount<=2){
-            bossCount++;
-          }
-          used = true;
-        } else if(i==island2Height-2 && j==boss[1]+bossCount){
-          int count = bossCount+2;
-          if(printedBoss[1][count] == "$"){
-            System.Console.Write(" ");
-          } else {
-            System.Console.Write(printedBoss[1][count]);
-          }
-          used = true;
-        } else if(i==island2Height-3 && j==boss[1]+bossCount){
-          int count = bossCount+2;
-          if(printedBoss[0][count] == "$"){
-            System.Console.Write(" ");
-          } else {
-            System.Console.Write(printedBoss[0][count]);
-          }
-          used = true;
-        }
-      } else if(currentBossPos == boss[2]){
-        if(i==island3Height-1 && j==boss[2]+bossCount){
-          int count = bossCount+2;
-          if(printedBoss[2][count] == "$"){
-            System.Console.Write(" ");
-          } else {
-            System.Console.Write(printedBoss[2][count]);
-          }
-          if(bossCount<=2){
-            bossCount++;
-          }
-          used = true;
-        } else if(i==island3Height-2 && j==boss[2]+bossCount){
-          int count = bossCount+2;
-          if(printedBoss[1][count] == "$"){
-            System.Console.Write(" ");
-          } else {
-            System.Console.Write(printedBoss[1][count]);
-          }
-          used = true;
-        } else if(i==island3Height-3 && j==boss[2]+bossCount){
-          int count = bossCount+2;
-          if(printedBoss[0][count] == "$"){
-            System.Console.Write(" ");
-          } else {
-            System.Console.Write(printedBoss[0][count]);
-          }
-          used = true;
-        }
-      }
     }
+
+    for (int index = 0; index < boss.Length; index++)
+    {
+        if (currentBossPos == boss[index])
+        {
+            int islandHeight = islandHeights[index];
+            PrintBossRows(i, j, islandHeight, boss[index], ref used);
+            break;
+        }
+    }
+}
+
+private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref bool used)
+{
+    for (int row = 0; row < 3; row++) // Iterate through the 3 rows of the boss
+    {
+        if (i == islandHeight - 1 - row && j >= bossPosition && j < bossPosition + printedBoss[row].Length)
+        {
+            int relativePosition = j - bossPosition; // Calculate the position within the row
+            string toPrint = printedBoss[row][relativePosition] == "$" ? " " : printedBoss[row][relativePosition];
+            System.Console.Write(toPrint);
+
+            if (row == 0 && bossCount < printedBoss[row].Length - 2)
+            {
+                bossCount++;
+            }
+
+            used = true;
+            return;
+        }
+    }
+}
+
+
 
     private void PrintBossLevel(){
       Console.Clear();
+      Utility util = new Utility(player);
 
       bool used = false;
       bool isEnemy = false;
@@ -1401,6 +1330,19 @@ namespace CGI_Project {
         System.Console.WriteLine();
       }
       bossCount = -2;
+
+      if(1==2){
+
+      } else {
+        Inventory();
+        System.Console.WriteLine($"Health: {player.GetHealth()}");
+        System.Console.WriteLine($"Damage: {player.GetDamage()}");
+        System.Console.Write($"Activated Items: ");
+        if(!string.IsNullOrEmpty(player.GetItemsInUse())){
+          util.PrintActivatedItems();
+        } 
+        System.Console.WriteLine(player.GetPos());
+      }
     }
 
     private void Boss(){
@@ -1419,8 +1361,8 @@ namespace CGI_Project {
       // Variables
       bossHealth = 150;
       int boss1 = 27;
-      int boss2 = 58;
-      int boss3 = 107;
+      int boss2 = 57;
+      int boss3 = 93;
       int[] bosses = {boss1,boss2,boss3};
       SetBoss(bosses);
       PrintedBoss();
