@@ -887,7 +887,8 @@ namespace CGI_Project {
         enterLevel = false;
         System.Console.WriteLine("\nPress Enter to start a game");
         if(Console.ReadKey().Key == ConsoleKey.Enter){
-          RandomGame();
+          //RandomGame();
+          Boss();
           player.SetPos(76);
           SwitchOvrRide();
         } else {
@@ -1175,6 +1176,69 @@ namespace CGI_Project {
         }
         System.Console.WriteLine();
       }  
+    }
+
+    private void PrintedBoss(){
+
+    }
+
+    private void PrintBossLevel(){
+      Console.Clear();
+
+      bool used = false;
+      bool isEnemy = false;
+      for (int i = 0; i < 63; i++) {
+        for (int j = 0; j < 147; j++) {
+          Island(3, 41, 15, i, j, ref used, 63, ref isEnemy);
+          Island(42, 77, 5, i, j, ref used, 63, ref isEnemy);
+          Island(78, 116, 15, i, j, ref used, 63, ref isEnemy);
+
+          if(!used){
+            System.Console.Write(" ");
+          }
+
+          used = false;
+        }
+        System.Console.WriteLine();
+      }
+    }
+
+    private void Boss(){
+      PlayerFileHandler file = new PlayerFileHandler(player);
+      Utility util = new Utility(player);
+      bool end = false;
+
+      // Set player back
+      player.SetPos(4);
+      prev = ConsoleKey.D;
+      key = ConsoleKey.D;
+      ovrRide = true;
+      SetLowerBound(4);
+      SetUpperBound(115);
+
+      ConsoleKey newKey = new ConsoleKey();
+
+      do{
+        PrintBossLevel();
+        SetAccessInventory(newKey);
+        if (ovrRide == false) {
+          newKey = Console.ReadKey().Key;
+          SetKey(newKey);
+
+          if (GetKey() == ConsoleKey.D && player.GetPos() < upperBound) {
+            player.IncPos();
+          } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
+            player.DecPos();
+          } else if(GetKey() == ConsoleKey.X){
+            Console.Clear();
+            end = true;
+          }
+
+        } else {
+          SwitchOvrRide();
+        }
+      }while(!end);
+      
     }
   }
 }
