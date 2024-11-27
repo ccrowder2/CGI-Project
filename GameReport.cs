@@ -555,7 +555,7 @@ namespace CGI_Project {
 
         if(num < start && player.GetPos() >= start && player.GetPos() <= stop || num > stop && player.GetPos() >= start && player.GetPos() <= stop ){
           enemy = false;
-          System.Console.WriteLine("Error");
+          this.enemy = -1;
         } else {
             
           if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][0])) {
@@ -1147,7 +1147,7 @@ namespace CGI_Project {
         if(!string.IsNullOrEmpty(player.GetItemsInUse())){
           util.PrintActivatedItems();
         } 
-        System.Console.WriteLine($"Player Pos: {player.GetPos()}");
+        System.Console.WriteLine();
       }
     }
 
