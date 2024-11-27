@@ -12,6 +12,8 @@ namespace CGI_Project {
     private ConsoleKey accessInventory;
     private int enemy;
     private int[] boss;
+    private int bossCount = -2;
+    private int currentBossPos;
     private int bossHealth;
     private int enemyHealth = 50;
     private int num;
@@ -25,6 +27,7 @@ namespace CGI_Project {
     private bool switchIslands = false;
     private int randomIslandCount;
     bool improperLength = false;
+    private bool moveBoss = false;
 
     public GameReport() {
 
@@ -77,7 +80,7 @@ namespace CGI_Project {
     private void SetEnemy(int enemy) {
       this.enemy = enemy;
     }
-    private void SetBoss(int boss) {
+    private void SetBoss(int[] boss) {
       this.boss = boss;
     }
 
@@ -204,10 +207,6 @@ namespace CGI_Project {
 
     private void SetIsEnemy(bool[] isEnemy){
       this.isEnemy = isEnemy;
-    }
-
-    private void SetBoss(int[] boss){
-      this.boss = boss;
     }
 
     private void SetPrintedBoss(string[][] printedBoss){
@@ -1194,7 +1193,7 @@ namespace CGI_Project {
       string[] bossHead = {" "," "," "," "," "," "};
       string[] bossMiddle = {" "," "," "," "," "," "};
       string[] bossLegs = {" "," "," "," "," "," "};
-      string[][] newEnemy = {bossHead, bossLegs, bossMiddle};
+      string[][] newEnemy = {bossHead, bossMiddle, bossLegs};
 
       switch(number){
         case 0:
@@ -1218,9 +1217,166 @@ namespace CGI_Project {
           bossHead[5] = "O";
           break;
         case 1:
+          bossLegs[0] = "^";
+          bossLegs[1] = "$";
+          bossLegs[2] = "^";
+          bossLegs[3] = "^";
+          bossLegs[4] = "$";
+          bossLegs[5] = "^";
+          bossMiddle[0] = "|";
+          bossMiddle[1] = "-";
+          bossMiddle[2] = "|";
+          bossMiddle[3] = "|";
+          bossMiddle[4] = "-";
+          bossMiddle[5] = "|";
+          bossHead[0] = "_";
+          bossHead[1] = "_";
+          bossHead[2] = ".";
+          bossHead[3] = ".";
+          bossHead[4] = "_";
+          bossHead[5] = "_";
           break;
         case 2:
+          bossLegs[0] = "$";
+          bossLegs[1] = "$";
+          bossLegs[2] = "|";
+          bossLegs[3] = "|";
+          bossLegs[4] = "$";
+          bossLegs[5] = "$";
+          bossMiddle[0] = "-";
+          bossMiddle[1] = "-";
+          bossMiddle[2] = "|";
+          bossMiddle[3] = "-";
+          bossMiddle[4] = "-";
+          bossMiddle[5] = "-";
+          bossHead[0] = "$";
+          bossHead[1] = "<";
+          bossHead[2] = "O";
+          bossHead[3] = ">";
+          bossHead[4] = "$";
+          bossHead[5] = "$";
           break;
+      }
+    SetPrintedBoss(newEnemy);
+    }
+
+    public void PrintBoss(int i, int j, ref bool used){
+      // Variables
+      int island1Start = 3;
+      int island1Stop = 41;
+      int island1Height = 63-15;
+      int island2Start = 42;
+      int island2Stop = 77;
+      int island2Height = 63-5;
+      int island3Start = 78;
+      int island3Stop = 116;
+      int island3Height = 63-15;
+
+      if(moveBoss == true){
+        Random rnd = new Random();
+        int number = rnd.Next(0,3);
+
+        switch(number){
+          case 0:
+            currentBossPos = boss[0];
+            break;
+          case 1:
+            currentBossPos = boss[1];
+            break;
+          case 2:
+            currentBossPos = boss[2];
+            break;
+        }
+        moveBoss = false;
+      }
+
+      if(currentBossPos == boss[0]){
+        if(i==island1Height-1 && j==boss[0]+bossCount){
+          int count = bossCount+2;
+          if(printedBoss[2][count] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedBoss[2][count]);
+          }
+          if(bossCount<=2){
+            bossCount++;
+          }
+          used = true;
+        } else if(i==island1Height-2 && j==boss[0]+bossCount){
+          int count = bossCount+2;
+          if(printedBoss[1][count] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedBoss[1][count]);
+          }
+          used = true;
+        } else if(i==island1Height-3 && j==boss[0]+bossCount){
+          int count = bossCount+2;
+          if(printedBoss[0][count] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedBoss[0][count]);
+          }
+          used = true;
+        }
+      } else if(currentBossPos == boss[1]){
+        if(i==island2Height-1 && j==boss[1]+bossCount){
+          int count = bossCount+2;
+          if(printedBoss[2][count] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedBoss[2][count]);
+          }
+          if(bossCount<=2){
+            bossCount++;
+          }
+          used = true;
+        } else if(i==island2Height-2 && j==boss[1]+bossCount){
+          int count = bossCount+2;
+          if(printedBoss[1][count] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedBoss[1][count]);
+          }
+          used = true;
+        } else if(i==island2Height-3 && j==boss[1]+bossCount){
+          int count = bossCount+2;
+          if(printedBoss[0][count] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedBoss[0][count]);
+          }
+          used = true;
+        }
+      } else if(currentBossPos == boss[2]){
+        if(i==island3Height-1 && j==boss[2]+bossCount){
+          int count = bossCount+2;
+          if(printedBoss[2][count] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedBoss[2][count]);
+          }
+          if(bossCount<=2){
+            bossCount++;
+          }
+          used = true;
+        } else if(i==island3Height-2 && j==boss[2]+bossCount){
+          int count = bossCount+2;
+          if(printedBoss[1][count] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedBoss[1][count]);
+          }
+          used = true;
+        } else if(i==island3Height-3 && j==boss[2]+bossCount){
+          int count = bossCount+2;
+          if(printedBoss[0][count] == "$"){
+            System.Console.Write(" ");
+          } else {
+            System.Console.Write(printedBoss[0][count]);
+          }
+          used = true;
+        }
       }
     }
 
@@ -1234,6 +1390,7 @@ namespace CGI_Project {
           Island(3, 41, 15, i, j, ref used, 63, ref isEnemy);
           Island(42, 77, 5, i, j, ref used, 63, ref isEnemy);
           Island(78, 116, 15, i, j, ref used, 63, ref isEnemy);
+          PrintBoss(i,j,ref used);
 
           if(!used){
             System.Console.Write(" ");
@@ -1243,6 +1400,7 @@ namespace CGI_Project {
         }
         System.Console.WriteLine();
       }
+      bossCount = -2;
     }
 
     private void Boss(){
@@ -1265,6 +1423,8 @@ namespace CGI_Project {
       int boss3 = 107;
       int[] bosses = {boss1,boss2,boss3};
       SetBoss(bosses);
+      PrintedBoss();
+      moveBoss = true;
 
 
       ConsoleKey newKey = new ConsoleKey();
