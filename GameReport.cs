@@ -22,6 +22,7 @@ namespace CGI_Project {
     private bool enterLevel = false;
     private bool switchIslands = false;
     private int randomIslandCount;
+    bool improperLength = false;
 
     public GameReport() {
 
@@ -173,6 +174,10 @@ namespace CGI_Project {
           return  start+length-9;
           break;
       }
+      }
+
+      if(number%2 == 0){
+        number++;
       }
       
       return -1;
@@ -540,6 +545,10 @@ namespace CGI_Project {
         if (newNum == true && enemy == true && onIsland == true) {
           SetRandomNum();
           SetEnemy(num);
+          if(this.num > currentIslands[2][0] && this.num < currentIslands[2][1]){
+            this.num--;
+            this.enemy--;
+          }
           PrintedEnemy();
           newNum = !newNum;
         }
@@ -1041,7 +1050,7 @@ namespace CGI_Project {
           int island2Start = RandomStart(island1Stop);
           int island2Stop = RandomStop(island2Start, 30);
           int island3Start = RandomStart(island2Stop);
-          int island3Stop = RandomStop(island3Start, 45); 
+          int island3Stop = RandomStop(island3Start, 30); 
           bool enemy1 = CreateEnemy();
           bool enemy2 = CreateEnemy();
           bool enemy3 = CreateEnemy();
@@ -1070,6 +1079,10 @@ namespace CGI_Project {
           } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
             player.DecPos();
           } else if(GetKey() == ConsoleKey.X){
+            end = true;
+          }
+
+          if(player.GetPos() == currentIslands[2][1]-1 && randomIslandCount != 0){
             end = true;
           }
 
@@ -1105,7 +1118,7 @@ namespace CGI_Project {
               SwitchIslands();
               newNum = !newNum;
               enemyHealth = 50;
-            } else {
+            } else {     
               // Enter boss fight
             }
           }
@@ -1134,6 +1147,7 @@ namespace CGI_Project {
         if(!string.IsNullOrEmpty(player.GetItemsInUse())){
           util.PrintActivatedItems();
         } 
+        System.Console.WriteLine($"Player Pos: {player.GetPos()}");
       }
     }
 
