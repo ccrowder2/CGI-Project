@@ -11,13 +11,15 @@ namespace CGI_Project {
     private ConsoleKey prev;
     private ConsoleKey accessInventory;
     private int enemy;
-    private int boss;
+    private int[] boss;
+    private int bossHealth;
     private int enemyHealth = 50;
     private int num;
     private bool newNum = false;
     private bool ovrRide = false;
     private int[][] currentIslands;
     private string[][] printedEnemy;
+    private string[][] printedBoss;
     private bool[] isEnemy;
     private bool enterLevel = false;
     private bool switchIslands = false;
@@ -202,6 +204,14 @@ namespace CGI_Project {
 
     private void SetIsEnemy(bool[] isEnemy){
       this.isEnemy = isEnemy;
+    }
+
+    private void SetBoss(int[] boss){
+      this.boss = boss;
+    }
+
+    private void SetPrintedBoss(string[][] printedBoss){
+      this.printedBoss = printedBoss;
     }
 
     public void Tutorial() {
@@ -1179,7 +1189,39 @@ namespace CGI_Project {
     }
 
     private void PrintedBoss(){
+      Random rnd = new Random();
+      int number = rnd.Next(0,3);
+      string[] bossHead = {" "," "," "," "," "," "};
+      string[] bossMiddle = {" "," "," "," "," "," "};
+      string[] bossLegs = {" "," "," "," "," "," "};
+      string[][] newEnemy = {bossHead, bossLegs, bossMiddle};
 
+      switch(number){
+        case 0:
+          bossLegs[0] = "|";
+          bossLegs[1] = "$";
+          bossLegs[2] = "|";
+          bossLegs[3] = "|";
+          bossLegs[4] = "$";
+          bossLegs[5] = "|";
+          bossMiddle[0] = "(";
+          bossMiddle[1] = "=";
+          bossMiddle[2] = "$";
+          bossMiddle[3] = "=";
+          bossMiddle[4] = "$";
+          bossMiddle[5] = "=";
+          bossHead[0] = "O";
+          bossHead[1] = "O";
+          bossHead[2] = ":";
+          bossHead[3] = ":";
+          bossHead[4] = "O";
+          bossHead[5] = "O";
+          break;
+        case 1:
+          break;
+        case 2:
+          break;
+      }
     }
 
     private void PrintBossLevel(){
@@ -1215,6 +1257,15 @@ namespace CGI_Project {
       ovrRide = true;
       SetLowerBound(4);
       SetUpperBound(115);
+
+      // Variables
+      bossHealth = 150;
+      int boss1 = 27;
+      int boss2 = 58;
+      int boss3 = 107;
+      int[] bosses = {boss1,boss2,boss3};
+      SetBoss(bosses);
+
 
       ConsoleKey newKey = new ConsoleKey();
 
