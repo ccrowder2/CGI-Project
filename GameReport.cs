@@ -765,7 +765,7 @@ namespace CGI_Project {
       do{
       Console.Clear();
 
-      System.Console.WriteLine("Item Shop");
+      System.Console.WriteLine($"Item Shop - (Total XP: {player.GetXP()})");
       if(itemNav == 0){
         Console.ForegroundColor = ConsoleColor.Green;
         System.Console.WriteLine("Bonus XP - 25 XP");
@@ -1276,7 +1276,7 @@ namespace CGI_Project {
 
     for (int index = 0; index < boss.Length; index++)
     {
-        if (currentBossPos == boss[index])
+        if (currentBossPos == boss[index] && bossHealth > 0)
         {
             int islandHeight = islandHeights[index];
             PrintBossRows(i, j, islandHeight, boss[index], ref used);
@@ -1331,7 +1331,23 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
       }
       bossCount = -2;
 
-      if(1==2){
+      if(player.GetPos() == currentBossPos+7 && bossHealth > 0 || player.GetPos() == currentBossPos-2 && bossHealth > 0){
+        System.Console.WriteLine("Question");
+
+        if(Console.ReadLine() == "answer"){
+          bossHealth -= player.GetDamage();
+          moveBoss = !moveBoss;
+          SwitchOvrRide();
+          if(bossHealth <= 0){
+            player.SetXP(player.GetXP()+player.GetXpToEarn());
+            Console.Clear();
+            System.Console.WriteLine($"\n\nYou've beat this level, you've been awarded {player.GetXpToEarn()} XP.");
+            System.Console.WriteLine("\nPress any key to continue:");
+            Console.ReadKey();
+            return;
+
+          }
+        }
 
       } else {
         Inventory();
@@ -1341,7 +1357,6 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
         if(!string.IsNullOrEmpty(player.GetItemsInUse())){
           util.PrintActivatedItems();
         } 
-        System.Console.WriteLine(player.GetPos());
       }
     }
 
@@ -1357,10 +1372,11 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
       ovrRide = true;
       SetLowerBound(4);
       SetUpperBound(115);
+      util.ResetItems();
 
       // Variables
       bossHealth = 150;
-      int boss1 = 27;
+      int boss1 = 21;
       int boss2 = 57;
       int boss3 = 93;
       int[] bosses = {boss1,boss2,boss3};
@@ -1390,7 +1406,7 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
         } else {
           SwitchOvrRide();
         }
-      }while(!end);
+      }while(!end && bossHealth > 0);
       
     }
   }
