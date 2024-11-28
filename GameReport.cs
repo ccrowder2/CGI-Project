@@ -896,8 +896,7 @@ namespace CGI_Project {
         enterLevel = false;
         System.Console.WriteLine("\nPress Enter to start a game");
         if(Console.ReadKey().Key == ConsoleKey.Enter){
-          //RandomGame();
-          Boss();
+          RandomGame();
           player.SetPos(76);
           SwitchOvrRide();
         } else {
@@ -1044,6 +1043,7 @@ namespace CGI_Project {
       newNum = !newNum;
       randomIslandCount = 0;
       enemyHealth = 50;
+      bossHealth = 150;
       
       
       string[] enemyHead = {"","",""};
@@ -1092,15 +1092,11 @@ namespace CGI_Project {
             end = true;
           }
 
-          if(player.GetPos() == currentIslands[2][1]-1 && randomIslandCount != 0){
-            end = true;
-          }
-
         } else {
           SwitchOvrRide();
         }
 
-      }while(!end);
+      }while(!end && bossHealth > 0);
 
     }
 
@@ -1129,7 +1125,7 @@ namespace CGI_Project {
               newNum = !newNum;
               enemyHealth = 50;
             } else {     
-              // Enter boss fight
+              Boss();
             }
           }
 
@@ -1306,8 +1302,6 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
     }
 }
 
-
-
     private void PrintBossLevel(){
       Console.Clear();
       Utility util = new Utility(player);
@@ -1372,7 +1366,6 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
       ovrRide = true;
       SetLowerBound(4);
       SetUpperBound(115);
-      util.ResetItems();
 
       // Variables
       bossHealth = 150;
@@ -1388,6 +1381,7 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
       ConsoleKey newKey = new ConsoleKey();
 
       do{
+        util.CheckActivatedItems();
         PrintBossLevel();
         SetAccessInventory(newKey);
         if (ovrRide == false) {

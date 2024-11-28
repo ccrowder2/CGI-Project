@@ -1,4 +1,4 @@
-1#cb#cb#cb#1575#10#d
+1#cb#cb#cb#1575#10#
 2#cb3#cb#cb#100#1#b
 3#cb4#cb#cb#0#0#
 4#cb6#cb#cb#0#0#
