@@ -1096,7 +1096,7 @@ namespace CGI_Project {
           SwitchOvrRide();
         }
 
-      }while(!end && bossHealth > 0);
+      }while(!end && bossHealth > 0 && player.GetHealth() > 0);
 
     }
 
@@ -1132,7 +1132,10 @@ namespace CGI_Project {
           SetLowerBound(player.GetPos());
           SwitchOvrRide();
         } else {
-          player.SetPos(lowerBound);
+          player.SetHealth(0);
+          Console.Clear();
+          System.Console.WriteLine("\n\nYou fell to your death\n\nPress any key to continue:");
+          Console.ReadKey();
           SwitchOvrRide();
         }
       } else if(player.GetPos() == enemy-3 && enemyHealth > 0){
@@ -1142,6 +1145,7 @@ namespace CGI_Project {
           SwitchOvrRide();
         } else {
           player.SetPos(lowerBound);
+          player.SetHealth(player.GetHealth()-25);
           SwitchOvrRide();
         }
 
@@ -1339,8 +1343,14 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
             System.Console.WriteLine("\nPress any key to continue:");
             Console.ReadKey();
             return;
-
+          } else if(player.GetHealth() <= 0){
+            Console.Clear();
+            System.Console.WriteLine("");
           }
+        } else {
+          player.SetPos(lowerBound);
+          player.SetHealth(player.GetHealth()-50);
+          SwitchOvrRide();
         }
 
       } else {
@@ -1350,7 +1360,8 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
         System.Console.Write($"Activated Items: ");
         if(!string.IsNullOrEmpty(player.GetItemsInUse())){
           util.PrintActivatedItems();
-        } 
+        }
+        System.Console.WriteLine();
       }
     }
 
@@ -1400,7 +1411,7 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
         } else {
           SwitchOvrRide();
         }
-      }while(!end && bossHealth > 0);
+      }while(!end && bossHealth > 0 && player.GetHealth() > 0);
       
     }
   }
