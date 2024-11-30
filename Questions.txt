@@ -4,7 +4,7 @@ easy#What does a StreamReader object do?#Reads data from a text file#Writes data
 easy#What type of access reads data sequentially from start to end?#Sequential Access#Direct Access#Binary Access#Indexed Access#Sequential Access
 easy#What is a delimiter?#A character used to separate values in a text file#A marker indicating the end of a file#A method for appending data#An array operation#A character used to separate values in a text file
 easy#What is the purpose of a constructor in a class?#To initialize an object#To read files#To perform sorting#To calculate averages#To initialize an object
-easy#What is the output of the following C# code? String[] names = "John-Paul-Ringo".Split('-'); Console.WriteLine(names[1]);#Paul#John#Ringo#Error#Paul
+easy#What is the output of the following C Sharp code? String[] names = "John-Paul-Ringo".Split('-'); Console.WriteLine(names[1]);#Paul#John#Ringo#Error#Paul
 easy#What is an instance variable?#A variable that belongs to an object#A variable shared across all instances of a class#A local variable within a method#A parameter passed to a function#A variable that belongs to an object
 easy#What is the file extension for text files?#.txt#.docx#.csv#.bin#.txt
 easy#What does EOF stand for in file processing?#End of File#End of Function#Error on File#End of Field#End of File

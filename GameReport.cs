@@ -28,6 +28,7 @@ namespace CGI_Project {
     private int randomIslandCount;
     bool improperLength = false;
     private bool moveBoss = false;
+    private bool noQuestion = false;
 
     public GameReport() {
 
@@ -560,14 +561,16 @@ namespace CGI_Project {
           }
           PrintedEnemy();
           newNum = !newNum;
+          noQuestion = false;
         }
 
-        if(num < start && player.GetPos() >= start && player.GetPos() <= stop || num > stop && player.GetPos() >= start && player.GetPos() <= stop ){
+        if(num < start && player.GetPos() >= start && player.GetPos() <= stop || num > stop && player.GetPos() >= start && player.GetPos() <= stop && noQuestion == false){
           enemy = false;
           this.enemy = -1;
+          noQuestion = true;
         } else {
             
-          if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][0])) {
+          if (i == height - 1 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][0]) && noQuestion == false) {
           if(printedEnemy[1][0] == "$"){
             System.Console.Write(" ");
           } else {
@@ -575,7 +578,7 @@ namespace CGI_Project {
           }
           
           used = true;
-        } else if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][1])) {
+        } else if (i == height - 1 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][1]) && noQuestion == false) {
           if(printedEnemy[1][1] == "$"){
             System.Console.Write(" ");
           } else {
@@ -583,7 +586,7 @@ namespace CGI_Project {
           }
 
           used = true;
-        } else if (i == height - 1 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][2])) {
+        } else if (i == height - 1 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[1][2]) && noQuestion == false) {
           if(printedEnemy[1][2] == "$"){
             System.Console.Write(" ");
           } else {
@@ -591,13 +594,13 @@ namespace CGI_Project {
           }
 
           used = true;
-        } else if (i == height - 2 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[0][0])) {
+        } else if (i == height - 2 && j == num-1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[0][0]) && noQuestion == false) {
           System.Console.Write(printedEnemy[0][0]);
           used = true;
-        } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[0][1])) {
+        } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[0][1]) && noQuestion == false) {
           System.Console.Write(printedEnemy[0][1]);
           used = true;
-        } else if (i == height - 2 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[0][2])) {
+        } else if (i == height - 2 && j == num+1 && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == false && !string.IsNullOrEmpty(printedEnemy[0][2]) && noQuestion == false) {
           System.Console.Write(printedEnemy[0][2]);
           used = true;
         } else if (i == height - 2 && j == num && player.GetPos() >= start && player.GetPos() <= stop && enemy == true && tutorial == true){
@@ -1138,7 +1141,7 @@ namespace CGI_Project {
           Console.ReadKey();
           SwitchOvrRide();
         }
-      } else if(player.GetPos() == enemy-3 && enemyHealth > 0){
+      } else if(player.GetPos() == enemy-3 && enemyHealth > 0 && noQuestion == false){
         if (Question("medium") == true) {
           SetEnemyHealth(enemyHealth - player.GetDamage());
           SwitchOvrRide();
