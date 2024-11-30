@@ -1106,8 +1106,8 @@ namespace CGI_Project {
       Utility util = new Utility(player);
 
       if(player.GetPos() == currentIslands[0][1] - 1 || player.GetPos() == currentIslands[1][1] - 1 || player.GetPos() == currentIslands[2][1] - 1){
-        System.Console.WriteLine("Question");
-        if (Console.ReadLine() == "answer") {
+   
+        if (Question("easy") == true) {
           if (player.GetPos() == currentIslands[0][1] - 1) {
             player.SetPos(currentIslands[1][0] + 1);
             SetUpperBound(currentIslands[1][1] - 1);
@@ -1139,13 +1139,18 @@ namespace CGI_Project {
           SwitchOvrRide();
         }
       } else if(player.GetPos() == enemy-3 && enemyHealth > 0){
-        System.Console.WriteLine("Question");
-        if (Console.ReadLine() == "answer") {
+        if (Question("medium") == true) {
           SetEnemyHealth(enemyHealth - player.GetDamage());
           SwitchOvrRide();
         } else {
           player.SetPos(lowerBound);
           player.SetHealth(player.GetHealth()-25);
+          if(player.GetHealth() <= 0){
+            Console.Clear();
+            System.Console.WriteLine("\n\nYou were killed by an enemy");
+            System.Console.WriteLine("\nPress any key to continue:");
+            Console.ReadKey();
+          }
           SwitchOvrRide();
         }
 
@@ -1330,9 +1335,8 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
       bossCount = -2;
 
       if(player.GetPos() == currentBossPos+7 && bossHealth > 0 || player.GetPos() == currentBossPos-2 && bossHealth > 0){
-        System.Console.WriteLine("Question");
 
-        if(Console.ReadLine() == "answer"){
+        if(Question("hard") == true){
           bossHealth -= player.GetDamage();
           moveBoss = !moveBoss;
           SwitchOvrRide();
@@ -1350,6 +1354,12 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
         } else {
           player.SetPos(lowerBound);
           player.SetHealth(player.GetHealth()-50);
+          if(player.GetHealth() <= 0){
+            Console.Clear();
+            System.Console.WriteLine("\n\nYou have died to the boss");
+            System.Console.WriteLine("\n\nPress any key to continue:");
+            Console.ReadKey();
+          }
           SwitchOvrRide();
         }
 

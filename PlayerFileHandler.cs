@@ -206,11 +206,11 @@ namespace CGI_Project {
       int count = 0;
 
       if(difficulty == "easy"){
-        num = rnd.Next(0,46);
+        num = rnd.Next(0,21);
       } else if(difficulty == "medium"){
-        num = rnd.Next(46,81);
+        num = rnd.Next(21,41);
       } else if(difficulty == "hard"){
-        num = rnd.Next(81,108);
+        num = rnd.Next(41,61);
       }
 
       string line = inFile.ReadLine();
