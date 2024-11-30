@@ -428,6 +428,25 @@ namespace CGI_Project {
               }
               return;
             }
+            if(selectedItem == 'i'){
+              player.SetHealth(150);
+            } else if (selectedItem == 'h'){
+              bool increasedHealth = false;
+              if(player.GetItemsInUse() != null){
+                string newItemsInUse = player.GetItemsInUse();
+                for(int i=0;i<newItemsInUse.Length;i++){
+                  if(newItemsInUse[i] == 'i'){
+                    player.SetHealth(150);
+                    increasedHealth = true;
+                  }
+                }
+                if(increasedHealth == false){
+                  player.SetHealth(100);
+                }
+              } else {
+                player.SetHealth(100);
+              }      
+            }
             util.ActivateItem(selectedItem);
             end = true;
           }

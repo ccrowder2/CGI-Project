@@ -291,9 +291,9 @@ namespace CGI_Project {
         if(items[i] == 'd'){
           player.SetDamage(50);
         } else if(items[i] == 'h'){
-           player.SetHealth(100);
+          
           } else if(items[i] == 'i'){
-            player.SetHealth(150);
+
          } else if(items[i] == 'b'){
           player.SetXpToEarn(150);
          }
