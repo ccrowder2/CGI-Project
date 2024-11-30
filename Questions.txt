@@ -19,7 +19,7 @@ easy#What does the ReadLine method do?#Reads a line of text from a file#Writes a
 easy#What is the purpose of a file extension?#To indicate the file type#To increase file size#To add metadata to a file#To change file permissions#To indicate the file type
 easy#What is a binary file?#A file storing data in binary format#A file storing text data#A file storing only images#A file storing only arrays#A file storing data in binary format
 medium#What is the main advantage of using a binary search over a sequential search?#Binary search is faster for sorted data#Binary search works on unsorted data#Sequential search requires less memory#Binary search avoids sorting#Binary search is faster for sorted data
-medium#What is the output of this C# code? int[] arr = {1, 2, 3}; Console.WriteLine(arr[1]);#2#1#3#Error#2
+medium#What is the output of this C Sharp code? int[] arr = {1, 2, 3}; Console.WriteLine(arr[1]);#2#1#3#Error#2
 medium#What is the role of the StreamReader method ReadLine in file processing?#It reads a line of text from a file#It writes a line of text to a file#It deletes a line of text in a file#It moves to the next file#It reads a line of text from a file
 medium#What is the output of this algorithm? double[] weights = {50.5, 75.3, 60.7}; Console.WriteLine(weights.Max());#75.3#50.5#60.7#Error#75.3
 medium#What does direct file access allow that sequential file access does not?#Random access to data#Faster reading of files#Text file manipulation#Sorting files#Random access to data

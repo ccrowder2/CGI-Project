@@ -133,8 +133,9 @@ namespace CGI_Project {
           }
         }
         confirm = "";
+        PlayerFileHandler newFile = new PlayerFileHandler(player);
 
-        file.SavePlayer();
+        newFile.SavePlayer();
       }
     }
 
