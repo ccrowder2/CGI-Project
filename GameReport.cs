@@ -1128,7 +1128,7 @@ namespace CGI_Project {
       Utility util = new Utility(player);
 
       if(player.GetPos() == currentIslands[0][1] - 1 || player.GetPos() == currentIslands[1][1] - 1 || player.GetPos() == currentIslands[2][1] - 1){
-   
+        System.Console.WriteLine();
         if (Question("easy") == true) {
           if (player.GetPos() == currentIslands[0][1] - 1) {
             player.SetPos(currentIslands[1][0] + 1);
@@ -1161,6 +1161,7 @@ namespace CGI_Project {
           SwitchOvrRide();
         }
       } else if(player.GetPos() == enemy-3 && enemyHealth > 0 && noQuestion == false){
+        System.Console.WriteLine();
         if (Question("medium") == true) {
           SetEnemyHealth(enemyHealth - player.GetDamage());
           SwitchOvrRide();
@@ -1185,6 +1186,7 @@ namespace CGI_Project {
           util.PrintActivatedItems();
         } 
         System.Console.WriteLine();
+        System.Console.WriteLine();
       }
     }
 
@@ -1198,11 +1200,11 @@ namespace CGI_Project {
 
     private void RandomIslands(){
       bool used = false;
-      for (int i = 0; i < 63; i++) {
+      for (int i = 0; i < 62; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, 63, ref isEnemy[0]);
-          Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, 63, ref isEnemy[1]);
-          Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, 63, ref isEnemy[2]);
+          Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, 62, ref isEnemy[0]);
+          Island(currentIslands[1][0], currentIslands[1][1], currentIslands[1][2], i, j, ref used, 62, ref isEnemy[1]);
+          Island(currentIslands[2][0], currentIslands[2][1], currentIslands[2][2], i, j, ref used, 62, ref isEnemy[2]);
 
           if(!used){
             System.Console.Write(" ");
@@ -1273,14 +1275,14 @@ namespace CGI_Project {
           bossMiddle[0] = "-";
           bossMiddle[1] = "-";
           bossMiddle[2] = "|";
-          bossMiddle[3] = "-";
+          bossMiddle[3] = "|";
           bossMiddle[4] = "-";
           bossMiddle[5] = "-";
           bossHead[0] = "$";
           bossHead[1] = "<";
           bossHead[2] = "O";
-          bossHead[3] = ">";
-          bossHead[4] = "$";
+          bossHead[3] = "O";
+          bossHead[4] = ">";
           bossHead[5] = "$";
           break;
       }
@@ -1339,11 +1341,11 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
 
       bool used = false;
       bool isEnemy = false;
-      for (int i = 0; i < 63; i++) {
+      for (int i = 0; i < 62; i++) {
         for (int j = 0; j < 147; j++) {
-          Island(3, 41, 15, i, j, ref used, 63, ref isEnemy);
-          Island(42, 77, 5, i, j, ref used, 63, ref isEnemy);
-          Island(78, 116, 15, i, j, ref used, 63, ref isEnemy);
+          Island(3, 41, 15, i, j, ref used, 62, ref isEnemy);
+          Island(42, 77, 5, i, j, ref used, 62, ref isEnemy);
+          Island(78, 116, 15, i, j, ref used, 62, ref isEnemy);
           PrintBoss(i,j,ref used);
 
           if(!used){
@@ -1357,7 +1359,7 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
       bossCount = -2;
 
       if(player.GetPos() == currentBossPos+7 && bossHealth > 0 || player.GetPos() == currentBossPos-2 && bossHealth > 0){
-
+        System.Console.WriteLine();
         if(Question("hard") == true){
           bossHealth -= player.GetDamage();
           moveBoss = !moveBoss;
@@ -1393,6 +1395,7 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
         if(!string.IsNullOrEmpty(player.GetItemsInUse())){
           util.PrintActivatedItems();
         }
+        System.Console.WriteLine();
         System.Console.WriteLine();
       }
     }

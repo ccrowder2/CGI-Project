@@ -206,14 +206,18 @@ namespace CGI_Project {
       int count = 0;
 
       if(difficulty == "easy"){
-        num = rnd.Next(0,21);
+        num = rnd.Next(0,28);
       } else if(difficulty == "medium"){
-        num = rnd.Next(21,41);
+        num = rnd.Next(28,57);
       } else if(difficulty == "hard"){
-        num = rnd.Next(41,61);
+        num = rnd.Next(57,84);
+      } else {
+        num = 52;
       }
 
       string line = inFile.ReadLine();
+      
+      int randomize = rnd.Next(2,6);
 
       while(line != null){
         string[] temp = line.Split('#');
@@ -235,6 +239,10 @@ namespace CGI_Project {
         count++;
         line = inFile.ReadLine();
       }
+
+      string temp = question[5];
+      question[5] = question[randomize];
+      question[randomize] = temp;
 
       return question;
     }
