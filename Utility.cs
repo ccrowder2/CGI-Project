@@ -134,7 +134,7 @@ namespace CGI_Project {
         }
         confirm = "";
 
-        file.SavePlayer();
+        file.SaveOrUpdatePlayer();
       }
     }
 

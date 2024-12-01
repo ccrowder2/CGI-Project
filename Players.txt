@@ -1,7 +1,6 @@
-1#cb#cb#cb#900#7#
+1#cb#cb#cb#825#6#
 2#cb3#cb#cb#25#1#b
 3#cb4#cb#cb#100#1#b
 4#cb6#cb#cb#0#0#
 5#cb7#cb#cb#0#0#
-7#coy3#coy3pw#coy3#0#0#
-8#cbcrowder08@gmail.com#coyspw#coy1#75#1#hb
+7#cbcrowder08@gmail.com#coyspw#coy1#100#1#b

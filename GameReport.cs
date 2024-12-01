@@ -258,7 +258,7 @@ namespace CGI_Project {
             System.Console.WriteLine("\n\nCongratulations, you passed the tutorial! You will now be sent to your home base.\n\nPress any key to continue");
             Console.ReadKey();
             player.SetXP(player.GetXpToEarn());
-            file.SaveExistingPlayer();
+            file.SaveOrUpdatePlayer();
             end = true;
           }
         } else {
@@ -1035,7 +1035,7 @@ namespace CGI_Project {
             System.Console.WriteLine("Are you sure you want to exit the game, all progress made will be saved (Enter to leave, any key to continue)");
 
             if(Console.ReadKey().Key == ConsoleKey.Enter){
-              file.SaveExistingPlayer();
+              file.SaveOrUpdatePlayer();
               end = true;
             }
           }

@@ -70,57 +70,66 @@ namespace CGI_Project {
       return rValue;
     }
 
-    public void SavePlayer() {
-      using(StreamWriter outFile = new StreamWriter("Players.txt", append: true)) {
-        outFile.WriteLine(player.ToFile());
-      }
+    public void SaveOrUpdatePlayer(){
+    string filePath = "Players.txt";
+    List<Player> players = new List<Player>();
+    bool playerExists = false;
+
+    // Check if the file exists and read existing players
+    if (File.Exists(filePath))
+    {
+        using (StreamReader inFile = new StreamReader(filePath))
+        {
+            string line;
+            while ((line = inFile.ReadLine()) != null)
+            {
+                string[] temp = line.Split('#');
+
+                // Create a new Player object from the line data
+                Player existingPlayer = new Player(
+                    int.Parse(temp[0]), // ID
+                    temp[1], // Email
+                    temp[2], // Password
+                    temp[3], // Username
+                    int.Parse(temp[4]), // XP
+                    int.Parse(temp[5]) // Level
+                );
+
+                // Parse inventory items
+                if (temp.Length > 6 && !string.IsNullOrEmpty(temp[6]))
+                {
+                    char[] items = temp[6].ToCharArray();
+                    existingPlayer.SetItems(items);
+                }
+
+                players.Add(existingPlayer);
+
+                // Check if this is the player to update
+                if (existingPlayer.GetID() == player.GetID())
+                {
+                    players[^1] = player; // Update the player
+                    playerExists = true;
+                }
+            }
+        }
     }
 
-    public void SaveExistingPlayer() {
-      // Read all players from the file
-      StreamReader inFile = new StreamReader("Players.txt");
-      Player[] players = new Player[MAX_PLAYERS];
-      int count = 0;
-
-      string line = inFile.ReadLine();
-      while (line != null) {
-        string[] temp = line.Split('#');
-
-        // Create a new Player object from the line data
-        players[count] = new Player(
-          int.Parse(temp[0]), // ID
-          temp[1], // Email
-          temp[2], // Password
-          temp[3], // Username
-          int.Parse(temp[4]), // XP
-          int.Parse(temp[5]) // Level
-        );
-
-        // Parse inventory items
-        if (temp.Length > 6 && !string.IsNullOrEmpty(temp[6])) {
-          char[] items = temp[6].ToCharArray();
-          players[count].SetItems(items);
-        }
-
-        count++;
-        line = inFile.ReadLine();
-      }
-      inFile.Close();
-
-      // Update the player's data in the array
-      for (int i = 0; i < count; i++) {
-        if (players[i].GetID() == player.GetID()) {
-          players[i] = player; // Replace with the updated player object
-        }
-      }
-
-      // Write all players back to the file
-      StreamWriter outFile = new StreamWriter("Players.txt");
-      for (int i = 0; i < count; i++) {
-        outFile.WriteLine(players[i].ToFile());
-      }
-      outFile.Close();
+    // If the player does not exist, add them to the list
+    if (!playerExists)
+    {
+        players.Add(player);
     }
+
+    // Write all players back to the file
+    using (StreamWriter outFile = new StreamWriter(filePath, false)) // Overwrite the file
+    {
+        foreach (var p in players)
+        {
+            outFile.WriteLine(p.ToFile());
+        }
+    }
+}
+
 
     public Player FindPlayerByEmail(string email) {
       Player player = new Player();
