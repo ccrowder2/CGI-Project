@@ -1293,7 +1293,7 @@ namespace CGI_Project {
 {
     // Variables
     int[] islandStarts = { 3, 42, 78 };
-    int[] islandHeights = { 63 - 15, 63 - 5, 63 - 15 };
+    int[] islandHeights = { 62 - 15, 62 - 5, 62 - 15 };
 
     if (moveBoss)
     {

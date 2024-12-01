@@ -210,7 +210,7 @@ namespace CGI_Project {
       } else if(difficulty == "medium"){
         num = rnd.Next(28,57);
       } else if(difficulty == "hard"){
-        num = rnd.Next(57,84);
+        num = rnd.Next(57,86);
       } else {
         num = 52;
       }
@@ -240,9 +240,9 @@ namespace CGI_Project {
         line = inFile.ReadLine();
       }
 
-      string temp = question[5];
+      string tempQues = question[5];
       question[5] = question[randomize];
-      question[randomize] = temp;
+      question[randomize] = tempQues;
 
       return question;
     }
