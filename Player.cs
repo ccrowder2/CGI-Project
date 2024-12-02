@@ -135,10 +135,12 @@ namespace CGI_Project
 
         public int GetItemsCount(){
             countOfItems=-1;
+            if(items != null){
             for(int i=0;i<items.Length;i++){
                 if(items[i] == 'b' || items[i] == 'd' || items[i] == 'h' || items[i] == 'i'){
                     countOfItems++;
                 }
+            }
             }
             return countOfItems;
         }

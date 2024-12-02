@@ -43,6 +43,8 @@ static void Menu()
                 case 0: // Login
                     if (utility.Login(ref player))
                     {
+                        PlayerFileHandler file = new PlayerFileHandler(player);
+                        file.SaveOrUpdatePlayer();
                         Home(player);  // Proceed to Home if login is successful
                         exitLoop = true; // Exit loop after successful login
                     }
