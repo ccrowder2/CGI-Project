@@ -18,6 +18,7 @@ namespace CGI_Project {
       Console.ReadKey();
     }
 
+    // Makes user keep typing if the string is an invalid input
     public void StringInvalidInput(ref string userInput, string[] answers) {
 
       bool endLoop = false;
@@ -40,6 +41,7 @@ namespace CGI_Project {
       }
     }
 
+    // Makes user keep typing if the int is an invalid input
     public void IntInvalidInput(ref int userInput, int[] answers) {
 
       bool endLoop = false;
@@ -67,7 +69,7 @@ namespace CGI_Project {
       }
     }
 
-    // Creates a new player
+    // Creates a new player and populates the object
     public void CreatePlayer() {
       Player player = new Player();
       PlayerFileHandler file = new PlayerFileHandler(player);
@@ -138,6 +140,7 @@ namespace CGI_Project {
       }
     }
 
+    // Allows player to login, then finds player by email
     public bool Login(ref Player player){
       Console.Clear();
       PlayerFileHandler file = new PlayerFileHandler();
@@ -161,6 +164,7 @@ namespace CGI_Project {
       return false;
     }
 
+    // Allows user to enter their account by asking for a password. Checks to make sure password is correct.
     public bool EnterPassword(Player player){
       PlayerFileHandler file = new PlayerFileHandler(player);
       Console.Clear();
@@ -194,6 +198,7 @@ namespace CGI_Project {
       return false;
     } 
 
+    // Add an item to inventory
     public void AddItem(char item) {
     if (player == null) {
         Console.WriteLine("");
@@ -223,7 +228,7 @@ namespace CGI_Project {
     SortInventory();
 }
 
-
+    // Moves an inventory item to the activated list
     public void ActivateItem(char item){
       char[] items = player.GetItems();
       string itemsInUse = player.GetItemsInUse();
@@ -244,6 +249,7 @@ namespace CGI_Project {
       }
     }  
 
+    // Removes an item from inventory
     public void RemoveItems(char item){
       char[] items = player.GetItems();
       int count = 0;
@@ -258,6 +264,7 @@ namespace CGI_Project {
       }
     }
 
+    // Sorts the inventory
     public void SortInventory(){
       char[] items = player.GetItems();
       for(int i=0;i<items.Length-1;i++){
@@ -282,6 +289,7 @@ namespace CGI_Project {
       }
     }
 
+    // Each time the game is printed, makes sure that the activated items are set
     public void CheckActivatedItems(){
       if(player.GetItemsInUse() != null){
       string items = player.GetItemsInUse();
@@ -300,6 +308,7 @@ namespace CGI_Project {
       }
     }
 
+    // Prints all activated items
     public void PrintActivatedItems(){
       if(!string.IsNullOrEmpty(player.GetItemsInUse())){
         string items = player.GetItemsInUse();
@@ -329,6 +338,7 @@ namespace CGI_Project {
       player.SetItemsInUse("");
     }
 
+    // Creates levels for player
     public void AddLevels(){
       if(player.GetXP() >= 1500){
         player.SetLevel(10);

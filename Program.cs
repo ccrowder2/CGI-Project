@@ -65,6 +65,7 @@ static void DisplayMenuOptions(int userNav)
         "Create new account"
     };
 
+    // If the nav is on the option, highlight green, otherwise print normally
     for (int i = 0; i < options.Length; i++)
     {
         if (i == userNav)

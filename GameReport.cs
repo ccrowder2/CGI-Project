@@ -97,6 +97,7 @@ namespace CGI_Project {
       this.printedEnemy = printedEnemy;
     }
 
+    // Creates a random number for enemy
     private void SetRandomNum() {
       Random rnd = new Random();
       int number = -1;
@@ -112,6 +113,7 @@ namespace CGI_Project {
       }
     }
 
+    // Creates a random start for island
     private int RandomStart(int stop){
       bool end = false;
       Random rnd = new Random();
@@ -132,6 +134,7 @@ namespace CGI_Project {
       return -1;
     }
 
+    // Creates a random stop for island
     private int RandomStop(int start, int length){
       bool end = false;
       Random rnd = new Random();
@@ -189,12 +192,14 @@ namespace CGI_Project {
       return -1;
     }
 
+    // Creates a random island height
     private int RandomHeight(){
       Random rnd = new Random();
       
       return rnd.Next(5,21);
     }
 
+    // Returns true or false to create an enemy
     private bool CreateEnemy(){
       Random rnd = new Random();
       int number = rnd.Next(0,2);
@@ -214,6 +219,7 @@ namespace CGI_Project {
       this.printedBoss = printedBoss;
     }
 
+    // Tutorial controls
     public void Tutorial() {
       Utility util = new Utility(player);
       PlayerFileHandler file = new PlayerFileHandler(player);
@@ -249,6 +255,7 @@ namespace CGI_Project {
           newKey = Console.ReadKey().Key;
           SetKey(newKey);
 
+          // If player presses key, increase or decrease player position
           if (GetKey() == ConsoleKey.D && player.GetPos() < upperBound) {
             player.IncPos();
           } else if (GetKey() == ConsoleKey.A && player.GetPos() > lowerBound) {
@@ -281,6 +288,7 @@ namespace CGI_Project {
 
       TutorialIsland();
 
+      // If the player reaches the end of an island, ask a question
       if (player.GetPos() == currentIslands[0][1] - 1 || player.GetPos() == currentIslands[1][1] - 1 || player.GetPos() == currentIslands[2][1] - 1) {
         System.Console.WriteLine();
         if (Question("easy") == true) {
@@ -304,6 +312,7 @@ namespace CGI_Project {
           player.SetPos(lowerBound);
           SwitchOvrRide();
         }
+        // Else if the player reaches an enemy, ask a question
       } else if (player.GetPos() >= currentIslands[3][3] - 3 && player.GetPos() <= currentIslands[3][3] - 1 && enemyHealth > 0) {
         System.Console.WriteLine();
         if (Question("medium") == true) {
@@ -314,6 +323,7 @@ namespace CGI_Project {
           SwitchOvrRide();
         }
       } else {
+        // Print menu on the bottom
         Inventory();
         System.Console.WriteLine($"Health: {player.GetHealth()}");
         System.Console.WriteLine($"Damage: {player.GetDamage()}");
@@ -323,6 +333,7 @@ namespace CGI_Project {
       }
     }
 
+    // Allows player to access their inventory
     private void Inventory(bool home = false) {
       if (key == ConsoleKey.Enter && accessInventory == ConsoleKey.S) {
         SwitchOvrRide();
@@ -509,6 +520,7 @@ namespace CGI_Project {
         putEnemy = true;
       }
 
+      // This is used to print the islands, using the island method. If a space isn't used a space is put in it's place
       for (int i = 0; i < 53; i++) {
         for (int j = 0; j < 147; j++) {
           Island(island1[0], island1[1], island1[2], i, j, ref used, 53, ref putEnemy, false, true);
@@ -534,6 +546,7 @@ namespace CGI_Project {
         onIsland = true;
       }
 
+      // If the loop is at the exact position needed for a character, it places that string there.
       if (i == height - 1 && j == player.GetPos() && player.GetPos() >= start && player.GetPos() <= stop) {
         System.Console.Write("-|-");
         used = true;
@@ -570,6 +583,7 @@ namespace CGI_Project {
         used = true;
       }
 
+      // This is used to print the enemy. If the enemy is alive
       if (enemy == true && enemyHealth > 0) {
         if (newNum == true && enemy == true && onIsland == true) {
           SetRandomNum();
@@ -659,6 +673,7 @@ namespace CGI_Project {
       return "";
     }
 
+    // This creates a 2d array of what the enemy will look like
     private void PrintedEnemy() {
       Random rnd1 = new Random();
       string[] enemyHead = {" "," "," "};
@@ -899,6 +914,7 @@ namespace CGI_Project {
       bool used = false;
       bool homeEnemy = false;
 
+      // Prints the home base
       for (int i = 0; i < 63; i++) {
         for (int j = 0; j < 147; j++) {
           Island(0, 102, 5, i, j, ref used, 63, ref homeEnemy);
@@ -913,6 +929,7 @@ namespace CGI_Project {
         System.Console.WriteLine();
       }
 
+      // Checking to see if the player is at the shop or at the start of the game
       if(enterLevel == true){
         SwitchOvrRide();
         enterLevel = false;
@@ -954,6 +971,7 @@ namespace CGI_Project {
     public void PrintItemShop(int i, int j, ref bool used){
       int height = 63-5;
 
+      // Prints out the item shop depending on the position of the for loop
       if(i==height-1&&j==5 || i==height-2&&j==5 || i==height-3&&j==5 || i==height-1&&j==13 || i==height-2&&j==13 || i==height-3&&j==13){
         System.Console.Write("|");
         used = true;
@@ -1022,6 +1040,7 @@ namespace CGI_Project {
         SetUpperBound(79);
         PrintHome();
         SetAccessInventory(newKey);
+        // Override the method if you want it to update without requiring player to move
         if (ovrRide == false) {
           newKey = Console.ReadKey().Key;
           SetKey(newKey);
@@ -1126,7 +1145,8 @@ namespace CGI_Project {
       Console.Clear();
       RandomIslands();
       Utility util = new Utility(player);
-
+      
+      // If player reaches the end of an island, ask an easy question
       if(player.GetPos() == currentIslands[0][1] - 1 || player.GetPos() == currentIslands[1][1] - 1 || player.GetPos() == currentIslands[2][1] - 1){
         System.Console.WriteLine();
         if (Question("easy") == true) {
@@ -1160,6 +1180,7 @@ namespace CGI_Project {
           Console.ReadKey();
           SwitchOvrRide();
         }
+        // If the player reaches an enemy, ask a medium question
       } else if(player.GetPos() == enemy-3 && enemyHealth > 0 && noQuestion == false){
         System.Console.WriteLine();
         if (Question("medium") == true) {
@@ -1200,6 +1221,7 @@ namespace CGI_Project {
 
     private void RandomIslands(){
       bool used = false;
+      // Prints the random islands
       for (int i = 0; i < 62; i++) {
         for (int j = 0; j < 147; j++) {
           Island(currentIslands[0][0], currentIslands[0][1], currentIslands[0][2], i, j, ref used, 62, ref isEnemy[0]);
@@ -1216,6 +1238,7 @@ namespace CGI_Project {
       }  
     }
 
+    // Creates a 2d array to print out a boss
     private void PrintedBoss(){
       Random rnd = new Random();
       int number = rnd.Next(0,3);
@@ -1358,6 +1381,7 @@ private void PrintBossRows(int i, int j, int islandHeight, int bossPosition, ref
       }
       bossCount = -2;
 
+      // If the player reaches the boss, ask a hard question
       if(player.GetPos() == currentBossPos+7 && bossHealth > 0 || player.GetPos() == currentBossPos-2 && bossHealth > 0){
         System.Console.WriteLine();
         if(Question("hard") == true){

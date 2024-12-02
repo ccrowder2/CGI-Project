@@ -30,6 +30,7 @@ namespace CGI_Project {
       return count;
     }
 
+    // Checks to make sure email isn't used
     public bool EmailInUse() {
       bool rValue = false;
       StreamReader inFile = new StreamReader("Players.txt");
@@ -50,6 +51,7 @@ namespace CGI_Project {
       return rValue;
     }
 
+    // Checks to make sure username isn't in use
     public bool UsernameInUse() {
       bool rValue = false;
       StreamReader inFile = new StreamReader("Players.txt");
@@ -131,6 +133,7 @@ namespace CGI_Project {
 }
 
 
+    // Find a player by email and returns that player
     public Player FindPlayerByEmail(string email) {
       Player player = new Player();
       StreamReader inFile = new StreamReader("Players.txt");
@@ -164,6 +167,7 @@ namespace CGI_Project {
       return player;
     }
 
+    // Checks the password
     public bool CheckPassword(string password) {
       bool rValue = false;
       StreamReader inFile = new StreamReader("Players.txt");
@@ -184,6 +188,7 @@ namespace CGI_Project {
       return rValue;
     }
 
+    // Adds a players inventory from the text file
     public char[] AddInventory(string email) {
       StreamReader inFile = new StreamReader("Players.txt");
       char[] inventory = new char[MAX_ITEMS];
@@ -206,6 +211,7 @@ namespace CGI_Project {
       return inventory;
     }
 
+    // Gets a random question
     public string[] Question(string difficulty){
       StreamReader inFile = new StreamReader("Questions.txt");
       string[] question = new string[6];
